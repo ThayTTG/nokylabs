@@ -1,0 +1,1700 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="theme-color" content="#0F0B1A" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F6F4FA" media="(prefers-color-scheme: light)">
+<meta property="og:title" content="NokyLabs">
+<meta property="og:description" content="Utilitários, apps para a sala de aula e jogos, reunidos num só lugar.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thayttg.github.io/nokylabs/">
+<title>NokyLabs</title>
+<meta name="description" content="NokyLabs: utilitários, apps para a sala de aula e jogos, reunidos num só lugar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: cabeçalho fixo + páginas trocadas por rota (#launcher, #cubebin…), largura máx. 1160px.
+   Claro = laranja sobre lilás bem claro · Escuro = roxo do NokyLabs Launcher. */
+:root {
+  --bg: #F6F4FA;
+  --surface: #FFFFFF;
+  --surface-2: #EFEBF6;
+  --border: #E1DAEC;
+  --fg: #1D1530;
+  --fg-2: #574D6E;
+  --fg-3: #857B9C;
+  --accent: #EA580C;
+  --accent-hover: #C2410C;
+  --accent-ink: #C2410C;
+  --accent-soft: rgba(234, 88, 12, .11);
+  --accent-soft-2: rgba(234, 88, 12, .2);
+  --on-accent: #FFFFFF;
+  --brand-a: #F97316;
+  --brand-b: #FDBA74;
+  --ok: #047857;
+  --ok-soft: rgba(4, 120, 87, .1);
+  --warn: #A16207;
+  --warn-soft: rgba(202, 138, 4, .13);
+  --danger: #DC2626;
+  --danger-soft: rgba(220, 38, 38, .1);
+  --muted-soft: rgba(87, 77, 110, .1);
+  --shadow: 0 1px 2px rgba(29, 21, 48, .05), 0 8px 24px rgba(29, 21, 48, .06);
+  --header-bg: rgba(246, 244, 250, .86);
+
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  --radius: 16px;
+  --radius-sm: 10px;
+  --max: 1160px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F0B1A; --surface: #1B1530; --surface-2: #231B3E; --border: #2C2347;
+    --fg: #F2EEFF; --fg-2: #A99FC7; --fg-3: #786E9B;
+    --accent: #8B5CF6; --accent-hover: #9D74FF; --accent-ink: #C4B5FD;
+    --accent-soft: rgba(139, 92, 246, .16); --accent-soft-2: rgba(139, 92, 246, .28); --on-accent: #FFFFFF;
+    --brand-a: #6D28D9; --brand-b: #C084FC;
+    --ok: #34D399; --ok-soft: rgba(52, 211, 153, .13);
+    --warn: #FBBF24; --warn-soft: rgba(251, 191, 36, .13);
+    --danger: #F87171; --danger-soft: rgba(248, 113, 113, .13);
+    --muted-soft: rgba(169, 159, 199, .12);
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 30px rgba(0, 0, 0, .25);
+    --header-bg: rgba(15, 11, 26, .82);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F0B1A; --surface: #1B1530; --surface-2: #231B3E; --border: #2C2347;
+  --fg: #F2EEFF; --fg-2: #A99FC7; --fg-3: #786E9B;
+  --accent: #8B5CF6; --accent-hover: #9D74FF; --accent-ink: #C4B5FD;
+  --accent-soft: rgba(139, 92, 246, .16); --accent-soft-2: rgba(139, 92, 246, .28); --on-accent: #FFFFFF;
+  --brand-a: #6D28D9; --brand-b: #C084FC;
+  --ok: #34D399; --ok-soft: rgba(52, 211, 153, .13);
+  --warn: #FBBF24; --warn-soft: rgba(251, 191, 36, .13);
+  --danger: #F87171; --danger-soft: rgba(248, 113, 113, .13);
+  --muted-soft: rgba(169, 159, 199, .12);
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 30px rgba(0, 0, 0, .25);
+  --header-bg: rgba(15, 11, 26, .82);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+a { color: var(--accent-ink); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--accent-hover); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.12; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+p { margin: 0; }
+code, .mono { font-family: var(--font-mono); font-size: .88em; }
+code { background: var(--surface-2); border: 1px solid var(--border); padding: .08em .4em; border-radius: 6px; overflow-wrap: anywhere; }
+
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (min-width: 720px) {
+  .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); }
+}
+
+/* ---------- ícones ---------- */
+.ico { width: 1.25em; height: 1.25em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+/* ---------- cabeçalho ---------- */
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: var(--header-bg);
+  backdrop-filter: saturate(1.4) blur(14px);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+.header-row { display: flex; align-items: center; gap: 16px; height: 66px; }
+.logo { display: flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; }
+.logo:hover { color: var(--fg); }
+.logo-mark {
+  width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--brand-a), var(--brand-b)); color: #fff;
+}
+.logo-mark .ico { width: 22px; height: 22px; stroke-width: 2.9; }
+.logo-text { font-family: var(--font-display); font-weight: 800; font-size: 1.2rem; letter-spacing: -.02em; }
+.nav { display: flex; gap: 2px; margin-left: auto; }
+.nav a {
+  color: var(--fg-2); text-decoration: none; font-weight: 600; font-size: .93rem;
+  padding: 8px 12px; border-radius: 999px;
+}
+.nav a:hover { color: var(--fg); background: var(--surface-2); }
+.nav a[aria-current="page"] { color: var(--accent-ink); background: var(--accent-soft); }
+.icon-btn {
+  width: 40px; height: 40px; display: grid; place-items: center; flex: none;
+  border-radius: 12px; border: 1px solid var(--border); background: var(--surface); color: var(--fg-2); cursor: pointer;
+}
+.icon-btn:hover { color: var(--fg); border-color: var(--accent-soft-2); }
+.menu-btn { display: none; }
+@media (max-width: 940px) {
+  .menu-btn { display: grid; margin-left: auto; }
+  .nav {
+    display: none; position: absolute; left: 0; right: 0; top: 66px;
+    flex-direction: column; gap: 2px; background: var(--bg); border-bottom: 1px solid var(--border);
+    padding: 10px max(16px, env(safe-area-inset-right, 0px)) 16px max(16px, env(safe-area-inset-left, 0px));
+  }
+  .nav.open { display: flex; }
+  .nav a { padding: 12px 14px; border-radius: 12px; font-size: 1rem; }
+}
+
+/* ---------- botões ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font: 700 .95rem/1 var(--font-body); padding: 13px 20px; border-radius: 12px;
+  border: 1px solid transparent; cursor: pointer; text-decoration: none; white-space: nowrap;
+  transition: background .15s, border-color .15s, color .15s, transform .15s;
+}
+.btn:active { transform: translateY(1px); }
+.btn.primary { background: var(--accent); color: var(--on-accent); }
+.btn.primary:hover { background: var(--accent-hover); color: var(--on-accent); }
+.btn.soft { background: var(--accent-soft); color: var(--accent-ink); }
+.btn.soft:hover { background: var(--accent-soft-2); color: var(--accent-ink); }
+.btn.ghost { background: transparent; color: var(--fg); border-color: var(--border); }
+.btn.ghost:hover { background: var(--surface-2); color: var(--fg); }
+.btn[disabled], .btn.is-disabled { background: var(--surface-2); color: var(--fg-3); border-color: var(--border); cursor: not-allowed; transform: none; }
+.btn.small { padding: 9px 14px; font-size: .86rem; border-radius: 10px; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* ---------- elementos comuns ---------- */
+main { padding-block: 0 72px; }
+.page { animation: page-in .35s ease both; }
+@keyframes page-in { from { opacity: .4; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.eyebrow {
+  font-family: var(--font-mono); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--accent-ink); font-weight: 500;
+}
+.lead { color: var(--fg-2); font-size: 1.1rem; max-width: 62ch; }
+.muted { color: var(--fg-3); font-size: .9rem; }
+.section { padding-block: 56px 0; }
+.section-head { display: grid; gap: 8px; margin-bottom: 24px; }
+.section-head h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
+.section-head p { color: var(--fg-2); max-width: 64ch; }
+.card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 22px; min-width: 0;
+}
+.grid { display: grid; gap: 16px; }
+.grid.cols-2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+.grid.cols-3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+.grid.cols-4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+
+.pill {
+  display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 999px;
+  font-size: .78rem; font-weight: 700; white-space: nowrap;
+}
+.pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.pill.ok { color: var(--ok); background: var(--ok-soft); }
+.pill.warn { color: var(--warn); background: var(--warn-soft); }
+.pill.accent { color: var(--accent-ink); background: var(--accent-soft); }
+.pill.muted-pill { color: var(--fg-2); background: var(--muted-soft); }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 8px;
+  font-size: .82rem; font-weight: 600; color: var(--fg-2); background: var(--surface-2); border: 1px solid var(--border);
+}
+.chip .ico { width: 15px; height: 15px; }
+.chip.off { opacity: .55; text-decoration: line-through; }
+
+.app-tile {
+  width: 52px; height: 52px; border-radius: 15px; display: grid; place-items: center; flex: none;
+  background: color-mix(in srgb, var(--tint) 16%, transparent); color: var(--tint);
+}
+.app-tile .ico { width: 26px; height: 26px; }
+.app-tile.big { width: 76px; height: 76px; border-radius: 22px; }
+.app-tile.big .ico { width: 38px; height: 38px; }
+
+/* ---------- HOME: hero ---------- */
+.hero { padding-block: 56px 8px; display: grid; gap: 40px; align-items: center; grid-template-columns: 1fr; }
+@media (min-width: 980px) { .hero { grid-template-columns: 1.05fr 1fr; padding-block: 72px 8px; } }
+.hero h1 { font-size: clamp(2.3rem, 5.4vw, 3.9rem); font-weight: 800; letter-spacing: -.03em; }
+.hero h1 em { font-style: normal; color: var(--accent-ink); }
+.hero-copy { display: grid; gap: 20px; min-width: 0; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 8px 18px; color: var(--fg-3); font-size: .9rem; }
+.hero-meta span { display: inline-flex; align-items: center; gap: 6px; }
+
+/* ---------- mockup do launcher (sempre no visual real do app, que é escuro) ---------- */
+.mock {
+  --m-bg: #0F0B1A; --m-side: #140F24; --m-surface: #1B1530; --m-border: #2C2347;
+  --m-fg: #F2EEFF; --m-fg2: #A99FC7; --m-fg3: #6E6491; --m-accent: #8B5CF6;
+  background: var(--m-bg); color: var(--m-fg); border-radius: 18px; overflow: hidden;
+  border: 1px solid #2C2347; box-shadow: 0 30px 60px -20px rgba(45, 20, 110, .45), 0 0 0 1px rgba(255,255,255,.02);
+  font-size: 12px; line-height: 1.4; max-width: 100%; min-width: 0;
+  display: grid; grid-template-rows: auto 1fr;
+}
+.mock-bar { display: flex; align-items: center; gap: 8px; padding: 9px 12px; background: #f5f3fa; color: #3a3150; font-size: 11.5px; }
+.mock-bar .mini-logo { width: 14px; height: 14px; border-radius: 4px; background: linear-gradient(135deg, #6D28D9, #C084FC); }
+.mock-bar .win { margin-left: auto; letter-spacing: 10px; color: #6b6380; }
+.mock-body { display: grid; grid-template-columns: 132px 1fr; min-height: 300px; }
+.mock-side { background: var(--m-side); border-right: 1px solid var(--m-border); padding: 14px 10px; display: grid; align-content: start; gap: 4px; }
+.mock-brand { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; }
+.mock-brand .lm { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(135deg, #6D28D9, #C084FC); display: grid; place-items: center; }
+.mock-brand .lm .ico { width: 16px; height: 16px; color: #fff; stroke-width: 2.9; }
+.mock-brand b { display: block; font-size: 12.5px; }
+.mock-brand small { color: var(--m-fg3); font-size: 10px; }
+.mock-nav { padding: 6px 8px; border-radius: 7px; color: var(--m-fg2); font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+.mock-nav.on { background: rgba(139, 92, 246, .16); color: var(--m-fg); }
+.mock-nav .n { background: rgba(251, 191, 36, .14); color: #FBBF24; border-radius: 99px; padding: 0 6px; font-size: 9.5px; }
+.mock-main { padding: 14px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.mock-hero { border-radius: 10px; padding: 12px; background: linear-gradient(135deg, #4C1D95, #2E1A5E 55%, #1B1530); border: 1px solid var(--m-border); }
+.mock-hero b { font-size: 13px; }
+.mock-hero p { color: var(--m-fg2); font-size: 10.5px; }
+.mock-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.mock-card { background: var(--m-surface); border: 1px solid var(--m-border); border-radius: 9px; padding: 9px; display: grid; gap: 7px; min-width: 0; }
+.mock-card .top { display: flex; justify-content: space-between; align-items: start; gap: 4px; }
+.mock-card .t { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; background: color-mix(in srgb, var(--tint) 18%, transparent); color: var(--tint); }
+.mock-card .t .ico { width: 14px; height: 14px; }
+.mock-card .badge { font-size: 8.5px; font-weight: 700; padding: 1px 6px; border-radius: 99px; white-space: nowrap; }
+.mock-card b { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mock-card .v { color: var(--m-fg3); font-size: 9px; height: 12px; display: flex; align-items: center; }
+.mock-card .bar { height: 4px; border-radius: 3px; background: #2A2149; overflow: hidden; width: 100%; }
+.mock-card .bar i { display: block; height: 100%; width: 0; background: var(--m-accent); transition: width .1s linear; }
+.mock-card .act { text-align: center; font-weight: 700; font-size: 9.5px; padding: 5px 0; border-radius: 6px; }
+.act.open { background: #8B5CF6; color: #fff; }
+.act.upd { background: rgba(251, 191, 36, .14); color: #FBBF24; }
+.act.inst { background: rgba(139, 92, 246, .16); color: #C4B5FD; }
+.act.wait { background: #2A2149; color: #6E6491; }
+@media (max-width: 520px) {
+  .mock-body { grid-template-columns: 1fr; }
+  .mock-side { display: none; }
+}
+
+/* ---------- cartões de categoria / app ---------- */
+.cat-card { display: grid; gap: 12px; text-decoration: none; color: var(--fg); transition: border-color .15s, transform .15s, background .15s; }
+.cat-card:hover { color: var(--fg); border-color: var(--accent-soft-2); transform: translateY(-2px); }
+.cat-card h3 { font-size: 1.25rem; }
+.cat-card p { color: var(--fg-2); font-size: .95rem; }
+.cat-card .go { display: inline-flex; align-items: center; gap: 6px; color: var(--accent-ink); font-weight: 700; font-size: .9rem; margin-top: auto; }
+
+.app-card { display: grid; gap: 14px; grid-template-rows: auto auto 1fr auto; text-decoration: none; color: var(--fg); transition: border-color .15s, transform .15s; }
+.app-card:hover { color: var(--fg); border-color: color-mix(in srgb, var(--tint) 45%, var(--border)); transform: translateY(-2px); }
+.app-card .head { display: flex; align-items: start; justify-content: space-between; gap: 10px; }
+.app-card h3 { font-size: 1.3rem; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.app-card h3 small { font-family: var(--font-mono); font-size: .72rem; font-weight: 500; color: var(--fg-3); letter-spacing: .04em; text-transform: uppercase; }
+.app-card p { color: var(--fg-2); font-size: .95rem; }
+.app-card .foot { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+
+/* ---------- tabela de plataformas ---------- */
+.table-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
+.matrix th, .matrix td { padding: 13px 16px; text-align: left; border-bottom: 1px solid var(--border); font-size: .93rem; }
+.matrix tr:last-child td { border-bottom: 0; }
+.matrix th { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .07em; text-transform: uppercase; color: var(--fg-3); font-weight: 500; }
+.matrix td:first-child a { color: var(--fg); font-weight: 700; text-decoration: none; display: inline-flex; gap: 10px; align-items: center; }
+.matrix td:first-child a:hover { color: var(--accent-ink); }
+.mark { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: .86rem; }
+.mark.yes { color: var(--ok); }
+.mark.soon { color: var(--warn); }
+.mark.no { color: var(--fg-3); }
+.dot-tile { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; background: color-mix(in srgb, var(--tint) 16%, transparent); color: var(--tint); }
+.dot-tile .ico { width: 17px; height: 17px; }
+
+/* ---------- caminhos de download (home) ---------- */
+.path-card { display: grid; gap: 12px; }
+.path-card h3 { font-size: 1.2rem; }
+.path-card ol { margin: 0; padding-left: 1.2em; color: var(--fg-2); display: grid; gap: 4px; }
+.path-card.featured { border-color: var(--accent-soft-2); background: linear-gradient(160deg, var(--accent-soft), var(--surface) 55%); }
+
+/* ---------- página de app ---------- */
+.crumbs { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: .88rem; color: var(--fg-3); padding-top: 28px; }
+.crumbs a { color: var(--fg-2); text-decoration: none; }
+.crumbs a:hover { color: var(--accent-ink); }
+.app-hero { padding-block: 22px 8px; display: grid; gap: 22px; }
+.app-hero-top { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+.app-title h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 800; letter-spacing: -.03em; }
+.app-title .sub {
+  display: inline-block; font-family: var(--font-mono); font-size: .8rem; font-weight: 500; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent-ink); background: var(--accent-soft); padding: 3px 10px; border-radius: 7px; margin-top: 8px;
+}
+.app-meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.tabs {
+  position: sticky; top: calc(66px + env(safe-area-inset-top, 0px)); z-index: 10;
+  background: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border); margin-top: 28px;
+}
+.tabs-row { display: flex; gap: 4px; overflow-x: auto; padding-block: 10px; scrollbar-width: none; }
+.tabs-row::-webkit-scrollbar { display: none; }
+.tabs button {
+  border: 0; background: transparent; color: var(--fg-2); font: 600 .92rem var(--font-body);
+  padding: 8px 14px; border-radius: 999px; cursor: pointer; white-space: nowrap; display: inline-flex; gap: 7px; align-items: center;
+}
+.tabs button:hover { background: var(--surface-2); color: var(--fg); }
+.tabs button.on { background: var(--accent-soft); color: var(--accent-ink); }
+.anchor { scroll-margin-top: calc(140px + env(safe-area-inset-top, 0px)); }
+
+.feature { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; }
+.feature .fi { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; background: color-mix(in srgb, var(--tint) 14%, transparent); color: var(--tint); }
+.feature .fi .ico { width: 19px; height: 19px; }
+.feature h3 { font-size: 1.02rem; font-family: var(--font-body); font-weight: 700; letter-spacing: 0; margin-bottom: 2px; }
+.feature p { color: var(--fg-2); font-size: .93rem; }
+
+.roadmap { display: grid; gap: 10px; }
+.roadmap li { list-style: none; display: flex; gap: 12px; align-items: start; color: var(--fg-2); }
+.roadmap li .ico { color: var(--accent-ink); margin-top: 3px; width: 18px; height: 18px; }
+.roadmap { padding: 0; margin: 0; }
+
+.steps { counter-reset: step; display: grid; gap: 12px; padding: 0; margin: 0; }
+.steps li {
+  list-style: none; counter-increment: step; display: grid; grid-template-columns: 44px 1fr; gap: 16px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; min-width: 0;
+}
+.steps li::before {
+  content: counter(step); font-family: var(--font-display); font-weight: 800; font-size: 1.15rem;
+  width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent-ink);
+}
+.steps h3 { font-family: var(--font-body); font-size: 1.04rem; font-weight: 700; letter-spacing: 0; margin-bottom: 3px; }
+.steps p { color: var(--fg-2); font-size: .95rem; }
+.steps > li > div { min-width: 0; }
+
+.os-note {
+  display: flex; gap: 12px; align-items: center; padding: 12px 16px; border-radius: 12px;
+  background: var(--accent-soft); color: var(--fg); font-size: .93rem; margin-bottom: 16px;
+}
+.os-note .ico { color: var(--accent-ink); }
+.dl-card { display: grid; gap: 14px; align-content: start; position: relative; }
+.dl-card.mine { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.dl-card .mine-tag { position: absolute; top: -11px; right: 16px; background: var(--accent); color: var(--on-accent); font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; }
+.dl-card .plat { display: flex; align-items: center; gap: 10px; }
+.dl-card .plat .ico { width: 26px; height: 26px; color: var(--fg-2); }
+.dl-card h3 { font-size: 1.15rem; }
+.dl-card dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin: 0; font-size: .88rem; }
+.dl-card dt { color: var(--fg-3); }
+.dl-card dd { margin: 0; color: var(--fg-2); min-width: 0; overflow-wrap: anywhere; }
+.dl-card .btn { width: 100%; }
+.via-launcher { display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; }
+@media (max-width: 640px) { .via-launcher { grid-template-columns: 1fr; } }
+
+.inst-tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.inst-tabs button {
+  border: 1px solid var(--border); background: var(--surface); color: var(--fg-2); font: 600 .9rem var(--font-body);
+  padding: 8px 14px; border-radius: 10px; cursor: pointer; display: inline-flex; gap: 8px; align-items: center;
+}
+.inst-tabs button.on { border-color: var(--accent); color: var(--accent-ink); background: var(--accent-soft); }
+
+.callout {
+  display: grid; grid-template-columns: auto 1fr; gap: 12px; padding: 16px 18px; border-radius: 14px;
+  background: var(--warn-soft); border: 1px solid color-mix(in srgb, var(--warn) 30%, transparent); font-size: .93rem;
+}
+.callout .ico { color: var(--warn); margin-top: 2px; }
+.callout b { display: block; margin-bottom: 2px; }
+.callout p { color: var(--fg-2); }
+.callout.info { background: var(--accent-soft); border-color: var(--accent-soft-2); }
+.callout.info .ico { color: var(--accent-ink); }
+
+.faq { display: grid; gap: 10px; }
+.faq details { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 0 18px; }
+.faq details[open] { border-color: var(--accent-soft-2); }
+.faq summary {
+  cursor: pointer; list-style: none; padding: 16px 0; font-weight: 700; display: flex; justify-content: space-between; gap: 16px; align-items: center;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .ico { transition: transform .2s; color: var(--fg-3); }
+.faq details[open] summary .ico { transform: rotate(45deg); color: var(--accent-ink); }
+.faq .answer { padding: 0 0 18px; color: var(--fg-2); display: grid; gap: 8px; max-width: 72ch; }
+.faq-tools { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.search {
+  flex: 1 1 260px; display: flex; align-items: center; gap: 10px; padding: 0 14px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px; color: var(--fg-3);
+}
+.search input { border: 0; background: transparent; color: var(--fg); font: 500 .95rem var(--font-body); padding: 12px 0; width: 100%; outline: none; }
+.search:focus-within { border-color: var(--accent); }
+
+/* ---------- jogo ---------- */
+.players { display: flex; gap: 14px; flex-wrap: wrap; }
+.player { display: grid; justify-items: center; gap: 8px; font-size: .82rem; color: var(--fg-2); font-weight: 600; }
+.shape { width: 46px; height: 46px; }
+.progress-list { display: grid; gap: 12px; }
+.progress-item { display: grid; gap: 6px; }
+.progress-item .row { display: flex; justify-content: space-between; gap: 12px; font-size: .92rem; }
+.progress-item .row span:last-child { color: var(--fg-3); font-family: var(--font-mono); font-size: .8rem; }
+.track { height: 8px; background: var(--surface-2); border-radius: 99px; overflow: hidden; }
+.track i { display: block; height: 100%; background: var(--tint, var(--accent)); border-radius: 99px; }
+
+/* ---------- novidades ---------- */
+.timeline { display: grid; gap: 0; padding: 0; margin: 0; }
+.timeline li { list-style: none; display: grid; grid-template-columns: 110px 1fr; gap: 22px; padding-block: 18px; border-bottom: 1px solid var(--border); }
+.timeline li:last-child { border-bottom: 0; }
+.timeline time { font-family: var(--font-mono); font-size: .82rem; color: var(--fg-3); padding-top: 3px; }
+.timeline h3 { font-size: 1.1rem; font-family: var(--font-body); font-weight: 700; letter-spacing: 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.timeline p { color: var(--fg-2); font-size: .95rem; margin-top: 4px; }
+.timeline .tag { font-family: var(--font-mono); font-size: .72rem; padding: 2px 8px; border-radius: 6px; background: color-mix(in srgb, var(--tint) 15%, transparent); color: var(--tint); font-weight: 500; }
+@media (max-width: 600px) { .timeline li { grid-template-columns: 1fr; gap: 4px; } }
+.filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.filters button {
+  border: 1px solid var(--border); background: var(--surface); color: var(--fg-2); font: 600 .86rem var(--font-body);
+  padding: 7px 13px; border-radius: 99px; cursor: pointer;
+}
+.filters button.on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+
+/* ---------- contato ---------- */
+.mail-card { display: grid; gap: 14px; }
+.mail-addr {
+  font-family: var(--font-mono); font-size: clamp(1rem, 2.6vw, 1.3rem); font-weight: 500; color: var(--fg);
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px;
+  overflow-wrap: anywhere; user-select: all;
+}
+.form { display: grid; gap: 14px; }
+.form-row { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label { font-weight: 700; font-size: .88rem; }
+.field .hint { color: var(--fg-3); font-size: .8rem; }
+.field input, .field select, .field textarea {
+  width: 100%; font: 500 .95rem var(--font-body); color: var(--fg);
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 11px 12px;
+}
+.field textarea { min-height: 92px; resize: vertical; line-height: 1.5; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.seg { display: flex; gap: 6px; flex-wrap: wrap; }
+.seg label {
+  display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 10px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface); font-weight: 600; font-size: .9rem; color: var(--fg-2);
+}
+.seg input { accent-color: var(--accent); }
+.seg label:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-ink); }
+.preview {
+  font-family: var(--font-mono); font-size: .8rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere;
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin: 0;
+  max-height: 340px; overflow: auto; color: var(--fg-2);
+}
+.contact-layout { display: grid; gap: 20px; grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 1000px) { .contact-layout { grid-template-columns: 1.15fr .85fr; } }
+.contact-side { display: grid; gap: 16px; }
+.check-list { display: grid; gap: 10px; padding: 0; margin: 0; }
+.check-list li { list-style: none; display: grid; grid-template-columns: auto 1fr; gap: 10px; color: var(--fg-2); font-size: .93rem; }
+.check-list .ico { color: var(--ok); margin-top: 3px; width: 17px; height: 17px; }
+.toast {
+  position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(20px);
+  background: var(--fg); color: var(--bg); padding: 11px 18px; border-radius: 12px; font-weight: 700; font-size: .9rem;
+  opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 50; max-width: calc(100% - 32px);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ---------- rodapé ---------- */
+.site-footer { border-top: 1px solid var(--border); padding-block: 36px 40px; color: var(--fg-3); font-size: .9rem; }
+.footer-row { display: flex; flex-wrap: wrap; gap: 24px 48px; justify-content: space-between; }
+.footer-col { display: grid; gap: 8px; align-content: start; min-width: 0; }
+.footer-col b { color: var(--fg); font-size: .9rem; }
+.footer-col a { color: var(--fg-2); text-decoration: none; }
+.footer-col a:hover { color: var(--accent-ink); }
+.footer-mail { font-family: var(--font-mono); font-size: .85rem; overflow-wrap: anywhere; }
+
+.empty { padding: 28px; text-align: center; color: var(--fg-3); }
+.split { display: grid; gap: 28px; grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 900px) { .split { grid-template-columns: 1.2fr .8fr; } }
+.stack { display: grid; gap: 16px; align-content: start; min-width: 0; }
+</style>
+<style>
+  :root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  body { margin: 0; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="logo" href="#home" aria-label="NokyLabs, página inicial">
+      <span class="logo-mark"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5,7 V17 M7.5,11.5 A4.5,4.5 0 0 1 16.5,11.5 V17"/></svg></span>
+      <span class="logo-text">NokyLabs</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Principal"></nav>
+    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4,7 H20 M4,12 H20 M4,17 H20"/></svg>
+    </button>
+    <button class="icon-btn" id="themeBtn" aria-label="Alternar tema claro e escuro"></button>
+  </div>
+</header>
+
+<main id="app" tabindex="-1"></main>
+
+<footer class="site-footer">
+  <div class="wrap footer-row" id="footer"></div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =====================================================================
+   CONFIGURAÇÃO DO SITE
+   Para lançar um app: troque "soon" por "available" na plataforma certa
+   e confira o nome do arquivo. O link do GitHub é montado sozinho.
+   ===================================================================== */
+const SITE = {
+  name: "NokyLabs",
+  email: "thaynarcd1178@gmail.com",
+  github: "ThayTTG",
+};
+
+const I = {
+  logo: "M7.5,7 V17 M7.5,11.5 A4.5,4.5 0 0 1 16.5,11.5 V17",
+  hotswap: "M7,7 H20 M16,3 L20,7 L16,11 M17,17 H4 M8,13 L4,17 L8,21",
+  cubebin: "M12,2.5 L20.5,7.25 V16.75 L12,21.5 L3.5,16.75 V7.25 Z M3.5,7.25 L12,12 L20.5,7.25 M12,12 V21.5",
+  ytdlp: "M5,4.5 H19 A2,2 0 0 1 21,6.5 V17.5 A2,2 0 0 1 19,19.5 H5 A2,2 0 0 1 3,17.5 V6.5 A2,2 0 0 1 5,4.5 Z M10,9 L15,12 L10,15 Z",
+  cap: "M2,9.5 L12,5 L22,9.5 L12,14 Z M6,11.5 V16 C6,17.6 9,19 12,19 C15,19 18,17.6 18,16 V11.5 M22,9.5 V14.5",
+  blocks: "M4,4 H10 V10 H4 Z M14,10 L17,4 L20,10 Z M14,14 H20 V20 H14 Z M4,17 A3,3 0 1 0 10,17 A3,3 0 1 0 4,17 Z",
+  windows: "M3,5.6 L10.5,4.6 V11.5 H3 Z M12.5,4.3 L21,3.2 V11.5 H12.5 Z M3,12.5 H10.5 V19.4 L3,18.4 Z M12.5,12.5 H21 V20.8 L12.5,19.7 Z",
+  linux: "M4,5 H20 A1,1 0 0 1 21,6 V18 A1,1 0 0 1 20,19 H4 A1,1 0 0 1 3,18 V6 A1,1 0 0 1 4,5 Z M7,10 L10,12.5 L7,15 M12.5,15 H16.5",
+  web: "M3,12 A9,9 0 1 0 21,12 A9,9 0 1 0 3,12 Z M3,12 H21 M12,3 C9.5,6 9.5,18 12,21 M12,3 C14.5,6 14.5,18 12,21",
+  arrow: "M5,12 H19 M13,6 L19,12 L13,18",
+  download: "M12,3 V15 M7,10 L12,15 L17,10 M4,19.5 H20",
+  check: "M5,12.5 L10,17.5 L19,7.5",
+  plus: "M12,5 V19 M5,12 H19",
+  sun: "M12,7.5 A4.5,4.5 0 1 0 12,16.5 A4.5,4.5 0 1 0 12,7.5 Z M12,2.5 V4.5 M12,19.5 V21.5 M2.5,12 H4.5 M19.5,12 H21.5 M5.3,5.3 L6.7,6.7 M17.3,17.3 L18.7,18.7 M5.3,18.7 L6.7,17.3 M17.3,6.7 L18.7,5.3",
+  moon: "M20,14.5 A8.5,8.5 0 1 1 9.5,4 A7,7 0 0 0 20,14.5 Z",
+  mail: "M3.5,6 H20.5 V18 H3.5 Z M3.5,6.5 L12,13 L20.5,6.5",
+  bug: "M8.5,9 H15.5 A1,1 0 0 1 16.5,10 V14 A4.5,4.5 0 0 1 7.5,14 V10 A1,1 0 0 1 8.5,9 Z M9.5,9 V7.5 A2.5,2.5 0 0 1 14.5,7.5 V9 M12,12 V18.5 M7.5,12.5 H4 M16.5,12.5 H20 M7.8,16.5 L5,19 M16.2,16.5 L19,19 M7.8,10 L5,7.5 M16.2,10 L19,7.5",
+  copy: "M9,9 H19 V19 H9 Z M5,15 V5 H15",
+  code: "M8.5,7.5 L4,12 L8.5,16.5 M15.5,7.5 L20,12 L15.5,16.5",
+  shield: "M12,3 L19.5,6 V11.5 C19.5,16 16.3,19.6 12,21 C7.7,19.6 4.5,16 4.5,11.5 V6 Z M8.8,12 L11,14.2 L15.4,9.8",
+  info: "M12,3 A9,9 0 1 0 12,21 A9,9 0 1 0 12,3 Z M12,11 V16.5 M12,7.6 V7.7",
+  warn: "M12,3.5 L21.5,20 H2.5 Z M12,10 V14 M12,17 V17.1",
+  book: "M4,5 A1,1 0 0 1 5,4 H11 V20 H5 A1,1 0 0 1 4,19 Z M13,4 H19 A1,1 0 0 1 20,5 V19 A1,1 0 0 1 19,20 H13 Z",
+  help: "M12,3 A9,9 0 1 0 12,21 A9,9 0 1 0 12,3 Z M9.5,9.3 A2.6,2.6 0 1 1 13,11.7 C12.3,12.1 12,12.6 12,13.5 M12,16.6 V16.7",
+  grid: "M4,4 H10 V10 H4 Z M14,4 H20 V10 H14 Z M4,14 H10 V20 H4 Z M14,14 H20 V20 H14 Z",
+  sparkle: "M12,3 L13.8,9.2 L20,11 L13.8,12.8 L12,19 L10.2,12.8 L4,11 L10.2,9.2 Z",
+  folder: "M3,6.5 A1.5,1.5 0 0 1 4.5,5 H9 L11,7 H19.5 A1.5,1.5 0 0 1 21,8.5 V17.5 A1.5,1.5 0 0 1 19.5,19 H4.5 A1.5,1.5 0 0 1 3,17.5 Z",
+  refresh: "M19.5,12 A7.5,7.5 0 1 1 16.8,6.2 M17,2.8 V6.5 H13.3",
+  bell: "M6,16 V11 A6,6 0 0 1 18,11 V16 L19.5,17.5 H4.5 Z M10,20 H14",
+  power: "M12,3 V11 M7,6.3 A7.5,7.5 0 1 0 17,6.3",
+  usb: "M9,3 H15 V8 H9 Z M7.5,8 H16.5 V17 A4.5,4.5 0 0 1 7.5,17 Z",
+  trash: "M4,7 H20 M9,7 V4.5 H15 V7 M6.5,7 L7.5,20 H16.5 L17.5,7",
+  history: "M4,12 A8,8 0 1 0 6.3,6.3 M4,3.5 V7.5 H8 M12,8 V12 L15,14",
+  cookie: "M12,3 A9,9 0 1 0 21,12 A3,3 0 0 1 17,9 A3,3 0 0 1 12,3 Z M8.5,10 V10.1 M12,15 V15.1 M15.5,14 V14.1 M8.5,15.5 V15.6",
+  list: "M9,6 H20 M9,12 H20 M9,18 H20 M4.5,6 V6.1 M4.5,12 V12.1 M4.5,18 V18.1",
+  cloud: "M7,18 A4.5,4.5 0 0 1 6.5,9 A6,6 0 0 1 18,10 A4,4 0 0 1 17.5,18 Z",
+  brain: "M12,5 V19 M12,5 A3,3 0 0 0 6.5,6.5 A3,3 0 0 0 5,12 A3,3 0 0 0 7,17.5 A2.5,2.5 0 0 0 12,19 M12,5 A3,3 0 0 1 17.5,6.5 A3,3 0 0 1 19,12 A3,3 0 0 1 17,17.5 A2.5,2.5 0 0 1 12,19",
+  clock: "M12,3 A9,9 0 1 0 12,21 A9,9 0 1 0 12,3 Z M12,7 V12 L15.5,14",
+  monitor: "M3.5,4.5 H20.5 V16 H3.5 Z M9,20 H15 M12,16 V20",
+  table: "M4,4.5 H20 V19.5 H4 Z M4,9.5 H20 M4,14.5 H20 M10,4.5 V19.5",
+  users: "M9,11 A3.5,3.5 0 1 0 9,4 A3.5,3.5 0 1 0 9,11 Z M2.5,20 A6.5,6.5 0 0 1 15.5,20 M16,4.3 A3.5,3.5 0 0 1 16,10.7 M18.5,14 A6.5,6.5 0 0 1 21.5,20",
+  wifi: "M2.5,9 A14,14 0 0 1 21.5,9 M5.5,12.5 A9.5,9.5 0 0 1 18.5,12.5 M8.5,16 A4.5,4.5 0 0 1 15.5,16 M12,19.5 V19.6",
+  robot: "M5,9 H19 V19 H5 Z M12,9 V5 M12,4 V4.1 M9,13.5 V13.6 M15,13.5 V13.6 M9.5,16.5 H14.5 M2.5,13 V15.5 M21.5,13 V15.5",
+  key: "M15,4 A5,5 0 1 0 15,14 A5,5 0 1 0 15,4 Z M11.3,12.3 L3,20.5 M6,17.5 L8.5,20",
+  palette: "M12,3 A9,9 0 1 0 12,21 C13.5,21 13.5,19.5 12.7,18.5 C11.8,17.4 12.6,16 14,16 H16.5 A4.5,4.5 0 0 0 21,11.5 C21,6.8 17,3 12,3 Z M7.5,12 V12.1 M9.5,7.5 V7.6 M14.5,7.5 V7.6",
+  terminal: "M7,9 L10,12 L7,15 M12.5,15 H17",
+  chat: "M4,5 H20 V16 H11 L6.5,19.5 V16 H4 Z",
+  layers: "M12,3 L21,8 L12,13 L3,8 Z M3,12.5 L12,17.5 L21,12.5 M3,16.5 L12,21.5 L21,16.5",
+};
+
+const ico = (name, cls = "") => `<svg class="ico ${cls}" viewBox="0 0 24 24" aria-hidden="true"><path d="${I[name] || name}"/></svg>`;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+const PLATFORM_LABEL = { windows: "Windows", linux: "Linux", web: "Navegador" };
+const PLATFORM_ICON = { windows: "windows", linux: "linux", web: "web" };
+
+const repoUrl = app => `https://github.com/${SITE.github}/${app.repo}`;
+const downloadUrl = (app, file) => `${repoUrl(app)}/releases/latest/download/${file}`;
+
+/* =====================================================================
+   OS PROJETOS
+   status do card: ok (verde) · accent · warn (âmbar) · muted
+   plataformas: available (baixar) · soon (em breve) · none (não existe)
+   ===================================================================== */
+const APPS = {
+  launcher: {
+    id: "launcher", route: "launcher", name: "NokyLabs", subtitle: "Launcher", parent: null,
+    tint: "#8B5CF6", icon: "logo",
+    tagline: "Instale, abra e mantenha todos os apps da NokyLabs atualizados, num só lugar.",
+    status: ["Prévia", "accent"], version: "0.5.0", repo: "NokyLabs-Launcher", repoPublic: false,
+    platforms: {
+      windows: { status: "soon", file: "NokyLabs-win-x64.zip", req: "Windows 10 ou 11 (64 bits)", size: "≈ 40 MB" },
+      linux: { status: "soon", file: "NokyLabs-linux-x64.zip", req: "Linux 64 bits com interface gráfica", size: "≈ 45 MB" },
+    },
+    features: [
+      ["grid", "Biblioteca com tudo", "Veja o que está instalado, o que dá para instalar e o que está chegando, com busca e filtros."],
+      ["download", "Instalar com um clique", "Baixa, instala e cria atalhos. Ao desinstalar, os atalhos saem junto."],
+      ["refresh", "Atualizações automáticas", "Opcionais e separadas para os apps e para o próprio launcher. A versão antiga só sai quando a nova está pronta."],
+      ["bell", "Avisos de novidades", "Um aviso discreto no canto da tela quando aparece algo novo, e um contador no ícone da bandeja."],
+      ["power", "Inicia com o sistema", "Do jeito nativo: aparece em Gerenciador de Tarefas › Aplicativos de inicialização, onde dá para ligar e desligar."],
+      ["usb", "Modo portátil", "Rode direto de um pendrive: configurações e apps ficam na mesma pasta, sem mexer no computador."],
+      ["layers", "Assistente de instalação", "Escolha a pasta, os atalhos, os apps iniciais e até uma instalação limpa, passo a passo."],
+      ["shield", "Sem administrador", "Instala na sua pasta de usuário e aparece em Aplicativos instalados, com desinstalador próprio."],
+    ],
+    roadmap: [
+      "Assinatura digital do executável, para acabar com o aviso do SmartScreen",
+      "Escolha de idioma no assistente",
+      "Novos utilitários entrando no catálogo",
+    ],
+    howto: [
+      ["Abra o NokyLabs pela primeira vez", "O assistente pergunta se você quer instalar no computador ou usar no modo portátil, e onde guardar os apps."],
+      ["Escolha os atalhos e as preferências", "Área de Trabalho, menu Iniciar, iniciar com o sistema, ficar na bandeja e atualizações automáticas. Tudo pode ser mudado depois."],
+      ["Instale seus apps na Biblioteca", "Clique em Instalar no card do app. Uma janelinha mostra o destino e pergunta quais atalhos criar."],
+      ["Abra e organize", "Apps instalados ganham o botão Abrir, um atalho para a pasta e a lixeira para desinstalar com confirmação."],
+      ["Mantenha tudo em dia", "A página Atualizações mostra o que tem versão nova. Use Atualizar tudo, ou deixe o launcher cuidar disso sozinho."],
+    ],
+    install: {
+      windows: [
+        ["Baixe o arquivo", "Clique em Baixar para Windows e salve o NokyLabs-win-x64.zip."],
+        ["Extraia", "Clique com o botão direito no .zip e escolha Extrair tudo."],
+        ["Abra o NokyLabs.exe", "Se aparecer a tela azul do Windows, clique em Mais informações e depois em Executar assim mesmo."],
+        ["Siga o assistente", "Ele copia o launcher para a pasta certa e abre a versão instalada. O arquivo baixado pode ser apagado depois."],
+      ],
+      linux: [
+        ["Baixe e extraia", "Baixe o NokyLabs-linux-x64.zip e extraia numa pasta da sua escolha."],
+        ["Dê permissão de execução", "No terminal, dentro da pasta: chmod +x NokyLabs"],
+        ["Abra", "Rode ./NokyLabs (ou dê dois cliques, se o seu gerenciador de arquivos permitir)."],
+        ["Siga o assistente", "Os atalhos vão para o menu de aplicativos e, se quiser, para a Área de Trabalho."],
+      ],
+    },
+    faq: [
+      ["Preciso instalar o .NET ou outra coisa antes?", "Não. O launcher já vem com tudo o que precisa dentro do executável."],
+      ["Precisa de permissão de administrador?", "Não. A instalação padrão fica na sua pasta de usuário (no Windows, em <code>%LOCALAPPDATA%\\Programs\\NokyLabs</code>)."],
+      ["Onde ficam os apps instalados?", "No Windows, em <code>%LOCALAPPDATA%\\NokyLabs\\Apps</code>. No Linux, em <code>~/.local/share/NokyLabs/Apps</code>. Dá para trocar em Configurações › Pasta de origem."],
+      ["O que é o modo portátil?", "Um jeito de usar sem instalar. O NokyLabs cria um arquivo <code>NokyLabs.portable</code> ao lado dele e guarda configurações e apps nas pastas <code>NokyLabs-Dados</code> e <code>NokyLabs-Apps</code>. Funciona mesmo se a letra do pendrive mudar."],
+      ["Por que o Windows mostra um aviso azul ao abrir?", "É o SmartScreen. Ele aparece para programas novos que ainda não têm assinatura digital paga. Clique em Mais informações e em Executar assim mesmo. Se quiser conferir que o arquivo é original, compare o SHA-256 publicado na página do lançamento."],
+      ["Fechei a janela e o launcher continua aberto. É normal?", "Sim, se a opção Ficar na bandeja estiver ligada. Clique no ícone da bandeja para voltar, ou em Sair para fechar de vez."],
+      ["No Linux o ícone da bandeja não aparece.", "Alguns ambientes, como o GNOME sem extensões, não mostram a bandeja. Por isso, no Linux, fechar a janela só minimiza; fechar de novo encerra."],
+      ["Como desinstalar?", "Pelo Windows, em Configurações › Aplicativos › Aplicativos instalados, ou dentro do launcher, em Configurações › NokyLabs neste computador. Você escolhe se os apps e as preferências também saem."],
+      ["De onde o launcher tira a lista de apps?", "Do catálogo oficial, publicado aqui mesmo no site: <code>https://thayttg.github.io/nokylabs/catalogo.json</code>. É esse endereço que vai no campo Catálogo de apps, nas Configurações."],
+    ],
+  },
+
+  ytdlp: {
+    id: "ytdlp", route: "ytdlp-gui", name: "YT-DLP GUI", parent: "apps", alsoEdu: true,
+    tint: "#EC4899", icon: "ytdlp",
+    tagline: "Baixe vídeos e áudios colando um link, sem abrir o terminal. Feito para usar com a turma.",
+    status: ["Estável", "ok"], version: "9", repo: "yt-dlp-GUI", repoPublic: true, license: "MIT",
+    platforms: {
+      windows: { status: "soon", file: "YtDlpGui-win-x64.zip", req: "Windows 10 ou 11 (64 bits)", size: "≈ 160 MB (com yt-dlp e ffmpeg)" },
+      linux: { status: "none" },
+    },
+    features: [
+      ["monitor", "Prévia antes de baixar", "Cole o link e veja a miniatura, o título e o canal do vídeo antes de confirmar."],
+      ["download", "Vídeo ou só áudio", "MP4 para vídeo, MP3 para áudio. Playlists inteiras com um único botão."],
+      ["history", "Histórico", "Tudo o que foi baixado fica listado, para achar de novo sem procurar nas pastas."],
+      ["shield", "Filtro para a sala de aula", "Módulo opcional que libera só os sites permitidos. Por padrão, apenas o YouTube."],
+      ["cookie", "Vídeos que pedem login", "Usa os cookies do navegador, com um botão que gera um cookies.txt estável quando aparece o erro 403."],
+      ["refresh", "Sempre funcionando", "O yt-dlp se atualiza sozinho, e o ffmpeg já vem junto. Nada para instalar à parte."],
+    ],
+    roadmap: [
+      "Visual novo, inspirado no NokyLabs Launcher",
+      "Modo desenvolvedor com painel de detalhes para suporte",
+      "Lançamentos automáticos pelo GitHub",
+      "Versão acessível pelo celular, como servidor web local",
+    ],
+    howto: [
+      ["Cole o link do vídeo", "Na página Home, cole o endereço. A prévia aparece em poucos segundos."],
+      ["Escolha o formato", "MP4 para vídeo ou MP3 para áudio. Se o link for de uma playlist, ative a opção Playlist."],
+      ["Confira a pasta de destino", "Na página Pasta, escolha onde os arquivos vão ficar."],
+      ["Clique em Baixar", "O progresso aparece na tela, e o Windows avisa quando terminar ou se algo der errado."],
+      ["Ache depois no Histórico", "A página Histórico lista tudo o que já foi baixado."],
+    ],
+    install: {
+      windows: [
+        ["Baixe o arquivo", "Pelo NokyLabs Launcher (recomendado) ou pelo botão Baixar para Windows."],
+        ["Extraia a pasta inteira", "O yt-dlp.exe e o ffmpeg.exe precisam ficar ao lado do YtDlpGui.exe."],
+        ["Abra o YtDlpGui.exe", "Se aparecer a tela azul do SmartScreen, clique em Mais informações › Executar assim mesmo."],
+      ],
+    },
+    faq: [
+      ["Preciso instalar o yt-dlp ou o ffmpeg?", "Não. Os dois já vêm no pacote, e o yt-dlp se atualiza sozinho."],
+      ["Apareceu o erro 403. E agora?", "Alguns vídeos pedem login. Em Configurações, use o extrator de cookies: ele gera um <code>cookies.txt</code> a partir do seu navegador e resolve a maioria dos casos."],
+      ["Posso deixar só o YouTube liberado no laboratório?", "Sim. O filtro de conteúdo é opcional e, quando ativo, libera apenas os domínios da lista (por padrão, só o YouTube). Um código mestre libera bloqueios pontuais."],
+      ["Posso baixar qualquer vídeo?", "Baixe só conteúdo que você tem direito de usar, como material próprio, licenças abertas ou vídeos autorizados para uso em aula, e respeite os termos das plataformas e os direitos autorais."],
+      ["Onde ficam o histórico e o log?", "Em <code>%AppData%\\YtDlpGui</code>: <code>historico.json</code> e <code>log.txt</code>. O log ajuda muito num relatório de bug."],
+      ["Funciona no Linux?", "Ainda não. Por enquanto é só para Windows."],
+    ],
+  },
+
+  cubebin: {
+    id: "cubebin", route: "cubebin", name: "CubeBin", parent: "apps",
+    tint: "#A855F7", icon: "cubebin",
+    tagline: "Organiza suas pastas por tipo de arquivo, guarda um backup de tudo e libera espaço com segurança.",
+    status: ["Pronto para lançar", "accent"], version: "1.0", repo: "CubeBin", repoPublic: true,
+    platforms: {
+      windows: { status: "soon", file: "CubeBin-win-x64.zip", req: "Windows 10 ou 11 (64 bits)", size: "≈ 70 MB" },
+      linux: { status: "none" },
+    },
+    features: [
+      ["layers", "Organizar, Limpar e Deletar", "Três módulos separados, para você saber exatamente o que cada botão faz."],
+      ["list", "Regras por extensão", ".zip, .exe, .pdf, .mp4… cada tipo vai para a pasta que você escolher, num arquivo de configuração simples."],
+      ["table", "Backup antes de mexer", "Antes de mover qualquer coisa, salva em .csv onde cada arquivo estava."],
+      ["clock", "Funciona sozinho", "Roda em segundo plano quando você está longe do computador, com 60 segundos para cancelar."],
+      ["brain", "Sugestões de limpeza", "Um agente opcional, que roda no seu computador, aponta duplicados, arquivos esquecidos e os maiores."],
+      ["cloud", "Backup no Google Drive", "Compacta, envia e só apaga do PC depois que o envio é confirmado. Cada pacote vira um Cubo na galeria."],
+    ],
+    roadmap: [
+      "Primeiro lançamento público",
+      "Página de notas de atualização a cada versão",
+    ],
+    howto: [
+      ["Escolha as pastas monitoradas", "Documentos, Área de Trabalho, Downloads ou pastas suas. As pastas padrão do Windows nunca são apagadas."],
+      ["Revise as regras", "Confira para onde vai cada extensão. Organizar subpastas é opcional, com aviso de risco."],
+      ["Organize", "Clique em Organizar agora ou deixe no automático. Arquivos com o mesmo nome ganham o prefixo da origem, como Doc- e Desk-."],
+      ["Decida os que sobraram", "Arquivos sem regra ficam numa lista para você escolher o destino da próxima vez."],
+      ["Libere espaço com calma", "Use Limpar e as sugestões do agente. Para guardar e liberar espaço, envie um pacote para a nuvem."],
+    ],
+    install: {
+      windows: [
+        ["Baixe o arquivo", "Pelo NokyLabs Launcher (recomendado) ou pelo botão Baixar para Windows."],
+        ["Extraia e abra o CubeBin.exe", "Se aparecer o SmartScreen, clique em Mais informações › Executar assim mesmo."],
+        ["Configure na primeira abertura", "Escolha as pastas monitoradas e revise as regras antes de organizar."],
+      ],
+    },
+    faq: [
+      ["O CubeBin pode apagar meus arquivos?", "Organizar só move, nunca apaga. As pastas padrão do Windows nunca são excluídas, e o módulo Deletar sempre pede confirmação. Antes de qualquer mudança, um backup em .csv registra onde tudo estava."],
+      ["Como desfazer uma organização?", "O .csv de backup lista o caminho original de cada arquivo, em ordem alfabética, para você conferir e devolver o que quiser."],
+      ["O agente de sugestões manda meus arquivos para a internet?", "Não. Ele roda no seu computador, olhando tamanho, data do último acesso e arquivos repetidos."],
+      ["Preciso de conta no Google Drive?", "Só se quiser o backup na nuvem, que é opcional. O acesso fica guardado de forma criptografada no seu computador."],
+      ["Posso cancelar quando ele começar sozinho?", "Sim. Um aviso aparece antes de começar, e você tem 60 segundos para cancelar."],
+      ["Funciona no Linux?", "Não. O CubeBin foi feito para Windows 10 e 11."],
+    ],
+  },
+
+  hotswap: {
+    id: "hotswap", route: "hotswap", name: "HotSwap", parent: "apps",
+    tint: "#6366F1", icon: "hotswap",
+    tagline: "Troque a resolução e o monitor principal em um clique, sem abrir as configurações do sistema.",
+    status: ["Em breve", "warn"], version: "—", repo: "HotSwap", repoPublic: true,
+    platforms: {
+      windows: { status: "soon", file: "HotSwap-win-x64.zip", req: "Windows 10 ou 11 (64 bits)", size: "—" },
+      linux: { status: "none" },
+    },
+    features: [
+      ["monitor", "Todos os monitores à vista", "Mostra as telas conectadas, inclusive o projetor, e as resoluções que cada uma aceita."],
+      ["hotswap", "Troca rápida", "Muda a resolução ou o monitor principal sem passar pelas Configurações do Windows."],
+      ["users", "Pensado para a sala de aula", "Ótimo para alternar entre o monitor e o projetor na hora da aula."],
+    ],
+    roadmap: ["Primeiro lançamento público"],
+    howto: [
+      ["Abra o HotSwap", "Os monitores conectados aparecem na tela."],
+      ["Escolha a tela", "Clique no monitor ou projetor que você quer ajustar."],
+      ["Escolha a resolução ou defina como principal", "A mudança vale na hora."],
+    ],
+    install: {
+      windows: [
+        ["Baixe o arquivo", "Pelo NokyLabs Launcher (recomendado) ou pelo botão Baixar para Windows."],
+        ["Extraia e abra o HotSwap.exe", "Se aparecer o SmartScreen, clique em Mais informações › Executar assim mesmo."],
+      ],
+    },
+    faq: [
+      ["Funciona com projetor?", "Sim. Para o Windows, o projetor é mais um monitor, e ele aparece na lista."],
+      ["Escolhi uma resolução e a imagem sumiu. E agora?", "Desconecte e reconecte o cabo, ou use Windows + P para voltar a projeção para a tela do computador. Depois, abra o HotSwap e escolha outra resolução."],
+      ["Funciona no Linux?", "Ainda não. Por enquanto é só para Windows."],
+    ],
+  },
+
+  avaliador: {
+    id: "avaliador", route: "avaliador", name: "Avaliador Acadêmico", parent: "educacao",
+    tint: "#2563EB", icon: "cap",
+    tagline: "Avalie a turma, registre pontos fortes e o que melhorar, e gere o feedback de cada aluno em planilha.",
+    status: ["Em desenvolvimento", "warn"], version: "1.x", repo: "AvaliadorAcademico", repoPublic: false,
+    platforms: {
+      windows: { status: "soon", file: "AvaliadorAcademico-win-x64.zip", req: "Windows 10 ou 11 (64 bits)", size: "—" },
+      linux: { status: "none" },
+    },
+    features: [
+      ["list", "Avaliação completa", "Notas, pontos fortes, pontos a melhorar e um relato para cada aluno."],
+      ["table", "Feedback em planilha", "Gera um arquivo .xlsx por turma, pronto para compartilhar."],
+      ["sparkle", "Resumo escrito por IA", "Opcional: um resumo do desempenho de cada aluno, usando a sua própria chave da Groq."],
+      ["users", "Cada professora com seus dados", "Pode ser repassado para colegas: cada pessoa usa a própria base e a própria chave."],
+      ["palette", "Tema claro e escuro", "Começa no claro, com a cor azul do app, e alterna para o escuro quando você quiser."],
+      ["shield", "Dados protegidos", "Valida antes de salvar, confere a integridade dos arquivos e guarda um registro de erros."],
+    ],
+    roadmap: [
+      "Menu lateral recolhível e relógio no topo",
+      "Calendário com eventos da turma",
+      "Importar cadastros de .csv, .txt, .docx e .pdf",
+      "Bloco de notas integrado e seletor de tema com animações",
+    ],
+    howto: [
+      ["Cadastre a turma", "Crie a turma e adicione os alunos."],
+      ["Avalie cada aluno", "Preencha notas, pontos fortes, pontos a melhorar e o relato."],
+      ["Gere o resumo (opcional)", "Com a sua chave da Groq configurada, peça um resumo escrito para cada aluno."],
+      ["Exporte o feedback", "Gere o .xlsx da turma e compartilhe com quem precisar."],
+    ],
+    install: {
+      windows: [
+        ["Baixe o arquivo", "Pelo NokyLabs Launcher (recomendado) ou pelo botão Baixar para Windows."],
+        ["Extraia e abra o app", "Se aparecer o SmartScreen, clique em Mais informações › Executar assim mesmo."],
+        ["Configure a chave da Groq (opcional)", "Só é necessária para o resumo por IA. O resto funciona sem ela."],
+      ],
+    },
+    faq: [
+      ["Onde ficam os dados dos alunos?", "No seu computador. O app não tem servidor próprio nem conta online."],
+      ["A IA vê os dados dos alunos?", "Só quando você pede um resumo: o texto daquela avaliação é enviado à Groq usando a sua chave. Sem chave configurada, nada sai do computador. Evite colocar informações sensíveis no relato."],
+      ["Como consigo uma chave da Groq?", "Criando uma conta no site da Groq e gerando uma chave de API no painel. Depois, cole a chave nas configurações do app."],
+      ["Posso passar o app para outra professora?", "Pode. Cada pessoa instala no próprio computador, com os próprios dados e a própria chave."],
+      ["Funciona no Linux?", "Não. O Avaliador é feito para Windows."],
+    ],
+  },
+
+  blockable: {
+    id: "blockable", route: "blockable", name: "Blockable", parent: "jogos", isGame: true,
+    tint: "#16A34A", icon: "blocks",
+    tagline: "Jogo de arena para até 4 pessoas, no mesmo computador ou online. O último de pé vence.",
+    status: ["Em desenvolvimento", "warn"], version: "0.3.1", repo: "Blockable", repoPublic: true,
+    platforms: {
+      web: { status: "soon", file: "Jogar no navegador", req: "Navegador atualizado, no computador ou no celular", size: "—" },
+      windows: { status: "none" },
+    },
+    features: [
+      ["users", "Até 4 jogadores", "No mesmo computador, com controles conectados, ou online."],
+      ["robot", "Uma IA para jogar junto", "Controla o jogador 2 quando não tem ninguém. Pegou o controle, ela sai na hora."],
+      ["wifi", "Online do seu jeito", "Sala automática, sala com código ou escolha numa lista de salas abertas. A fase é sorteada."],
+      ["refresh", "Ninguém fica sozinho", "Se alguém sair no meio da partida, a IA assume o personagem."],
+      ["chat", "Seguro para a escola", "Sem chat aberto entre jogadores: só mensagens automáticas do jogo."],
+    ],
+    progress: [
+      ["Partidas locais", 90],
+      ["Multiplayer online", 70],
+      ["Nomes e salvamento local", 25],
+      ["Jogadores 3 e 4", 20],
+      ["Poderes trocáveis", 5],
+    ],
+    roadmap: [
+      "Trocar o nome da sala e dos jogadores, com salvamento local",
+      "Tela de vitória e placar da sessão",
+      "Jogadores 3 e 4, no local e no online",
+      "Tela de pronto no lobby, com início automático",
+      "Poderes trocáveis: 2 disparos e 1 poder por fase",
+      "Novas fases",
+    ],
+    howto: [
+      ["Escolha o modo", "Local, no mesmo computador, ou Online."],
+      ["Jogando local", "Escolha a fase. A IA controla o jogador 2 até alguém pegar o segundo controle."],
+      ["Jogando online", "Entre numa sala automática, digite o código de uma sala ou escolha na lista de salas abertas."],
+      ["Seja o último de pé", "Quem perde fica assistindo até o fim da rodada."],
+    ],
+    install: {
+      web: [
+        ["Abra pelo navegador", "Quando a versão de testes for publicada, o link aparece aqui. Não precisa instalar nada."],
+        ["Chame a turma", "Para o online, cada pessoa abre o jogo no próprio aparelho e entra na mesma sala."],
+      ],
+    },
+    faq: [
+      ["Quando vou poder jogar?", "O Blockable está na versão 0.3.1, em desenvolvimento. Acompanhe a página Novidades para saber quando a versão de testes sair."],
+      ["Tem chat entre jogadores?", "Não, de propósito. Só existem mensagens automáticas do jogo, sem texto digitado, para ser seguro para alunos."],
+      ["Precisa instalar?", "Não. O jogo vai rodar direto no navegador, inclusive no celular."],
+      ["Dá para jogar sozinho?", "Sim. A IA controla o adversário nas partidas locais."],
+    ],
+  },
+};
+
+const ORDER_UTIL = ["ytdlp", "cubebin", "hotswap"];
+
+const NEWS = [
+  { date: "2026-10-14", app: "site", title: "O site da NokyLabs está no ar", text: "Uma casa para todos os projetos, com guias de uso, downloads e um canal para reportar bugs." },
+  { date: "2026-10-13", app: "launcher", title: "NokyLabs Launcher 0.5", text: "Assistente de instalação, modo portátil, instalação limpa, atalhos e desinstalador registrado no Windows." },
+  { date: "2026-10-13", app: "launcher", title: "NokyLabs Launcher 0.4", text: "Iniciar com o sistema, avisos de novidades, verificação de tempos em tempos e atualizações automáticas opcionais." },
+  { date: "2026-10-13", app: "launcher", title: "NokyLabs Launcher 0.3", text: "Desinstalar apps, ficar na bandeja e o launcher passa a se atualizar sozinho." },
+  { date: "2026-10-13", app: "ytdlp", title: "YT-DLP GUI ganha visual novo", text: "O app está sendo redesenhado com a mesma identidade do NokyLabs Launcher." },
+  { date: "2026-10-01", app: "blockable", title: "Blockable: online funcionando", text: "O modelo de sincronização do multiplayer online passou nos testes. Próximos passos: nomes, salvamento e jogadores 3 e 4." },
+  { date: "2026-10-14", app: "avaliador", title: "Avaliador Acadêmico: versão 2 planejada", text: "Calendário, importação de cadastros, bloco de notas e menu recolhível estão a caminho." },
+].sort((a, b) => b.date.localeCompare(a.date));
+
+const MONTHS = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+const fmtDate = iso => { const [y, m, d] = iso.split("-"); return `${+d} ${MONTHS[+m - 1]} ${y}`; };
+
+/* =====================================================================
+   SISTEMA DO VISITANTE
+   ===================================================================== */
+const OS = (() => {
+  const ua = navigator.userAgent || "";
+  if (/Android|iPhone|iPad|iPod/i.test(ua)) return "mobile";
+  if (/Windows/i.test(ua)) return "windows";
+  if (/Mac OS X|Macintosh/i.test(ua)) return "mac";
+  if (/Linux|X11|CrOS/i.test(ua)) return "linux";
+  return "unknown";
+})();
+
+/* =====================================================================
+   PEDAÇOS DE INTERFACE
+   ===================================================================== */
+const pill = ([text, kind]) => `<span class="pill ${kind === "muted" ? "muted-pill" : kind}">${esc(text)}</span>`;
+
+function platformChips(app) {
+  return Object.entries(app.platforms)
+    .filter(([, p]) => p.status !== "none")
+    .map(([k]) => `<span class="chip">${ico(PLATFORM_ICON[k])}${PLATFORM_LABEL[k]}</span>`)
+    .join("");
+}
+
+function appTitle(app) {
+  return app.subtitle ? `${esc(app.name)} <small>${esc(app.subtitle)}</small>` : esc(app.name);
+}
+
+function appCard(app) {
+  return `
+  <a class="card app-card" href="#${app.route}" style="--tint:${app.tint}">
+    <div class="head">
+      <span class="app-tile">${ico(app.icon)}</span>
+      ${pill(app.status)}
+    </div>
+    <h3>${appTitle(app)}</h3>
+    <p>${esc(app.tagline)}</p>
+    <div class="foot">${platformChips(app)}</div>
+  </a>`;
+}
+
+function launcherMock() {
+  const card = (tint, iconName, name, badge, badgeStyle, ver, act, actCls, id = "") => `
+    <div class="mock-card" style="--tint:${tint}" ${id ? `id="${id}"` : ""}>
+      <div class="top"><span class="t">${ico(iconName)}</span><span class="badge" style="${badgeStyle}" data-badge>${badge}</span></div>
+      <b>${name}</b>
+      <span class="v" data-ver>${ver}</span>
+      <div class="act ${actCls}" data-act>${act}</div>
+    </div>`;
+  return `
+  <div class="mock" role="img" aria-label="Prévia do NokyLabs Launcher: biblioteca com HotSwap, CubeBin e YT-DLP GUI">
+    <div class="mock-bar"><span class="mini-logo"></span>NokyLabs<span class="win">– ▢ ✕</span></div>
+    <div class="mock-body">
+      <div class="mock-side">
+        <div class="mock-brand"><span class="lm">${ico("logo")}</span><span><b>NokyLabs</b><small>Launcher</small></span></div>
+        <div class="mock-nav on">Biblioteca</div>
+        <div class="mock-nav">Atualizações <span class="n">1</span></div>
+        <div class="mock-nav">Configurações</div>
+      </div>
+      <div class="mock-main">
+        <div class="mock-hero"><b>Seus utilitários, num só lugar</b><p>Instale, abra e mantenha tudo atualizado.</p></div>
+        <div class="mock-cards">
+          ${card("#818CF8", "hotswap", "HotSwap", "Atualização", "background:rgba(251,191,36,.14);color:#FBBF24", "v1.2 → v1.3", "Atualizar", "upd")}
+          ${card("#C084FC", "cubebin", "CubeBin", "Instalado", "background:rgba(52,211,153,.14);color:#34D399", "v2.0.1 · em dia", "Abrir", "open")}
+          ${card("#F472B6", "ytdlp", "YT-DLP GUI", "Disponível", "background:rgba(139,92,246,.16);color:#C4B5FD", "v9 disponível", "Instalar", "inst", "mockInstall")}
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* =====================================================================
+   PÁGINAS
+   ===================================================================== */
+function pageHome() {
+  const util = ORDER_UTIL.map(k => APPS[k]);
+  const all = [APPS.launcher, ...util, APPS.avaliador, APPS.blockable];
+  const mark = (p) => {
+    if (!p || p.status === "none") return `<span class="mark no">—</span>`;
+    if (p.status === "available") return `<span class="mark yes">${ico("check")}Disponível</span>`;
+    return `<span class="mark soon">${ico("clock")}Em breve</span>`;
+  };
+  return `
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">NokyLabs</span>
+        <h1>Ferramentas que nasceram no <em>laboratório</em>, prontas para o seu computador.</h1>
+        <p class="lead">Utilitários do dia a dia, apps para a sala de aula e jogos em desenvolvimento, reunidos num só lugar e mantidos em dia pelo NokyLabs Launcher.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="#launcher">${ico("download")}Conhecer o Launcher</a>
+          <a class="btn ghost" href="#apps">Ver os apps${ico("arrow")}</a>
+        </div>
+        <div class="hero-meta">
+          <span>${ico("windows")}Windows</span><span>${ico("linux")}Linux</span><span>${ico("web")}Navegador</span><span>${ico("shield")}Sem precisar de administrador</span>
+        </div>
+      </div>
+      ${launcherMock()}
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Explore</span>
+        <h2>O que tem por aqui</h2>
+      </div>
+      <div class="grid cols-4">
+        ${catCard("launcher", "logo", "#8B5CF6", "NokyLabs Launcher", "Instala, abre e atualiza todos os apps. Comece por aqui.")}
+        ${catCard("apps", "grid", "#EC4899", "Apps", "YT-DLP GUI, CubeBin e HotSwap: ferramentas para o dia a dia no computador.")}
+        ${catCard("educacao", "cap", "#2563EB", "Educação", "Apps pensados para professoras, professores e turmas.")}
+        ${catCard("jogos", "blocks", "#16A34A", "Jogos", "Projetos em desenvolvimento, como o Blockable.")}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Projetos</span>
+        <h2>Todos os apps</h2>
+        <p>Cada página tem um guia de uso, os downloads para cada sistema e as dúvidas mais comuns.</p>
+      </div>
+      <div class="grid cols-3">${all.map(appCard).join("")}</div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Compatibilidade</span>
+        <h2>Onde cada um funciona</h2>
+      </div>
+      <div class="table-scroll">
+        <table class="matrix">
+          <thead><tr><th>Projeto</th><th>Windows</th><th>Linux</th><th>Navegador</th></tr></thead>
+          <tbody>
+            ${all.map(a => `<tr>
+              <td><a href="#${a.route}"><span class="dot-tile" style="--tint:${a.tint}">${ico(a.icon)}</span>${appTitle(a).replace("<small>", "<small class=\"muted\">")}</a></td>
+              <td>${mark(a.platforms.windows)}</td><td>${mark(a.platforms.linux)}</td><td>${mark(a.platforms.web)}</td>
+            </tr>`).join("")}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="eyebrow">Como baixar</span>
+        <h2>Dois caminhos, você escolhe</h2>
+      </div>
+      <div class="grid cols-2">
+        <div class="card path-card featured">
+          <span class="pill accent">Recomendado</span>
+          <h3>Pelo NokyLabs Launcher</h3>
+          <ol>
+            <li>Baixe e instale o Launcher uma vez.</li>
+            <li>Clique em Instalar no app que quiser.</li>
+            <li>Pronto: atalhos criados e atualizações automáticas, se você quiser.</li>
+          </ol>
+          <div><a class="btn soft small" href="#launcher">Ir para o Launcher${ico("arrow")}</a></div>
+        </div>
+        <div class="card path-card">
+          <span class="pill muted-pill">Direto</span>
+          <h3>Baixando cada app</h3>
+          <ol>
+            <li>Abra a página do app e vá em Baixar e instalar.</li>
+            <li>Baixe o .zip do seu sistema e extraia.</li>
+            <li>Abra o executável. Para atualizar, repita o processo.</li>
+          </ol>
+          <div><a class="btn ghost small" href="#apps">Ver os apps${ico("arrow")}</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="split">
+        <div class="stack">
+          <div class="section-head" style="margin-bottom:8px">
+            <span class="eyebrow">Novidades</span>
+            <h2>O que mudou por último</h2>
+          </div>
+          <ol class="timeline">${NEWS.slice(0, 3).map(newsItem).join("")}</ol>
+          <div><a class="btn ghost small" href="#novidades">Ver todas as novidades${ico("arrow")}</a></div>
+        </div>
+        <div class="card stack" style="align-self:stretch">
+          <span class="app-tile" style="--tint:var(--accent)">${ico("bug")}</span>
+          <h3 style="font-size:1.35rem">Achou um bug ou teve uma ideia?</h3>
+          <p style="color:var(--fg-2)">Monte um relatório em poucos passos: o site organiza as informações para você enviar por e-mail ou pelo GitHub.</p>
+          <div><a class="btn primary" href="#contato">${ico("mail")}Falar com a NokyLabs</a></div>
+        </div>
+      </div>
+    </section>
+  </div>`;
+}
+
+function catCard(route, iconName, tint, title, text) {
+  return `<a class="card cat-card" href="#${route}" style="--tint:${tint}">
+    <span class="app-tile">${ico(iconName)}</span>
+    <h3>${title}</h3><p>${text}</p>
+    <span class="go">Abrir${ico("arrow")}</span>
+  </a>`;
+}
+
+function listingPage({ eyebrow, title, lead, apps, extra = "" }) {
+  return `
+  <div class="wrap">
+    <section class="app-hero" style="padding-top:48px">
+      <span class="eyebrow">${eyebrow}</span>
+      <div class="app-title"><h1>${title}</h1></div>
+      <p class="lead">${lead}</p>
+    </section>
+    <section class="section" style="padding-top:28px">
+      <div class="grid cols-3">${apps.map(appCard).join("")}</div>
+    </section>
+    ${extra}
+  </div>`;
+}
+
+function pageApps() {
+  return listingPage({
+    eyebrow: "Apps",
+    title: "Utilitários",
+    lead: "Ferramentas pequenas para resolver problemas do dia a dia no computador: baixar vídeos para a aula, arrumar pastas e trocar de tela rapidinho.",
+    apps: ORDER_UTIL.map(k => APPS[k]),
+    extra: launcherBanner(),
+  });
+}
+
+function pageEducacao() {
+  return listingPage({
+    eyebrow: "Educação",
+    title: "Para a sala de aula",
+    lead: "Apps pensados para quem ensina: avaliar a turma, preparar material e usar a tecnologia do laboratório com segurança.",
+    apps: [APPS.avaliador, APPS.ytdlp],
+    extra: `
+    <section class="section">
+      <div class="callout info">${ico("info")}<div><b>Também usado em aula</b><p>O YT-DLP GUI é um utilitário, mas foi feito pensando na turma: tem filtro de conteúdo opcional para liberar só os sites permitidos no laboratório.</p></div></div>
+    </section>`,
+  });
+}
+
+function pageJogos() {
+  const g = APPS.blockable;
+  return `
+  <div class="wrap">
+    <section class="app-hero" style="padding-top:48px">
+      <span class="eyebrow">Jogos</span>
+      <div class="app-title"><h1>Jogos em desenvolvimento</h1></div>
+      <p class="lead">Projetos que ainda estão sendo construídos. Aqui dá para acompanhar o que já funciona e o que vem por aí.</p>
+    </section>
+    <section class="section" style="padding-top:28px">
+      <a class="card app-card" href="#blockable" style="--tint:${g.tint};grid-template-rows:auto">
+        <div class="split" style="align-items:center">
+          <div class="stack">
+            <div class="head" style="justify-content:flex-start;gap:14px"><span class="app-tile big">${ico(g.icon)}</span>${pill(g.status)}</div>
+            <h3 style="font-size:2rem">${esc(g.name)}</h3>
+            <p style="font-size:1.05rem">${esc(g.tagline)}</p>
+            <div class="foot"><span class="chip">${ico("web")}Navegador</span><span class="chip mono">v${g.version}</span></div>
+          </div>
+          ${playersBlock()}
+        </div>
+      </a>
+    </section>
+  </div>`;
+}
+
+function playersBlock() {
+  const shapes = [
+    ["Jogador 1", `<rect x="6" y="6" width="36" height="36" rx="6" fill="#F97316"/>`],
+    ["Jogador 2", `<rect x="6" y="6" width="36" height="36" rx="3" fill="#3B82F6"/>`],
+    ["Jogador 3", `<path d="M24 5 L43 41 H5 Z" fill="#22C55E" stroke="#EAB308" stroke-width="4" stroke-linejoin="round"/>`],
+    ["Jogador 4", `<circle cx="24" cy="24" r="19" fill="#D946EF"/>`],
+  ];
+  return `<div class="card" style="background:var(--surface-2)">
+    <p class="muted" style="margin-bottom:12px">Até quatro pessoas na mesma arena</p>
+    <div class="players">${shapes.map(([n, s]) => `<div class="player"><svg class="shape" viewBox="0 0 48 48" aria-hidden="true">${s}</svg>${n}</div>`).join("")}</div>
+  </div>`;
+}
+
+function launcherBanner() {
+  const l = APPS.launcher;
+  return `
+  <section class="section">
+    <div class="card via-launcher" style="--tint:${l.tint}">
+      <span class="app-tile">${ico("logo")}</span>
+      <div><h3 style="font-size:1.2rem">Instale todos de uma vez pelo NokyLabs Launcher</h3><p style="color:var(--fg-2)">Um lugar só para instalar, abrir e atualizar, no Windows e no Linux.</p></div>
+      <a class="btn soft" href="#launcher">Conhecer${ico("arrow")}</a>
+    </div>
+  </section>`;
+}
+
+/* ---------- página de um app ---------- */
+function pageApp(app) {
+  const parentInfo = {
+    apps: ["#apps", "Apps"], educacao: ["#educacao", "Educação"], jogos: ["#jogos", "Jogos"],
+  }[app.parent];
+  const crumbs = `<nav class="crumbs" aria-label="Você está em"><a href="#home">Início</a><span>›</span>${parentInfo ? `<a href="${parentInfo[0]}">${parentInfo[1]}</a><span>›</span>` : ""}<span>${esc(app.name)}${app.subtitle ? " " + esc(app.subtitle) : ""}</span></nav>`;
+  const isGame = !!app.isGame;
+  const tabs = [
+    ["visao", "sparkle", "Visão geral"],
+    ["uso", "book", isGame ? "Como jogar" : "Como usar"],
+    ["baixar", "download", isGame ? "Onde jogar" : "Baixar e instalar"],
+    ["duvidas", "help", "Dúvidas"],
+  ];
+  const primaryPlat = Object.entries(app.platforms).find(([, p]) => p.status !== "none");
+
+  return `
+  <div style="--tint:${app.tint}">
+    <div class="wrap">
+      ${crumbs}
+      <section class="app-hero">
+        <div class="app-hero-top">
+          <span class="app-tile big">${ico(app.icon)}</span>
+          <div class="app-title">
+            <h1>${esc(app.name)}</h1>
+            ${app.subtitle ? `<span class="sub">${esc(app.subtitle)}</span>` : ""}
+          </div>
+        </div>
+        <p class="lead">${esc(app.tagline)}</p>
+        <div class="app-meta">
+          ${pill(app.status)}
+          ${app.version !== "—" ? `<span class="chip mono">v${esc(app.version)}</span>` : ""}
+          ${platformChips(app)}
+          ${app.license ? `<span class="chip">Licença ${app.license}</span>` : ""}
+          ${app.repoPublic ? `<a class="chip" href="${repoUrl(app)}" target="_blank" rel="noopener">${ico("code")}Código no GitHub</a>` : ""}
+        </div>
+        <div class="btn-row">
+          <button class="btn primary" data-jump="baixar">${ico(isGame ? "web" : "download")}${isGame ? "Onde jogar" : "Baixar"}</button>
+          <button class="btn ghost" data-jump="uso">${ico("book")}${isGame ? "Como jogar" : "Como usar"}</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="tabs"><div class="wrap tabs-row" role="tablist" aria-label="Seções">
+      ${tabs.map(([id, ic, label], i) => `<button data-jump="${id}" class="${i === 0 ? "on" : ""}">${ico(ic)}${label}</button>`).join("")}
+    </div></div>
+
+    <div class="wrap">
+      <section class="section anchor" id="sec-visao">
+        <div class="section-head"><span class="eyebrow">Visão geral</span><h2>${isGame ? "O que já dá para fazer" : "O que ele faz"}</h2></div>
+        <div class="grid cols-2">
+          ${app.features.map(([ic, t, d]) => `<div class="card feature"><span class="fi">${ico(ic)}</span><div><h3>${t}</h3><p>${d}</p></div></div>`).join("")}
+        </div>
+        ${isGame ? gameProgress(app) : ""}
+        ${app.roadmap?.length ? `
+        <div class="card" style="margin-top:16px">
+          <h3 style="font-size:1.15rem;margin-bottom:12px">O que vem por aí</h3>
+          <ul class="roadmap">${app.roadmap.map(r => `<li>${ico("sparkle")}<span>${r}</span></li>`).join("")}</ul>
+        </div>` : ""}
+      </section>
+
+      <section class="section anchor" id="sec-uso">
+        <div class="section-head"><span class="eyebrow">${isGame ? "Como jogar" : "Como usar"}</span><h2>${isGame ? "Do menu à vitória" : "Passo a passo"}</h2></div>
+        <ol class="steps">${app.howto.map(([t, d]) => `<li><div><h3>${t}</h3><p>${d}</p></div></li>`).join("")}</ol>
+      </section>
+
+      <section class="section anchor" id="sec-baixar">
+        <div class="section-head">
+          <span class="eyebrow">${isGame ? "Onde jogar" : "Baixar e instalar"}</span>
+          <h2>${isGame ? "Plataformas" : "Downloads"}</h2>
+          <p>${isGame ? "O Blockable vai rodar direto no navegador." : `Feito para ${Object.entries(app.platforms).filter(([, p]) => p.status !== "none").map(([k]) => PLATFORM_LABEL[k]).join(" e ")}.`}</p>
+        </div>
+        ${osNote(app)}
+        <div class="grid cols-2">${Object.entries(app.platforms).map(([k, p]) => downloadCard(app, k, p)).join("")}</div>
+        ${!isGame && app.id !== "launcher" ? viaLauncher() : ""}
+        ${installGuide(app)}
+        ${!isGame ? `
+        <div class="grid cols-2" style="margin-top:16px">
+          <div class="callout">${ico("warn")}<div><b>Aviso azul do Windows (SmartScreen)</b><p>Programas novos sem assinatura digital paga mostram esse aviso. Clique em Mais informações e depois em Executar assim mesmo.</p></div></div>
+          <div class="callout info">${ico("shield")}<div><b>Quer conferir o arquivo?</b><p>Cada lançamento publica o SHA-256 do download. No PowerShell, rode <code>Get-FileHash .\\arquivo.zip</code> e compare.</p></div></div>
+        </div>` : ""}
+      </section>
+
+      <section class="section anchor" id="sec-duvidas">
+        <div class="section-head"><span class="eyebrow">Dúvidas</span><h2>Perguntas frequentes</h2></div>
+        <div class="faq-tools">
+          <label class="search" for="faqSearch">${ico("M4,10.5 A6.5,6.5 0 1 0 17,10.5 A6.5,6.5 0 1 0 4,10.5 Z M15.5,15.5 L20,20")}<input id="faqSearch" type="search" placeholder="Buscar nas dúvidas" autocomplete="off"></label>
+        </div>
+        <div class="faq" id="faqList">
+          ${app.faq.map(([q, a]) => `<details><summary>${q}${ico("plus")}</summary><div class="answer"><p>${a}</p></div></details>`).join("")}
+        </div>
+        <p class="empty" id="faqEmpty" hidden>Nenhuma dúvida com esse termo.</p>
+        <div class="card" style="margin-top:16px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between">
+          <div><h3 style="font-size:1.1rem">Não achou a resposta?</h3><p style="color:var(--fg-2)">Mande sua dúvida ou reporte um problema com o ${esc(app.name)}.</p></div>
+          <button class="btn soft" data-contact="${app.id}">${ico("mail")}Falar sobre o ${esc(app.name)}</button>
+        </div>
+      </section>
+    </div>
+  </div>`;
+}
+
+function gameProgress(app) {
+  return `<div class="card" style="margin-top:16px">
+    <h3 style="font-size:1.15rem;margin-bottom:14px">Andamento</h3>
+    <div class="progress-list">${app.progress.map(([t, v]) => `
+      <div class="progress-item"><div class="row"><span>${t}</span><span>${v}%</span></div><div class="track"><i style="width:${v}%"></i></div></div>`).join("")}
+    </div>
+    <p class="muted" style="margin-top:12px">Estimativa da desenvolvedora, atualizada a cada versão.</p>
+  </div>`;
+}
+
+function osNote(app) {
+  const plats = Object.entries(app.platforms).filter(([, p]) => p.status !== "none").map(([k]) => k);
+  let text;
+  if (app.isGame) {
+    text = OS === "mobile" ? "Você está no celular: o Blockable vai funcionar direto daqui." : "Você vai poder jogar direto deste navegador.";
+  } else if (OS === "mobile") {
+    text = "Você está no celular. Estes apps são para computador: abra esta página no PC para baixar.";
+  } else if (OS === "windows" || OS === "linux") {
+    text = plats.includes(OS)
+      ? `Você está no ${PLATFORM_LABEL[OS]}. O download certo está destacado.`
+      : `Você está no ${PLATFORM_LABEL[OS]}, mas este app ainda não tem versão para ele.`;
+  } else if (OS === "mac") {
+    text = "Você está no macOS. Por enquanto, os apps da NokyLabs são para Windows e Linux.";
+  } else return "";
+  return `<div class="os-note">${ico("info")}<span>${text}</span></div>`;
+}
+
+function downloadCard(app, key, p) {
+  const label = PLATFORM_LABEL[key];
+  const mine = p.status !== "none" && (key === OS || (key === "web" && app.isGame));
+  let button;
+  if (p.status === "available") {
+    const href = key === "web" ? p.url : downloadUrl(app, p.file);
+    button = `<a class="btn primary" href="${href}" target="_blank" rel="noopener">${ico(key === "web" ? "web" : "download")}${key === "web" ? "Jogar agora" : "Baixar para " + label}</a>`;
+  } else if (p.status === "soon") {
+    button = `<button class="btn" disabled>${ico("clock")}Em breve</button>`;
+  } else {
+    button = `<button class="btn" disabled>Ainda não disponível</button>`;
+  }
+  const details = p.status === "none"
+    ? `<p class="muted">Ainda não existe versão do ${esc(app.name)} para ${label}.</p>`
+    : `<dl>
+        <dt>Arquivo</dt><dd class="mono">${esc(p.file)}</dd>
+        <dt>Requisitos</dt><dd>${esc(p.req)}</dd>
+        ${p.size && p.size !== "—" ? `<dt>Tamanho</dt><dd>${esc(p.size)}</dd>` : ""}
+      </dl>
+      ${p.status === "soon" ? `<p class="muted">O botão é liberado assim que a versão for publicada.</p>` : ""}`;
+  return `<div class="card dl-card ${mine ? "mine" : ""}">
+    ${mine ? `<span class="mine-tag">Seu sistema</span>` : ""}
+    <div class="plat">${ico(PLATFORM_ICON[key])}<h3>${label}</h3></div>
+    ${details}
+    ${button}
+  </div>`;
+}
+
+function viaLauncher() {
+  return `<div class="card via-launcher" style="margin-top:16px;--tint:#8B5CF6">
+    <span class="app-tile">${ico("logo")}</span>
+    <div><h3 style="font-size:1.1rem">Mais fácil: pelo NokyLabs Launcher</h3><p style="color:var(--fg-2)">Instala com um clique, cria os atalhos e avisa quando sair versão nova.</p></div>
+    <a class="btn soft" href="#launcher">Ver o Launcher${ico("arrow")}</a>
+  </div>`;
+}
+
+function installGuide(app) {
+  const keys = Object.keys(app.install);
+  const first = keys.includes(OS) ? OS : keys[0];
+  return `
+  <div style="margin-top:28px">
+    <h3 style="font-size:1.3rem;margin-bottom:12px">${app.isGame ? "Como começar" : "Instalação passo a passo"}</h3>
+    ${keys.length > 1 ? `<div class="inst-tabs" role="tablist">${keys.map(k => `<button data-inst="${k}" class="${k === first ? "on" : ""}">${ico(PLATFORM_ICON[k])}${PLATFORM_LABEL[k]}</button>`).join("")}</div>` : ""}
+    ${keys.map(k => `<ol class="steps" data-inst-panel="${k}" ${k === first ? "" : "hidden"}>${app.install[k].map(([t, d]) => `<li><div><h3>${t}</h3><p>${formatCmd(d)}</p></div></li>`).join("")}</ol>`).join("")}
+  </div>`;
+}
+
+const formatCmd = d => esc(d).replace(/(chmod \+x NokyLabs|\.\/NokyLabs)/g, "<code>$1</code>");
+
+/* ---------- novidades ---------- */
+const NEWS_TAGS = { site: ["Site", "#64748B"], launcher: ["Launcher", "#8B5CF6"], ytdlp: ["YT-DLP GUI", "#EC4899"], cubebin: ["CubeBin", "#A855F7"], hotswap: ["HotSwap", "#6366F1"], avaliador: ["Avaliador", "#2563EB"], blockable: ["Blockable", "#16A34A"] };
+function newsItem(n) {
+  const [tag, tint] = NEWS_TAGS[n.app] || ["NokyLabs", "#8B5CF6"];
+  return `<li data-app="${n.app}"><time datetime="${n.date}">${fmtDate(n.date)}</time><div><h3><span class="tag" style="--tint:${tint}">${tag}</span>${esc(n.title)}</h3><p>${esc(n.text)}</p></div></li>`;
+}
+function pageNovidades() {
+  const used = [...new Set(NEWS.map(n => n.app))];
+  return `
+  <div class="wrap">
+    <section class="app-hero" style="padding-top:48px">
+      <span class="eyebrow">Novidades</span>
+      <div class="app-title"><h1>Notas de atualização</h1></div>
+      <p class="lead">Tudo o que mudou nos projetos da NokyLabs, do mais recente para o mais antigo.</p>
+    </section>
+    <section class="section" style="padding-top:24px">
+      <div class="filters" id="newsFilters">
+        <button data-filter="all" class="on">Tudo</button>
+        ${used.map(a => `<button data-filter="${a}">${NEWS_TAGS[a][0]}</button>`).join("")}
+      </div>
+      <ol class="timeline" id="newsList">${NEWS.map(newsItem).join("")}</ol>
+    </section>
+  </div>`;
+}
+
+/* ---------- contato ---------- */
+let contactPreset = null;
+function pageContato() {
+  const options = [["geral", "Geral / site"], ...["launcher", ...ORDER_UTIL, "avaliador", "blockable"].map(k => [k, APPS[k].name + (APPS[k].subtitle ? " " + APPS[k].subtitle : "")])];
+  const osDefault = { windows: "Windows 11", linux: "Linux", mac: "macOS", mobile: "Celular" }[OS] || "";
+  return `
+  <div class="wrap">
+    <section class="app-hero" style="padding-top:48px">
+      <span class="eyebrow">Contato</span>
+      <div class="app-title"><h1>Fale com a NokyLabs</h1></div>
+      <p class="lead">Dúvidas, ideias e bugs são muito bem-vindos. Quanto mais detalhes, mais rápido dá para resolver.</p>
+    </section>
+
+    <section class="section" style="padding-top:24px">
+      <div class="contact-layout">
+        <div class="card stack">
+          <div><h2 style="font-size:1.5rem">Relatório de bug ou sugestão</h2><p style="color:var(--fg-2);margin-top:4px">Preencha o que souber. O texto ao lado é montado na hora, pronto para enviar.</p></div>
+          <form class="form" id="reportForm" novalidate>
+            <div class="field">
+              <span style="font-weight:700;font-size:.88rem">Tipo</span>
+              <div class="seg" role="radiogroup">
+                <label><input type="radio" name="kind" value="Bug" checked>Bug</label>
+                <label><input type="radio" name="kind" value="Sugestão">Sugestão</label>
+                <label><input type="radio" name="kind" value="Dúvida">Dúvida</label>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label for="fApp">App</label>
+                <select id="fApp">${options.map(([v, l]) => `<option value="${v}">${esc(l)}</option>`).join("")}</select></div>
+              <div class="field"><label for="fVer">Versão do app</label><input id="fVer" placeholder="ex.: 0.5.0"><span class="hint">Fica em Configurações › Sobre, na maioria dos apps.</span></div>
+              <div class="field"><label for="fOs">Sistema</label><input id="fOs" value="${esc(osDefault)}" placeholder="ex.: Windows 11"></div>
+            </div>
+            <div class="field"><label for="fWhat">O que aconteceu?</label><textarea id="fWhat" placeholder="Descreva com as suas palavras."></textarea></div>
+            <div class="field" data-bug-only><label for="fSteps">Como fazer o problema acontecer de novo</label><textarea id="fSteps" placeholder="1. Abri o app&#10;2. Cliquei em…&#10;3. Apareceu…"></textarea></div>
+            <div class="field" data-bug-only><label for="fExpected">O que você esperava que acontecesse?</label><input id="fExpected"></div>
+          </form>
+        </div>
+
+        <div class="contact-side">
+          <div class="card mail-card">
+            <h3 style="font-size:1.15rem;display:flex;gap:8px;align-items:center">${ico("mail")}Seu relatório</h3>
+            <pre class="preview" id="preview" aria-live="polite"></pre>
+            <div class="btn-row">
+              <button class="btn primary" id="copyReport">${ico("copy")}Copiar relatório</button>
+              <a class="btn ghost" id="mailReport" href="#">${ico("mail")}Abrir no e-mail</a>
+              <a class="btn ghost" id="ghReport" href="#" target="_blank" rel="noopener" hidden>${ico("code")}Abrir no GitHub</a>
+            </div>
+            <p class="muted">Se o botão de e-mail não abrir nada, copie o relatório e envie para o endereço abaixo.</p>
+          </div>
+
+          <div class="card mail-card">
+            <h3 style="font-size:1.1rem">E-mail</h3>
+            <div class="mail-addr" id="mailAddr">${esc(SITE.email)}</div>
+            <div class="btn-row"><button class="btn soft small" id="copyMail">${ico("copy")}Copiar e-mail</button></div>
+          </div>
+
+          <div class="card">
+            <h3 style="font-size:1.1rem;margin-bottom:12px">Antes de enviar</h3>
+            <ul class="check-list">
+              <li>${ico("check")}<span>Veja se a dúvida já está nas Perguntas frequentes da página do app.</span></li>
+              <li>${ico("check")}<span>Se puder, anexe um print da tela e o arquivo de log. No YT-DLP GUI ele fica em <code>%AppData%\\YtDlpGui\\log.txt</code>; nos outros apps, na pasta do programa.</span></li>
+              <li>${ico("check")}<span>Não envie senhas, chaves de API nem dados de alunos.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>`;
+}
+
+function setupContact() {
+  const $ = id => document.getElementById(id);
+  if (contactPreset) { $("fApp").value = contactPreset; contactPreset = null; }
+
+  const build = () => {
+    const kind = document.querySelector('input[name="kind"]:checked').value;
+    const appKey = $("fApp").value;
+    const app = APPS[appKey];
+    const appName = app ? app.name + (app.subtitle ? " " + app.subtitle : "") : "Geral / site";
+    const isBug = kind === "Bug";
+    document.querySelectorAll("[data-bug-only]").forEach(el => el.hidden = !isBug);
+
+    const lines = [
+      `Tipo: ${kind}`,
+      `App: ${appName}`,
+      `Versão: ${$("fVer").value.trim() || "não informada"}`,
+      `Sistema: ${$("fOs").value.trim() || "não informado"}`,
+      "",
+      "O que aconteceu:",
+      $("fWhat").value.trim() || "(descreva aqui)",
+    ];
+    if (isBug) {
+      lines.push("", "Como reproduzir:", $("fSteps").value.trim() || "(passos aqui)");
+      lines.push("", "Resultado esperado:", $("fExpected").value.trim() || "(o que deveria acontecer)");
+    }
+    const body = lines.join("\n");
+    const subject = `[NokyLabs] ${kind} · ${appName}`;
+    $("preview").textContent = `Assunto: ${subject}\n\n${body}`;
+    $("mailReport").href = `mailto:${SITE.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    const gh = $("ghReport");
+    if (app && app.repoPublic) {
+      gh.hidden = false;
+      gh.href = `${repoUrl(app)}/issues/new?title=${encodeURIComponent(`${kind}: ${($("fWhat").value.trim().split("\n")[0] || appName).slice(0, 80)}`)}&body=${encodeURIComponent(body)}`;
+    } else {
+      gh.hidden = true;
+    }
+    $("copyReport").dataset.text = `Assunto: ${subject}\n\n${body}`;
+  };
+
+  $("reportForm").addEventListener("input", build);
+  $("reportForm").addEventListener("change", build);
+  $("reportForm").addEventListener("submit", e => e.preventDefault());
+  $("copyReport").addEventListener("click", e => copyText(e.currentTarget.dataset.text, "Relatório copiado", $("preview")));
+  $("copyMail").addEventListener("click", () => copyText(SITE.email, "E-mail copiado", $("mailAddr")));
+  build();
+}
+
+/* =====================================================================
+   ROTEADOR E COMPORTAMENTOS
+   ===================================================================== */
+const ROUTES = {
+  home: { nav: "home", render: pageHome, title: "NokyLabs" },
+  launcher: { nav: "launcher", render: () => pageApp(APPS.launcher), title: "NokyLabs Launcher" },
+  apps: { nav: "apps", render: pageApps, title: "Apps" },
+  "ytdlp-gui": { nav: "apps", render: () => pageApp(APPS.ytdlp), title: "YT-DLP GUI" },
+  cubebin: { nav: "apps", render: () => pageApp(APPS.cubebin), title: "CubeBin" },
+  hotswap: { nav: "apps", render: () => pageApp(APPS.hotswap), title: "HotSwap" },
+  educacao: { nav: "educacao", render: pageEducacao, title: "Educação" },
+  avaliador: { nav: "educacao", render: () => pageApp(APPS.avaliador), title: "Avaliador Acadêmico" },
+  jogos: { nav: "jogos", render: pageJogos, title: "Jogos" },
+  blockable: { nav: "jogos", render: () => pageApp(APPS.blockable), title: "Blockable" },
+  novidades: { nav: "novidades", render: pageNovidades, title: "Novidades" },
+  contato: { nav: "contato", render: pageContato, title: "Contato" },
+};
+const NAV = [["home", "Início"], ["launcher", "Launcher"], ["apps", "Apps"], ["educacao", "Educação"], ["jogos", "Jogos"], ["novidades", "Novidades"], ["contato", "Contato"]];
+
+const main = document.getElementById("app");
+const nav = document.getElementById("nav");
+const menuBtn = document.getElementById("menuBtn");
+let mockTimer = null;
+
+function render() {
+  const key = (location.hash || "#home").slice(1);
+  const route = ROUTES[key] || ROUTES.home;
+  nav.innerHTML = NAV.map(([k, l]) => `<a href="#${k}" ${route.nav === k ? 'aria-current="page"' : ""}>${l}</a>`).join("");
+  main.innerHTML = `<div class="page">${route.render()}</div>`;
+  document.title = route.title === "NokyLabs" ? "NokyLabs" : `${route.title} · NokyLabs`;
+  nav.classList.remove("open");
+  menuBtn.setAttribute("aria-expanded", "false");
+  window.scrollTo({ top: 0, behavior: "auto" });
+  wirePage(key);
+}
+
+function wirePage(key) {
+  // Abas e botões que rolam até uma seção
+  main.querySelectorAll("[data-jump]").forEach(b => b.addEventListener("click", () => {
+    const target = document.getElementById("sec-" + b.dataset.jump);
+    if (target) target.scrollIntoView({ block: "start" });
+  }));
+  const tabButtons = [...main.querySelectorAll(".tabs button")];
+  if (tabButtons.length) {
+    const sections = tabButtons.map(b => document.getElementById("sec-" + b.dataset.jump));
+    const onScroll = () => {
+      let current = 0;
+      sections.forEach((s, i) => { if (s && s.getBoundingClientRect().top < 180) current = i; });
+      tabButtons.forEach((b, i) => b.classList.toggle("on", i === current));
+    };
+    window.onscroll = onScroll;
+  } else {
+    window.onscroll = null;
+  }
+
+  // Guia de instalação por sistema
+  main.querySelectorAll("[data-inst]").forEach(b => b.addEventListener("click", () => {
+    main.querySelectorAll("[data-inst]").forEach(x => x.classList.toggle("on", x === b));
+    main.querySelectorAll("[data-inst-panel]").forEach(p => p.hidden = p.dataset.instPanel !== b.dataset.inst);
+  }));
+
+  // Busca nas dúvidas
+  const search = document.getElementById("faqSearch");
+  if (search) search.addEventListener("input", () => {
+    const q = search.value.trim().toLowerCase();
+    let shown = 0;
+    document.querySelectorAll("#faqList details").forEach(d => {
+      const hit = !q || d.textContent.toLowerCase().includes(q);
+      d.hidden = !hit; if (hit) shown++;
+      if (q && hit) d.open = true;
+    });
+    document.getElementById("faqEmpty").hidden = shown > 0;
+  });
+
+  // "Falar sobre este app" abre o contato já com o app escolhido
+  main.querySelectorAll("[data-contact]").forEach(b => b.addEventListener("click", () => {
+    contactPreset = b.dataset.contact;
+    location.hash = "contato";
+  }));
+
+  // Filtro das novidades
+  const filters = document.getElementById("newsFilters");
+  if (filters) filters.addEventListener("click", e => {
+    const b = e.target.closest("button"); if (!b) return;
+    filters.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
+    document.querySelectorAll("#newsList li").forEach(li => li.hidden = b.dataset.filter !== "all" && li.dataset.app !== b.dataset.filter);
+  });
+
+  if (key === "contato") setupContact();
+  startMock();
+}
+
+/* Animação do card "YT-DLP GUI" no mockup: Instalar → progresso → Abrir */
+function startMock() {
+  clearInterval(mockTimer);
+  const card = document.getElementById("mockInstall");
+  if (!card || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const badge = card.querySelector("[data-badge]"), ver = card.querySelector("[data-ver]"), act = card.querySelector("[data-act]");
+  if (!badge || !ver || !act) return;
+  let t = 0;
+  mockTimer = setInterval(() => {
+    t = (t + 1) % 70;
+    if (t === 12) { act.className = "act wait"; act.textContent = "Aguarde…"; ver.innerHTML = '<span class="bar"><i></i></span>'; }
+    if (t > 12 && t <= 37) { const bar = ver.querySelector("i"); if (bar) bar.style.width = ((t - 12) * 4) + "%"; }
+    if (t === 38) {
+      act.className = "act open"; act.textContent = "Abrir"; ver.textContent = "v9 · em dia";
+      badge.textContent = "Instalado"; badge.style.cssText = "background:rgba(52,211,153,.14);color:#34D399";
+    }
+    if (t === 0) {
+      act.className = "act inst"; act.textContent = "Instalar"; ver.textContent = "v9 disponível";
+      badge.textContent = "Disponível"; badge.style.cssText = "background:rgba(139,92,246,.16);color:#C4B5FD";
+    }
+  }, 100);
+}
+
+/* Copiar com plano B (seleciona o texto se a área de transferência recusar) */
+function copyText(text, okMsg, fallbackEl) {
+  const done = () => toast(okMsg);
+  const fallback = () => {
+    if (fallbackEl) {
+      const range = document.createRange(); range.selectNodeContents(fallbackEl);
+      const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+    }
+    toast("Texto selecionado: use Ctrl+C para copiar");
+  };
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+    else fallback();
+  } catch { fallback(); }
+}
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById("toast");
+  el.textContent = msg; el.classList.add("show");
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("show"), 2200);
+}
+
+/* Tema: segue o sistema até a pessoa escolher; a escolha fica salva neste navegador */
+const themeBtn = document.getElementById("themeBtn");
+function currentTheme() {
+  const set = document.documentElement.dataset.theme;
+  if (set === "dark" || set === "light") return set;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+function paintThemeBtn() {
+  const dark = currentTheme() === "dark";
+  themeBtn.innerHTML = ico(dark ? "sun" : "moon");
+  themeBtn.setAttribute("aria-label", dark ? "Mudar para o tema claro" : "Mudar para o tema escuro");
+}
+try { const saved = localStorage.getItem("nokylabs-theme"); if (saved === "dark" || saved === "light") document.documentElement.dataset.theme = saved; } catch {}
+themeBtn.addEventListener("click", () => {
+  const next = currentTheme() === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem("nokylabs-theme", next); } catch {}
+  paintThemeBtn();
+});
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", paintThemeBtn);
+new MutationObserver(paintThemeBtn).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+menuBtn.addEventListener("click", () => {
+  const open = nav.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded", String(open));
+});
+
+/* Rodapé */
+document.getElementById("footer").innerHTML = `
+  <div class="footer-col" style="max-width:320px">
+    <a class="logo" href="#home"><span class="logo-mark">${ico("logo")}</span><span class="logo-text">NokyLabs</span></a>
+    <p>Utilitários, apps para a sala de aula e jogos, feitos com carinho no laboratório de informática.</p>
+  </div>
+  <div class="footer-col"><b>Projetos</b>
+    <a href="#launcher">NokyLabs Launcher</a>${ORDER_UTIL.map(k => `<a href="#${APPS[k].route}">${APPS[k].name}</a>`).join("")}
+    <a href="#avaliador">Avaliador Acadêmico</a><a href="#blockable">Blockable</a>
+  </div>
+  <div class="footer-col"><b>Site</b><a href="#novidades">Novidades</a><a href="#contato">Contato e bugs</a>
+    <a href="https://github.com/${SITE.github}" target="_blank" rel="noopener">GitHub</a></div>
+  <div class="footer-col"><b>E-mail</b><span class="footer-mail">${esc(SITE.email)}</span></div>`;
+
+window.addEventListener("hashchange", render);
+paintThemeBtn();
+render();
+</script>
+</body>
+</html>
