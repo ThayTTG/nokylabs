@@ -287,6 +287,10 @@ def main() -> int:
         if cat.get("launcher"):
             mudou |= atualizar_item("launcher", cat["launcher"])
         for app in cat.get("apps", []):
+            if app.get("requestAccess"):
+                # Uso restrito: o robô nunca publica download desse app.
+                print(f"· {app.get('id', '?')}: uso restrito (requestAccess). Nada a fazer.")
+                continue
             mudou |= atualizar_item(app.get("id", "?"), app)
 
     validar(cat)

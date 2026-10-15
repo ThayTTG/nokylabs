@@ -84,6 +84,7 @@ repositório ainda não tem lançamento é simplesmente ignorado até ter.
 ```
 
 - Apps de navegador usam `"web": "link"` e `"webAction": "Jogar"` no lugar dos downloads.
+- Apps de uso restrito usam `"requestAccess": "link"` (formulário, e-mail com `mailto:`…) e, opcionalmente, `"requestAction": "Solicitar acesso"`. O launcher (0.7.1 em diante) e o site mostram **Solicitar acesso** no lugar do download, e o robô nunca publica download desses apps.
 - `"comingSoon": true` mostra o card como "Em breve".
 - Para um app novo, basta colocar o link no formato `.../releases/latest/download/arquivo.zip`
   com `"published": false`: no primeiro lançamento o robô troca pelo link fixo e publica.

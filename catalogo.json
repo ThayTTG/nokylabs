@@ -84,6 +84,8 @@
       "version": "2.0.0",
       "accent": "#3B82F6",
       "icon": "M2,9.5 L12,5 L22,9.5 L12,14 Z M6,11.5 V16 C6,17.6 9,19 12,19 C15,19 18,17.6 18,16 V11.5 M22,9.5 V14.5",
+      "requestAccess": "mailto:thaynarcd1178@gmail.com?subject=Pedido%20de%20acesso%3A%20Avaliador%20Acad%C3%AAmico&body=Ol%C3%A1%21%20Gostaria%20de%20usar%20o%20Avaliador%20Acad%C3%AAmico.%0A%0ANome%3A%0AEscola%20ou%20institui%C3%A7%C3%A3o%3A%0APara%20que%20vou%20usar%3A%0A",
+      "requestAction": "Solicitar acesso",
       "downloads": {
         "windows": {
           "url": "https://github.com/ThayTTG/AvaliadorAcademico/releases/latest/download/AvaliadorAcademico-win-x64.zip",

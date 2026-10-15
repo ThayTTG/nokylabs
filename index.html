@@ -813,9 +813,12 @@ const APPS = {
     id: "avaliador", route: "avaliador", name: "Avaliador Acadêmico", parent: "educacao",
     tint: "#2563EB", icon: "cap",
     tagline: "Avalie a turma, registre pontos fortes e o que melhorar, e gere o feedback de cada aluno em planilha.",
-    status: ["Em desenvolvimento", "warn"], version: "2.0.0", repo: "AvaliadorAcademico", repoPublic: false,
+    status: ["Uso restrito", "warn"], version: "2.0.0", repo: "AvaliadorAcademico", repoPublic: false,
+    // Uso restrito: em vez de baixar, a pessoa pede acesso (o catálogo pode trocar este link).
+    requestAccess: "mailto:thaynarcd1178@gmail.com?subject=" + encodeURIComponent("Pedido de acesso: Avaliador Acadêmico")
+      + "&body=" + encodeURIComponent("Olá! Gostaria de usar o Avaliador Acadêmico.\n\nNome:\nEscola ou instituição:\nPara que vou usar:\n"),
     platforms: {
-      windows: { status: "soon", file: "AvaliadorAcademico-win-x64.zip", req: "Windows 10 ou 11 (64 bits)", size: "—" },
+      windows: { status: "request", file: "AvaliadorAcademico-win-x64.zip", req: "Windows 10 ou 11 (64 bits)", size: "—" },
       linux: { status: "none" },
     },
     features: [
@@ -840,7 +843,7 @@ const APPS = {
     ],
     install: {
       windows: [
-        ["Baixe o arquivo", "Pelo NokyLabs Launcher (recomendado) ou pelo botão Baixar para Windows."],
+        ["Peça acesso", "Clique em Solicitar acesso e envie o pedido por e-mail. Quando ele for aprovado, você recebe o arquivo."],
         ["Extraia e abra o app", "Se aparecer o SmartScreen, clique em Mais informações › Executar assim mesmo."],
         ["Configure a chave da Groq (opcional)", "Só é necessária para o resumo por IA. O resto funciona sem ela."],
       ],
@@ -909,6 +912,7 @@ const APPS = {
 const ORDER_UTIL = ["ytdlp", "cubebin", "hotswap"];
 
 const NEWS = [
+  { date: "2026-10-15", app: "avaliador", title: "Avaliador Acadêmico agora é sob pedido", text: "Por ser feito para a sala de aula, o Avaliador passa a ser liberado por pedido de acesso, no site e no NokyLabs Launcher 0.7.1." },
   { date: "2026-10-15", app: "launcher", title: "NokyLabs Launcher 0.7", text: "Atualizar um app não apaga mais as configurações e os dados que ele guarda na própria pasta. Cada app ganhou o link Novidades, com o que mudou na versão." },
   { date: "2026-10-15", app: "cubebin", title: "CubeBin 1.0.1", text: "O executável agora se chama CubeBin.exe. Quem usa o launcher recebe a atualização sozinho." },
   { date: "2026-10-15", app: "launcher", title: "NokyLabs Launcher 0.6 disponível", text: "Primeira versão para baixar, no Windows e no Linux. Mostra quais apps estão abertos, com opção de encerrar, e já vem ligado ao catálogo oficial." },
@@ -1007,6 +1011,7 @@ function pageHome() {
   const mark = (p) => {
     if (!p || p.status === "none") return `<span class="mark no">—</span>`;
     if (p.status === "available") return `<span class="mark yes">${ico("check")}Disponível</span>`;
+    if (p.status === "request") return `<span class="mark soon">${ico("shield")}Sob pedido</span>`;
     return `<span class="mark soon">${ico("clock")}Em breve</span>`;
   };
   return `
@@ -1249,7 +1254,9 @@ function pageApp(app) {
           ${app.repoPublic ? `<a class="chip" href="${repoUrl(app)}" target="_blank" rel="noopener">${ico("code")}Código no GitHub</a>` : ""}
         </div>
         <div class="btn-row">
-          <button class="btn primary" data-jump="baixar">${ico(isGame ? "web" : "download")}${isGame ? "Onde jogar" : "Baixar"}</button>
+          ${app.requestAccess
+            ? `<a class="btn primary" href="${esc(app.requestAccess)}">${ico("shield")}Solicitar acesso</a>`
+            : `<button class="btn primary" data-jump="baixar">${ico(isGame ? "web" : "download")}${isGame ? "Onde jogar" : "Baixar"}</button>`}
           <button class="btn ghost" data-jump="uso">${ico("book")}${isGame ? "Como jogar" : "Como usar"}</button>
         </div>
       </section>
@@ -1291,7 +1298,7 @@ function pageApp(app) {
         </div>
         ${osNote(app)}
         <div class="grid cols-2">${Object.entries(app.platforms).map(([k, p]) => downloadCard(app, k, p)).join("")}</div>
-        ${!isGame && app.id !== "launcher" ? viaLauncher() : ""}
+        ${!isGame && app.id !== "launcher" && !app.requestAccess ? viaLauncher() : ""}
         ${installGuide(app)}
         ${!isGame ? `
         <div class="grid cols-2" style="margin-top:16px">
@@ -1352,6 +1359,8 @@ function downloadCard(app, key, p) {
   if (p.status === "available") {
     const href = key === "web" ? p.url : (p.url || downloadUrl(app, p.file));
     button = `<a class="btn primary" href="${href}" target="_blank" rel="noopener">${ico(key === "web" ? "web" : "download")}${key === "web" ? "Jogar agora" : "Baixar para " + label}</a>`;
+  } else if (p.status === "request") {
+    button = `<a class="btn primary" href="${esc(app.requestAccess)}">${ico("shield")}Solicitar acesso</a>`;
   } else if (p.status === "soon") {
     button = `<button class="btn" disabled>${ico("clock")}Em breve</button>`;
   } else {
@@ -1364,7 +1373,8 @@ function downloadCard(app, key, p) {
         <dt>Requisitos</dt><dd>${esc(p.req)}</dd>
         ${p.size && p.size !== "—" ? `<dt>Tamanho</dt><dd>${esc(p.size)}</dd>` : ""}
       </dl>
-      ${p.status === "soon" ? `<p class="muted">O botão é liberado assim que a versão for publicada.</p>` : ""}`;
+      ${p.status === "soon" ? `<p class="muted">O botão é liberado assim que a versão for publicada.</p>` : ""}
+      ${p.status === "request" ? `<p class="muted">Este app é de uso restrito. Peça acesso por e-mail: quando o pedido for aprovado, você recebe o arquivo.</p>` : ""}`;
   return `<div class="card dl-card ${mine ? "mine" : ""}">
     ${mine ? `<span class="mine-tag">Seu sistema</span>` : ""}
     <div class="plat">${ico(PLATFORM_ICON[key])}<h3>${label}</h3></div>
@@ -1732,7 +1742,15 @@ function applyCatalog(cat) {
   for (const app of Object.values(APPS)) {
     const c = app.id === "launcher" ? cat.launcher
       : (cat.apps || []).find(a => a.id === (CATALOG_ID[app.id] || app.id));
-    if (!c || !c.downloads) continue;
+    if (!c) continue;
+    if (c.requestAccess) {
+      // Uso restrito: nada de download, só o pedido de acesso.
+      app.requestAccess = c.requestAccess;
+      for (const p of Object.values(app.platforms || {})) if (p.status !== "none") p.status = "request";
+      mudou = true;
+      continue;
+    }
+    if (!c.downloads) continue;
     let publicado = false;
     for (const [key, d] of Object.entries(c.downloads)) {
       const p = app.platforms?.[key];
