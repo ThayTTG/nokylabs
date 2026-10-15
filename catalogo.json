@@ -2,22 +2,22 @@
   "_leia": "Catálogo oficial da NokyLabs, lido pelo NokyLabs Launcher. As versões, os links e os SHA-256 são atualizados sozinhos pelo robô do catálogo (veja o README.md). O resto (nomes, descrições, cores, ícones) pode ser editado à mão.",
   "schemaVersion": 1,
   "launcher": {
-    "version": "0.7.0",
-    "notes": "- Atualizar um app não apaga mais as configurações e os dados que ele guarda na própria pasta (como as notas do Avaliador Acadêmico e o filtro de conteúdo do YT-DLP GUI).\n- Novo link **Novidades** em cada app, com o que mudou na versão mais recente. A página Atualizações mostra as novidades antes de você atualizar.\n- O catálogo que vem dentro do launcher agora é sempre o mais recente, para funcionar bem mesmo sem internet.",
+    "version": "0.7.1",
+    "notes": "- Apps de uso restrito, como o Avaliador Acadêmico, agora mostram **Solicitar acesso** em vez de Instalar.",
     "downloads": {
       "windows": {
-        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/download/v0.7.0/NokyLabs-win-x64.zip",
+        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/download/v0.7.1/NokyLabs-win-x64.zip",
         "executable": "NokyLabs.exe",
-        "sha256": "A49B997AED9F0A24EF758C332CD47AD037168A62A8719915A1D5BF525097F679",
+        "sha256": "20616AD883AA961A45B2E5C17643F0B67AC89B4E74E1FC6808D4E93E246A665F",
         "published": true,
-        "size": 41703991
+        "size": 41706278
       },
       "linux": {
-        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/download/v0.7.0/NokyLabs-linux-x64.zip",
+        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/download/v0.7.1/NokyLabs-linux-x64.zip",
         "executable": "NokyLabs",
-        "sha256": "084D5AA85324B4BEAF44083DCF111D981974187881CEC5A717AC8FF313F7D918",
+        "sha256": "937C23EF608768D4538F4D8053C3578C1B1EFD4C6B6285F21E0A9FC6B765346E",
         "published": true,
-        "size": 38209130
+        "size": 38209161
       }
     }
   },
