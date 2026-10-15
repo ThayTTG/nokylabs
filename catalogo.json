@@ -15,8 +15,8 @@
   // Versão mais recente do próprio launcher. Se for maior que a instalada,
   // aparece o aviso "Nova versão do NokyLabs".
   "launcher": {
-    "version": "0.5.0",
-    "notes": "Assistente de instalação, modo portátil, atalhos e desinstalador.",
+    "version": "0.6.0",
+    "notes": "Mostra quais apps estão abertos, com opção de encerrar, e já vem ligado ao catálogo oficial.",
     "downloads": {
       "windows": {
         "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/latest/download/NokyLabs-win-x64.zip",
