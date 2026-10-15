@@ -1,0 +1,61 @@
+name: Robô do catálogo
+
+# Mantém o catalogo.json em dia com os lançamentos de cada app.
+#
+# Roda sozinho de hora em hora. Para atualizar na hora, depois de lançar um app:
+#   aba Actions › "Robô do catálogo" › Run workflow.
+#
+# O que ele faz: lê o último Release de cada repositório citado no catálogo,
+# baixa o pacote, confere se o executável está lá dentro e atualiza versão,
+# link fixo da versão e SHA-256. Se algo estiver errado num app, aquele app
+# fica na versão anterior (que funciona) e o workflow termina em vermelho.
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: robo-catalogo
+  cancel-in-progress: false
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Conferir os lançamentos
+        id: robo
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python -I .github/scripts/atualizar_catalogo.py catalogo.json
+
+      - name: Salvar o catálogo
+        if: steps.robo.outputs.mudou == 'sim'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name  "Robô do catálogo"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add catalogo.json
+          git commit -m "Catálogo: versões atualizadas pelo robô"
+          git pull --rebase --quiet
+          git push
+          # Pede ao GitHub Pages para publicar de novo (commits do robô às vezes não disparam sozinhos).
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" --silent \
+            || echo "::notice::Não consegui pedir a publicação do Pages; ela acontece no próximo commit."
+
+      - name: Resultado
+        if: steps.robo.outcome == 'failure'
+        run: |
+          echo "::error::O robô encontrou problemas em algum app. Veja os avisos acima: os outros apps foram atualizados normalmente."
+          exit 1

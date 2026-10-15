@@ -13,6 +13,7 @@ Utilitários, apps para a sala de aula e jogos, reunidos num só lugar.
 | `favicon.svg` | Ícone da aba |
 | `404.html` | Página de "não encontrado", que volta para o início |
 | `.nojekyll` | Diz ao GitHub Pages para publicar os arquivos como estão |
+| `.github/` | O robô do catálogo e a verificação automática do site |
 
 ## Como editar
 
@@ -24,9 +25,61 @@ Tudo o que muda com frequência fica no começo do `<script>` do `index.html`:
 
 ### Quando lançar um app
 
-1. Publique o `.zip` num Release do repositório do app.
-2. No `index.html`, troque `status: "soon"` por `status: "available"` na plataforma certa do app.
-3. No `catalogo.json`, troque `"published": false` por `true` no mesmo app.
-4. Faça o commit. O site e o launcher passam a oferecer o download.
+1. No repositório do app, aumente o `<Version>` no `.csproj` e envie para o branch `release`.
+   O GitHub compila e publica o lançamento sozinho.
+2. Pronto. Em até uma hora o **robô do catálogo** percebe a versão nova e atualiza o `catalogo.json`
+   (versão, link e SHA-256). Para não esperar: aba **Actions** › **Robô do catálogo** › **Run workflow**.
+3. Só no **primeiro** lançamento de um app é preciso, no `index.html`, trocar `status: "soon"`
+   por `status: "available"` na plataforma certa (e a versão e o tamanho mostrados no site).
+
+## Robô do catálogo
+
+Fica em `.github/scripts/atualizar_catalogo.py` e roda pelo workflow `robo-catalogo.yml`.
+Para cada app, ele olha o último Release do repositório que aparece no link de download e:
+
+- baixa o pacote e confere se o executável indicado em `executable` está lá dentro;
+- grava o link **fixo daquela versão** (`.../releases/download/v1.2.0/...`) e o SHA-256;
+- marca o download como publicado.
+
+Se algo não bater (por exemplo, o executável mudou de nome), aquele app continua na versão
+anterior, que segue funcionando, e o workflow fica vermelho com a explicação. Um app cujo
+repositório ainda não tem lançamento é simplesmente ignorado até ter.
+
+> Por que link fixo e não `releases/latest`? Porque o SHA-256 é de um arquivo específico. Com o
+> "latest", no dia de um lançamento novo o link passaria a entregar o pacote novo com a impressão
+> digital antiga, e o launcher recusaria a instalação.
+
+## Formato do catálogo
+
+```jsonc
+{
+  "schemaVersion": 1,
+  "launcher": { "version": "…", "notes": "texto do aviso de atualização", "downloads": { … } },
+  "apps": [
+    {
+      "id": "hotswap",              // único, nunca muda
+      "name": "HotSwap",
+      "description": "…",
+      "version": "1.1.0",           // o robô atualiza
+      "accent": "#818CF8",          // cor do card
+      "icon": "M7,7 H20 …",         // caminho SVG (viewBox 24×24)
+      "downloads": {
+        "windows": {
+          "url": "https://github.com/ThayTTG/HotSwap/releases/download/v1.1.0/HotSwap-win-x64.zip",
+          "executable": "HotSwap.exe",
+          "sha256": "…",
+          "published": true         // false = "Download em breve"
+        },
+        "linux": null               // null ou ausente = indisponível nesse sistema
+      }
+    }
+  ]
+}
+```
+
+- Apps de navegador usam `"web": "link"` e `"webAction": "Jogar"` no lugar dos downloads.
+- `"comingSoon": true` mostra o card como "Em breve".
+- Para um app novo, basta colocar o link no formato `.../releases/latest/download/arquivo.zip`
+  com `"published": false`: no primeiro lançamento o robô troca pelo link fixo e publica.
 
 As páginas usam endereços com `#` (ex.: `#cubebin`), então tudo funciona no GitHub Pages sem configuração extra.

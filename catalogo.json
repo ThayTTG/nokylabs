@@ -1,38 +1,24 @@
 {
-  // Catálogo oficial de apps do NokyLabs.
-  // Publicado em: https://thayttg.github.io/nokylabs/catalogo.json
-  // Uma cópia vai embutida no launcher (funciona offline).
-  //
-  // Para cada sistema ("windows", "linux", "macos"):
-  //   url        -> link do .zip (ou do executável solto). Pode ser um caminho local para testes.
-  //   executable -> nome do executável depois de extraído
-  //   sha256     -> opcional, confere se o download chegou inteiro
-  //   published  -> false enquanto o arquivo ainda não está nos Releases ("Download em breve")
-  // Apps de navegador: em vez de "downloads", use "web" (link) e "webAction" (texto do botão).
-  // Sistema ausente ou null = app aparece como "Indisponível" naquele sistema.
+  "_leia": "Catálogo oficial da NokyLabs, lido pelo NokyLabs Launcher. As versões, os links e os SHA-256 são atualizados sozinhos pelo robô do catálogo (veja o README.md). O resto (nomes, descrições, cores, ícones) pode ser editado à mão.",
   "schemaVersion": 1,
-
-  // Versão mais recente do próprio launcher. Se for maior que a instalada,
-  // aparece o aviso "Nova versão do NokyLabs".
   "launcher": {
     "version": "0.6.0",
     "notes": "Mostra quais apps estão abertos, com opção de encerrar, e já vem ligado ao catálogo oficial.",
     "downloads": {
       "windows": {
-        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/latest/download/NokyLabs-win-x64.zip",
+        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/download/v0.6.0/NokyLabs-win-x64.zip",
         "executable": "NokyLabs.exe",
-        "sha256": "2ff6909fdf6cb39d4d3a38d6c4742848a7c3ddfaf96dc95898db8989e971987c",
+        "sha256": "2FF6909FDF6CB39D4D3A38D6C4742848A7C3DDFAF96DC95898DB8989E971987C",
         "published": true
       },
       "linux": {
-        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/latest/download/NokyLabs-linux-x64.zip",
+        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/download/v0.6.0/NokyLabs-linux-x64.zip",
         "executable": "NokyLabs",
-        "sha256": "052bc689427db41b827b0508110e48f838e67fe8888a46921dc575eec08e4700",
+        "sha256": "052BC689427DB41B827B0508110E48F838E67FE8888A46921DC575EEC08E4700",
         "published": true
       }
     }
   },
-
   "apps": [
     {
       "id": "hotswap",
@@ -43,7 +29,7 @@
       "icon": "M7,7 H20 M16,3 L20,7 L16,11 M17,17 H4 M8,13 L4,17 L8,21",
       "downloads": {
         "windows": {
-          "url": "https://github.com/ThayTTG/HotSwap/releases/latest/download/HotSwap-win-x64.zip",
+          "url": "https://github.com/ThayTTG/HotSwap/releases/download/v1.1.0/HotSwap-win-x64.zip",
           "executable": "HotSwap.exe",
           "sha256": "024066B9B2FBE9B33E2D1CF0E5F00A5D441682920C1FA67DDB202DB00DE5D34F",
           "published": true
@@ -60,7 +46,7 @@
       "icon": "M12,2.5 L20.5,7.25 V16.75 L12,21.5 L3.5,16.75 V7.25 Z M3.5,7.25 L12,12 L20.5,7.25 M12,12 V21.5",
       "downloads": {
         "windows": {
-          "url": "https://github.com/ThayTTG/CubeBin/releases/latest/download/CubeBin-win-x64.zip",
+          "url": "https://github.com/ThayTTG/CubeBin/releases/download/v1.0.0/CubeBin-win-x64.zip",
           "executable": "CubeBin.App.exe",
           "sha256": "1FD08E346DABB586A167D88855487F33C31B39683CC2426404B5AA99B74AE5DF",
           "published": true
@@ -77,7 +63,7 @@
       "icon": "M5,4.5 H19 A2,2 0 0 1 21,6.5 V17.5 A2,2 0 0 1 19,19.5 H5 A2,2 0 0 1 3,17.5 V6.5 A2,2 0 0 1 5,4.5 Z M10,9 L15,12 L10,15 Z",
       "downloads": {
         "windows": {
-          "url": "https://github.com/ThayTTG/yt-dlp-GUI/releases/latest/download/YtDlpGui-win-x64.zip",
+          "url": "https://github.com/ThayTTG/yt-dlp-GUI/releases/download/v2.0.0/YtDlpGui-win-x64.zip",
           "executable": "YtDlpGui.exe",
           "sha256": "A9A20A1D77D79B0505F6BFB862F55ED61E779477E924F8F6F06F95DF4146882C",
           "published": true

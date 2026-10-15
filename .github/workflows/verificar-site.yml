@@ -1,0 +1,38 @@
+name: Verificar site
+
+# Roda a cada envio: confere se o catalogo.json está válido e se o
+# JavaScript do index.html não tem erro de sintaxe. Assim um errinho
+# aparece aqui em vermelho, antes de quebrar o site ou o launcher.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Catálogo válido
+        run: python -I .github/scripts/atualizar_catalogo.py catalogo.json --conferir
+
+      - name: JavaScript do site sem erros
+        run: |
+          python -I - <<'PY'
+          import re
+          html = open("index.html", encoding="utf-8").read()
+          blocos = re.findall(r"<script>([\s\S]*?)</script>", html)
+          assert blocos, "Nenhum <script> encontrado no index.html"
+          open("site.js", "w", encoding="utf-8").write("\n;\n".join(blocos))
+          PY
+          node --check site.js
+          echo "JavaScript ok."
