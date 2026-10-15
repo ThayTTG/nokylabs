@@ -2,22 +2,22 @@
   "_leia": "Catálogo oficial da NokyLabs, lido pelo NokyLabs Launcher. As versões, os links e os SHA-256 são atualizados sozinhos pelo robô do catálogo (veja o README.md). O resto (nomes, descrições, cores, ícones) pode ser editado à mão.",
   "schemaVersion": 1,
   "launcher": {
-    "version": "0.6.0",
-    "notes": "Mostra quais apps estão abertos, com opção de encerrar, e já vem ligado ao catálogo oficial.",
+    "version": "0.7.0",
+    "notes": "- Atualizar um app não apaga mais as configurações e os dados que ele guarda na própria pasta (como as notas do Avaliador Acadêmico e o filtro de conteúdo do YT-DLP GUI).\n- Novo link **Novidades** em cada app, com o que mudou na versão mais recente. A página Atualizações mostra as novidades antes de você atualizar.\n- O catálogo que vem dentro do launcher agora é sempre o mais recente, para funcionar bem mesmo sem internet.",
     "downloads": {
       "windows": {
-        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/download/v0.6.0/NokyLabs-win-x64.zip",
+        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/download/v0.7.0/NokyLabs-win-x64.zip",
         "executable": "NokyLabs.exe",
-        "sha256": "2FF6909FDF6CB39D4D3A38D6C4742848A7C3DDFAF96DC95898DB8989E971987C",
+        "sha256": "A49B997AED9F0A24EF758C332CD47AD037168A62A8719915A1D5BF525097F679",
         "published": true,
-        "size": 41701119
+        "size": 41703991
       },
       "linux": {
-        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/download/v0.6.0/NokyLabs-linux-x64.zip",
+        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/download/v0.7.0/NokyLabs-linux-x64.zip",
         "executable": "NokyLabs",
-        "sha256": "052BC689427DB41B827B0508110E48F838E67FE8888A46921DC575EEC08E4700",
+        "sha256": "084D5AA85324B4BEAF44083DCF111D981974187881CEC5A717AC8FF313F7D918",
         "published": true,
-        "size": 38205389
+        "size": 38209130
       }
     }
   },
@@ -44,19 +44,20 @@
       "id": "cubebin",
       "name": "CubeBin",
       "description": "Organiza arquivos por extensão em pastas configuráveis e mantém uma auditoria de tudo que foi movido.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "accent": "#C4362E",
       "icon": "M12,2.5 L20.5,7.25 V16.75 L12,21.5 L3.5,16.75 V7.25 Z M3.5,7.25 L12,12 L20.5,7.25 M12,12 V21.5",
       "downloads": {
         "windows": {
-          "url": "https://github.com/ThayTTG/CubeBin/releases/download/v1.0.0/CubeBin-win-x64.zip",
-          "executable": "CubeBin.App.exe",
-          "sha256": "1FD08E346DABB586A167D88855487F33C31B39683CC2426404B5AA99B74AE5DF",
+          "url": "https://github.com/ThayTTG/CubeBin/releases/download/v1.0.1/CubeBin-win-x64.zip",
+          "executable": "CubeBin.exe",
+          "sha256": "387E917A4683822EF9FE3852144D70F417878BF2F50E70CFFB3B0F9743237523",
           "published": true,
-          "size": 75087880
+          "size": 75087851
         },
         "linux": null
-      }
+      },
+      "notes": "- O executável agora se chama `CubeBin.exe`.\r\n- Se o CubeBin abria junto com o Windows, abra-o uma vez depois de atualizar para ele registrar o caminho novo."
     },
     {
       "id": "ytdlp-gui",

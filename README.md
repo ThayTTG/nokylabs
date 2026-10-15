@@ -45,7 +45,10 @@ Para cada app, ele olha o último Release do repositório que aparece no link de
 - marca o download como publicado.
 
 Se algo não bater (por exemplo, o executável mudou de nome), aquele app continua na versão
-anterior, que segue funcionando, e o workflow fica vermelho com a explicação. Um app cujo
+anterior, que segue funcionando, e o workflow fica vermelho com a explicação.
+Quando o executável muda de nome de propósito, troque o `executable` no catálogo e, logo em
+seguida, rode o robô (Actions › Robô do catálogo › Run workflow), para o catálogo não ficar
+misturando o nome novo com o pacote antigo. Um app cujo
 repositório ainda não tem lançamento é simplesmente ignorado até ter.
 
 > Por que link fixo e não `releases/latest`? Porque o SHA-256 é de um arquivo específico. Com o
