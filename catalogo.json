@@ -108,6 +108,16 @@
       "downloads": {}
     },
     {
+      "id": "planingthings",
+      "name": "PlaningThings",
+      "description": "Um app de organização para planejar as suas coisas num lugar só. Ainda em planejamento.",
+      "version": "0.0.0",
+      "accent": "#2DD4BF",
+      "icon": "M9,6 H20 M9,12 H20 M9,18 H20 M3.5,6 L5,7.5 L7,4.5 M3.5,12 L5,13.5 L7,10.5 M4,18 H6",
+      "comingSoon": true,
+      "downloads": {}
+    },
+    {
       "id": "proximo",
       "name": "Próximo utilitário",
       "description": "Espaço reservado para as próximas ideias da NokyLabs.",

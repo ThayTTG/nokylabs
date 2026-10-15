@@ -343,6 +343,12 @@ table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
 .tabs button:hover { background: var(--surface-2); color: var(--fg); }
 .tabs button.on { background: var(--accent-soft); color: var(--accent-ink); }
 .anchor { scroll-margin-top: calc(140px + env(safe-area-inset-top, 0px)); }
+.tabs-row .tab-dl { margin-left: auto; background: var(--accent); color: var(--on-accent); }
+.tabs-row .tab-dl:hover { background: var(--accent-hover); color: var(--on-accent); }
+.tabs-row .tab-dl.on { background: var(--accent); color: var(--on-accent); box-shadow: 0 0 0 3px var(--accent-soft-2); }
+.tab-panel { padding-block: 36px 0; min-height: 40vh; }
+.tab-panel[hidden], .tabs[hidden] { display: none; }
+@media (max-width: 640px) { .tabs-row .tab-dl { margin-left: 0; } }
 
 .feature { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; }
 .feature .fi { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; background: color-mix(in srgb, var(--tint) 14%, transparent); color: var(--tint); }
@@ -554,6 +560,7 @@ const I = {
   cubebin: "M12,2.5 L20.5,7.25 V16.75 L12,21.5 L3.5,16.75 V7.25 Z M3.5,7.25 L12,12 L20.5,7.25 M12,12 V21.5",
   ytdlp: "M5,4.5 H19 A2,2 0 0 1 21,6.5 V17.5 A2,2 0 0 1 19,19.5 H5 A2,2 0 0 1 3,17.5 V6.5 A2,2 0 0 1 5,4.5 Z M10,9 L15,12 L10,15 Z",
   cap: "M2,9.5 L12,5 L22,9.5 L12,14 Z M6,11.5 V16 C6,17.6 9,19 12,19 C15,19 18,17.6 18,16 V11.5 M22,9.5 V14.5",
+  planning: "M9,6 H20 M9,12 H20 M9,18 H20 M3.5,6 L5,7.5 L7,4.5 M3.5,12 L5,13.5 L7,10.5 M4,18 H6",
   blocks: "M4,4 H10 V10 H4 Z M14,10 L17,4 L20,10 Z M14,14 H20 V20 H14 Z M4,17 A3,3 0 1 0 10,17 A3,3 0 1 0 4,17 Z",
   windows: "M3,5.6 L10.5,4.6 V11.5 H3 Z M12.5,4.3 L21,3.2 V11.5 H12.5 Z M3,12.5 H10.5 V19.4 L3,18.4 Z M12.5,12.5 H21 V20.8 L12.5,19.7 Z",
   linux: "M4,5 H20 A1,1 0 0 1 21,6 V18 A1,1 0 0 1 20,19 H4 A1,1 0 0 1 3,18 V6 A1,1 0 0 1 4,5 Z M7,10 L10,12.5 L7,15 M12.5,15 H16.5",
@@ -809,6 +816,19 @@ const APPS = {
     ],
   },
 
+  planingthings: {
+    id: "planingthings", route: "planingthings", name: "PlaningThings", parent: "apps", planned: true,
+    tint: "#0D9488", icon: "planning",
+    tagline: "Um app de organização para planejar as suas coisas num lugar só. Por enquanto, ainda é uma ideia no papel.",
+    status: ["Em planejamento", "muted"], version: "—",
+    platforms: {},
+    features: [],
+    roadmap: [
+      "Definir o que entra na primeira versão",
+      "Montar a primeira versão de teste (alpha)",
+    ],
+  },
+
   avaliador: {
     id: "avaliador", route: "avaliador", name: "Avaliador Acadêmico", parent: "educacao",
     tint: "#2563EB", icon: "cap",
@@ -909,9 +929,10 @@ const APPS = {
   },
 };
 
-const ORDER_UTIL = ["ytdlp", "cubebin", "hotswap"];
+const ORDER_UTIL = ["ytdlp", "cubebin", "hotswap", "planingthings"];
 
 const NEWS = [
+  { date: "2026-10-15", app: "planingthings", title: "PlaningThings entra no planejamento", text: "Um app de organização que estava guardado na gaveta ganhou o seu lugar no site e no NokyLabs Launcher, como \"Em breve\"." },
   { date: "2026-10-15", app: "avaliador", title: "Avaliador Acadêmico agora é sob pedido", text: "Por ser feito para a sala de aula, o Avaliador passa a ser liberado por pedido de acesso, no site e no NokyLabs Launcher 0.7.1." },
   { date: "2026-10-15", app: "launcher", title: "NokyLabs Launcher 0.7", text: "Atualizar um app não apaga mais as configurações e os dados que ele guarda na própria pasta. Cada app ganhou o link Novidades, com o que mudou na versão." },
   { date: "2026-10-15", app: "cubebin", title: "CubeBin 1.0.1", text: "O executável agora se chama CubeBin.exe. Quem usa o launcher recebe a atualização sozinho." },
@@ -1007,7 +1028,7 @@ function launcherMock() {
    ===================================================================== */
 function pageHome() {
   const util = ORDER_UTIL.map(k => APPS[k]);
-  const all = [APPS.launcher, ...util, APPS.avaliador, APPS.blockable];
+  const all = [APPS.launcher, ...util, APPS.avaliador, APPS.blockable].filter(a => !a.planned);
   const mark = (p) => {
     if (!p || p.status === "none") return `<span class="mark no">—</span>`;
     if (p.status === "available") return `<span class="mark yes">${ico("check")}Disponível</span>`;
@@ -1225,13 +1246,19 @@ function pageApp(app) {
   }[app.parent];
   const crumbs = `<nav class="crumbs" aria-label="Você está em"><a href="#home">Início</a><span>›</span>${parentInfo ? `<a href="${parentInfo[0]}">${parentInfo[1]}</a><span>›</span>` : ""}<span>${esc(app.name)}${app.subtitle ? " " + esc(app.subtitle) : ""}</span></nav>`;
   const isGame = !!app.isGame;
+  const hasDownloads = !app.planned && Object.values(app.platforms).some(p => p.status !== "none");
+  const dlLabel = isGame ? "Onde jogar" : app.requestAccess ? "Pedir acesso" : "Baixar";
+  const dlIcon = isGame ? "web" : app.requestAccess ? "shield" : "download";
+  // Uma aba por assunto; só a aba escolhida aparece na tela.
   const tabs = [
     ["visao", "sparkle", "Visão geral"],
-    ["uso", "book", isGame ? "Como jogar" : "Como usar"],
-    ["baixar", "download", isGame ? "Onde jogar" : "Baixar e instalar"],
-    ["duvidas", "help", "Dúvidas"],
-  ];
-  const primaryPlat = Object.entries(app.platforms).find(([, p]) => p.status !== "none");
+    app.howto?.length && ["uso", "book", isGame ? "Como jogar" : "Como usar"],
+    app.faq?.length && ["duvidas", "help", "Dúvidas"],
+    hasDownloads && ["baixar", dlIcon, dlLabel, "tab-dl"],
+  ].filter(Boolean);
+  const ids = tabs.map(x => x[0]);
+  const active = ids.includes(currentTab) ? currentTab : "visao";
+  const panel = id => `class="section tab-panel" id="sec-${id}" data-panel="${id}" role="tabpanel" ${id === active ? "" : "hidden"}`;
 
   return `
   <div style="--tint:${app.tint}">
@@ -1253,24 +1280,19 @@ function pageApp(app) {
           ${app.license ? `<span class="chip">Licença ${app.license}</span>` : ""}
           ${app.repoPublic ? `<a class="chip" href="${repoUrl(app)}" target="_blank" rel="noopener">${ico("code")}Código no GitHub</a>` : ""}
         </div>
-        <div class="btn-row">
-          ${app.requestAccess
-            ? `<a class="btn primary" href="${esc(app.requestAccess)}">${ico("shield")}Solicitar acesso</a>`
-            : `<button class="btn primary" data-jump="baixar">${ico(isGame ? "web" : "download")}${isGame ? "Onde jogar" : "Baixar"}</button>`}
-          <button class="btn ghost" data-jump="uso">${ico("book")}${isGame ? "Como jogar" : "Como usar"}</button>
-        </div>
       </section>
     </div>
 
-    <div class="tabs"><div class="wrap tabs-row" role="tablist" aria-label="Seções">
-      ${tabs.map(([id, ic, label], i) => `<button data-jump="${id}" class="${i === 0 ? "on" : ""}">${ico(ic)}${label}</button>`).join("")}
+    <div class="tabs" ${tabs.length > 1 ? "" : "hidden"}><div class="wrap tabs-row" role="tablist" aria-label="Seções">
+      ${tabs.map(([id, ic, label, cls = ""]) => `<button data-jump="${id}" role="tab" aria-selected="${id === active}" aria-controls="sec-${id}" class="${cls} ${id === active ? "on" : ""}">${ico(ic)}${label}</button>`).join("")}
     </div></div>
 
     <div class="wrap">
-      <section class="section anchor" id="sec-visao">
-        <div class="section-head"><span class="eyebrow">Visão geral</span><h2>${isGame ? "O que já dá para fazer" : "O que ele faz"}</h2></div>
+      <section ${panel("visao")}>
+        <div class="section-head"><span class="eyebrow">Visão geral</span><h2>${isGame ? "O que já dá para fazer" : app.planned ? "A ideia" : "O que ele faz"}</h2></div>
+        ${app.planned ? `<div class="callout info">${ico("info")}<div><b>Ainda na prancheta</b><p>Este app ainda não tem versão de teste. Quando tiver, ele aparece aqui e no NokyLabs Launcher.</p></div></div>` : ""}
         <div class="grid cols-2">
-          ${app.features.map(([ic, t, d]) => `<div class="card feature"><span class="fi">${ico(ic)}</span><div><h3>${t}</h3><p>${d}</p></div></div>`).join("")}
+          ${(app.features || []).map(([ic, t, d]) => `<div class="card feature"><span class="fi">${ico(ic)}</span><div><h3>${t}</h3><p>${d}</p></div></div>`).join("")}
         </div>
         ${isGame ? gameProgress(app) : ""}
         ${app.notes ? `
@@ -1285,15 +1307,15 @@ function pageApp(app) {
         </div>` : ""}
       </section>
 
-      <section class="section anchor" id="sec-uso">
+      ${ids.includes("uso") ? `<section ${panel("uso")}>
         <div class="section-head"><span class="eyebrow">${isGame ? "Como jogar" : "Como usar"}</span><h2>${isGame ? "Do menu à vitória" : "Passo a passo"}</h2></div>
         <ol class="steps">${app.howto.map(([t, d]) => `<li><div><h3>${t}</h3><p>${d}</p></div></li>`).join("")}</ol>
-      </section>
+      </section>` : ""}
 
-      <section class="section anchor" id="sec-baixar">
+      ${hasDownloads ? `<section ${panel("baixar")}>
         <div class="section-head">
-          <span class="eyebrow">${isGame ? "Onde jogar" : "Baixar e instalar"}</span>
-          <h2>${isGame ? "Plataformas" : "Downloads"}</h2>
+          <span class="eyebrow">${isGame ? "Onde jogar" : app.requestAccess ? "Pedir acesso" : "Baixar e instalar"}</span>
+          <h2>${isGame ? "Plataformas" : app.requestAccess ? "Como conseguir o app" : "Downloads"}</h2>
           <p>${isGame ? "O Blockable vai rodar direto no navegador." : `Feito para ${Object.entries(app.platforms).filter(([, p]) => p.status !== "none").map(([k]) => PLATFORM_LABEL[k]).join(" e ")}.`}</p>
         </div>
         ${osNote(app)}
@@ -1305,9 +1327,9 @@ function pageApp(app) {
           <div class="callout">${ico("warn")}<div><b>Aviso azul do Windows (SmartScreen)</b><p>Programas novos sem assinatura digital paga mostram esse aviso. Clique em Mais informações e depois em Executar assim mesmo.</p></div></div>
           <div class="callout info">${ico("shield")}<div><b>Quer conferir o arquivo?</b><p>Cada lançamento publica o SHA-256 do download. No PowerShell, rode <code>Get-FileHash .\\arquivo.zip</code> e compare.</p></div></div>
         </div>` : ""}
-      </section>
+      </section>` : ""}
 
-      <section class="section anchor" id="sec-duvidas">
+      ${ids.includes("duvidas") ? `<section ${panel("duvidas")}>
         <div class="section-head"><span class="eyebrow">Dúvidas</span><h2>Perguntas frequentes</h2></div>
         <div class="faq-tools">
           <label class="search" for="faqSearch">${ico("M4,10.5 A6.5,6.5 0 1 0 17,10.5 A6.5,6.5 0 1 0 4,10.5 Z M15.5,15.5 L20,20")}<input id="faqSearch" type="search" placeholder="Buscar nas dúvidas" autocomplete="off"></label>
@@ -1320,7 +1342,7 @@ function pageApp(app) {
           <div><h3 style="font-size:1.1rem">Não achou a resposta?</h3><p style="color:var(--fg-2)">Mande sua dúvida ou reporte um problema com o ${esc(app.name)}.</p></div>
           <button class="btn soft" data-contact="${app.id}">${ico("mail")}Falar sobre o ${esc(app.name)}</button>
         </div>
-      </section>
+      </section>` : ""}
     </div>
   </div>`;
 }
@@ -1405,7 +1427,7 @@ function installGuide(app) {
 const formatCmd = d => esc(d).replace(/(chmod \+x NokyLabs|\.\/NokyLabs)/g, "<code>$1</code>");
 
 /* ---------- novidades ---------- */
-const NEWS_TAGS = { site: ["Site", "#64748B"], launcher: ["Launcher", "#8B5CF6"], ytdlp: ["YT-DLP GUI", "#EC4899"], cubebin: ["CubeBin", "#A855F7"], hotswap: ["HotSwap", "#6366F1"], avaliador: ["Avaliador", "#2563EB"], blockable: ["Blockable", "#16A34A"] };
+const NEWS_TAGS = { site: ["Site", "#64748B"], launcher: ["Launcher", "#8B5CF6"], ytdlp: ["YT-DLP GUI", "#EC4899"], cubebin: ["CubeBin", "#A855F7"], hotswap: ["HotSwap", "#6366F1"], avaliador: ["Avaliador", "#2563EB"], planingthings: ["PlaningThings", "#0D9488"], blockable: ["Blockable", "#16A34A"] };
 function newsItem(n) {
   const [tag, tint] = NEWS_TAGS[n.app] || ["NokyLabs", "#8B5CF6"];
   return `<li data-app="${n.app}"><time datetime="${n.date}">${fmtDate(n.date)}</time><div><h3><span class="tag" style="--tint:${tint}">${tag}</span>${esc(n.title)}</h3><p>${esc(n.text)}</p></div></li>`;
@@ -1558,6 +1580,7 @@ const ROUTES = {
   cubebin: { nav: "apps", render: () => pageApp(APPS.cubebin), title: "CubeBin" },
   hotswap: { nav: "apps", render: () => pageApp(APPS.hotswap), title: "HotSwap" },
   educacao: { nav: "educacao", render: pageEducacao, title: "Educação" },
+  planingthings: { nav: "apps", render: () => pageApp(APPS.planingthings), title: "PlaningThings" },
   avaliador: { nav: "educacao", render: () => pageApp(APPS.avaliador), title: "Avaliador Acadêmico" },
   jogos: { nav: "jogos", render: pageJogos, title: "Jogos" },
   blockable: { nav: "jogos", render: () => pageApp(APPS.blockable), title: "Blockable" },
@@ -1571,8 +1594,10 @@ const nav = document.getElementById("nav");
 const menuBtn = document.getElementById("menuBtn");
 let mockTimer = null;
 
+let currentTab = null;
 function render() {
-  const key = (location.hash || "#home").slice(1);
+  const [key, tab] = (location.hash || "#home").slice(1).split("/");
+  currentTab = tab || null;
   const route = ROUTES[key] || ROUTES.home;
   nav.innerHTML = NAV.map(([k, l]) => `<a href="#${k}" ${route.nav === k ? 'aria-current="page"' : ""}>${l}</a>`).join("");
   main.innerHTML = `<div class="page">${route.render()}</div>`;
@@ -1584,23 +1609,27 @@ function render() {
 }
 
 function wirePage(key) {
-  // Abas e botões que rolam até uma seção
-  main.querySelectorAll("[data-jump]").forEach(b => b.addEventListener("click", () => {
-    const target = document.getElementById("sec-" + b.dataset.jump);
-    if (target) target.scrollIntoView({ block: "start" });
-  }));
-  const tabButtons = [...main.querySelectorAll(".tabs button")];
-  if (tabButtons.length) {
-    const sections = tabButtons.map(b => document.getElementById("sec-" + b.dataset.jump));
-    const onScroll = () => {
-      let current = 0;
-      sections.forEach((s, i) => { if (s && s.getBoundingClientRect().top < 180) current = i; });
-      tabButtons.forEach((b, i) => b.classList.toggle("on", i === current));
-    };
-    window.onscroll = onScroll;
-  } else {
-    window.onscroll = null;
-  }
+  // Abas da página de um app: mostra só a aba escolhida
+  window.onscroll = null;
+  const tabBar = main.querySelector(".tabs");
+  const showTab = id => {
+    if (!main.querySelector(`[data-panel="${id}"]`)) return;
+    main.querySelectorAll("[data-panel]").forEach(p => p.hidden = p.dataset.panel !== id);
+    main.querySelectorAll(".tabs button").forEach(b => {
+      const on = b.dataset.jump === id;
+      b.classList.toggle("on", on);
+      b.setAttribute("aria-selected", on);
+    });
+    currentTab = id;
+    history.replaceState(null, "", "#" + key + (id === "visao" ? "" : "/" + id));
+    // Se a pessoa já desceu a página, volta para o começo das abas
+    if (tabBar) {
+      const hero = tabBar.previousElementSibling;   // a aba "gruda" no topo logo depois do cabeçalho do app
+      const stick = hero.getBoundingClientRect().bottom + window.scrollY + 28 - 66;
+      if (window.scrollY > stick) window.scrollTo({ top: stick, behavior: "auto" });
+    }
+  };
+  main.querySelectorAll("[data-jump]").forEach(b => b.addEventListener("click", () => showTab(b.dataset.jump)));
 
   // Guia de instalação por sistema
   main.querySelectorAll("[data-inst]").forEach(b => b.addEventListener("click", () => {
