@@ -8,6 +8,7 @@
   //   executable -> nome do executável depois de extraído
   //   sha256     -> opcional, confere se o download chegou inteiro
   //   published  -> false enquanto o arquivo ainda não está nos Releases ("Download em breve")
+  // Apps de navegador: em vez de "downloads", use "web" (link) e "webAction" (texto do botão).
   // Sistema ausente ou null = app aparece como "Indisponível" naquele sistema.
   "schemaVersion": 1,
 
@@ -20,14 +21,14 @@
       "windows": {
         "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/latest/download/NokyLabs-win-x64.zip",
         "executable": "NokyLabs.exe",
-        "sha256": "",
-        "published": false
+        "sha256": "2ff6909fdf6cb39d4d3a38d6c4742848a7c3ddfaf96dc95898db8989e971987c",
+        "published": true
       },
       "linux": {
         "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/latest/download/NokyLabs-linux-x64.zip",
         "executable": "NokyLabs",
-        "sha256": "",
-        "published": false
+        "sha256": "052bc689427db41b827b0508110e48f838e67fe8888a46921dc575eec08e4700",
+        "published": true
       }
     }
   },
@@ -60,9 +61,9 @@
       "downloads": {
         "windows": {
           "url": "https://github.com/ThayTTG/CubeBin/releases/latest/download/CubeBin-win-x64.zip",
-          "executable": "CubeBin.exe",
-          "sha256": "",
-          "published": false
+          "executable": "CubeBin.App.exe",
+          "sha256": "1FD08E346DABB586A167D88855487F33C31B39683CC2426404B5AA99B74AE5DF",
+          "published": true
         },
         "linux": null
       }
@@ -71,15 +72,15 @@
       "id": "ytdlp-gui",
       "name": "YT-DLP GUI",
       "description": "Interface gráfica para o yt-dlp, pensada para usar com a turma em sala de aula.",
-      "version": "9.0.0",
+      "version": "2.0.0",
       "accent": "#F472B6",
       "icon": "M5,4.5 H19 A2,2 0 0 1 21,6.5 V17.5 A2,2 0 0 1 19,19.5 H5 A2,2 0 0 1 3,17.5 V6.5 A2,2 0 0 1 5,4.5 Z M10,9 L15,12 L10,15 Z",
       "downloads": {
         "windows": {
           "url": "https://github.com/ThayTTG/yt-dlp-GUI/releases/latest/download/YtDlpGui-win-x64.zip",
           "executable": "YtDlpGui.exe",
-          "sha256": "",
-          "published": false
+          "sha256": "A9A20A1D77D79B0505F6BFB862F55ED61E779477E924F8F6F06F95DF4146882C",
+          "published": true
         },
         "linux": null
       }
@@ -94,12 +95,23 @@
       "downloads": {
         "windows": {
           "url": "https://github.com/ThayTTG/AvaliadorAcademico/releases/latest/download/AvaliadorAcademico-win-x64.zip",
-          "executable": "AvaliadorAcademico.exe",
+          "executable": "AvaliacaoAlunos.exe",
           "sha256": "",
           "published": false
         },
         "linux": null
       }
+    },
+    {
+      "id": "blockable",
+      "name": "Blockable",
+      "description": "Jogo de arena para até 4 pessoas, no mesmo computador ou online. Roda no navegador.",
+      "version": "0.3.1",
+      "accent": "#22C55E",
+      "icon": "M4,4 H10 V10 H4 Z M14,10 L17,4 L20,10 Z M14,14 H20 V20 H14 Z M4,17 A3,3 0 1 0 10,17 A3,3 0 1 0 4,17 Z",
+      "web": "https://nokyttg.itch.io/blockable-game",
+      "webAction": "Jogar",
+      "downloads": {}
     },
     {
       "id": "proximo",
