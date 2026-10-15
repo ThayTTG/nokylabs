@@ -601,12 +601,16 @@ const I = {
 
 const ico = (name, cls = "") => `<svg class="ico ${cls}" viewBox="0 0 24 24" aria-hidden="true"><path d="${I[name] || name}"/></svg>`;
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const notesList = notes => String(notes).split("\n")
+  .map(l => l.trim()).filter(l => l && !l.startsWith("#"))
+  .map(l => `<li>${ico("sparkle")}<span>${esc(l.replace(/^[-*]\s+/, "").replace(/\*\*|`/g, ""))}</span></li>`).join("");
 
 const PLATFORM_LABEL = { windows: "Windows", linux: "Linux", web: "Navegador" };
 const PLATFORM_ICON = { windows: "windows", linux: "linux", web: "web" };
 
 const repoUrl = app => `https://github.com/${SITE.github}/${app.repo}`;
 const downloadUrl = (app, file) => `${repoUrl(app)}/releases/latest/download/${file}`;
+const fmtSize = bytes => bytes >= 1048576 ? `≈ ${Math.round(bytes / 1048576)} MB` : `≈ ${Math.max(1, Math.round(bytes / 1024))} KB`;
 
 /* =====================================================================
    OS PROJETOS
@@ -680,7 +684,7 @@ const APPS = {
     tagline: "Baixe vídeos e áudios colando um link, sem abrir o terminal. Feito para usar com a turma.",
     status: ["Estável", "ok"], version: "2.0.0", repo: "yt-dlp-GUI", repoPublic: true, license: "MIT",
     platforms: {
-      windows: { status: "available", file: "YtDlpGui-win-x64.zip", req: "Windows 10 ou 11 (64 bits)", size: "≈ 125 MB (com yt-dlp e ffmpeg)" },
+      windows: { status: "available", file: "YtDlpGui-win-x64.zip", req: "Windows 10 ou 11 (64 bits)", size: "≈ 125 MB (com yt-dlp e ffmpeg)", sizeNote: "(com yt-dlp e ffmpeg)" },
       linux: { status: "none" },
     },
     features: [
@@ -722,7 +726,7 @@ const APPS = {
 
   cubebin: {
     id: "cubebin", route: "cubebin", name: "CubeBin", parent: "apps",
-    tint: "#A855F7", icon: "cubebin",
+    tint: "#C4362E", icon: "cubebin",
     tagline: "Organiza suas pastas por tipo de arquivo, guarda um backup de tudo e libera espaço com segurança.",
     status: ["Estável", "ok"], version: "1.0.0", repo: "CubeBin", repoPublic: true, license: "MIT",
     platforms: {
@@ -750,7 +754,7 @@ const APPS = {
     install: {
       windows: [
         ["Baixe o arquivo", "Pelo NokyLabs Launcher (recomendado) ou pelo botão Baixar para Windows."],
-        ["Extraia e abra o CubeBin.App.exe", "Se aparecer o SmartScreen, clique em Mais informações › Executar assim mesmo."],
+        ["Extraia e abra o CubeBin.exe", "Se aparecer o SmartScreen, clique em Mais informações › Executar assim mesmo."],
         ["Configure na primeira abertura", "Escolha as pastas monitoradas e revise as regras antes de organizar."],
       ],
     },
@@ -781,7 +785,7 @@ const APPS = {
       ["sparkle", "Configura sozinho", "Na primeira execução, detecta os monitores e guarda o que cada um suporta num perfis.json."],
       ["power", "Sempre pronto", "Fica discreto na bandeja e pode abrir junto com o Windows."],
     ],
-    roadmap: ["Instalação e atualização pelo NokyLabs Launcher"],
+    roadmap: ["Visual novo, no padrão da NokyLabs"],
     howto: [
       ["Abra o HotSwap", "Ele vai direto para a bandeja do Windows e detecta os seus monitores."],
       ["Monte os perfis", "Pelo clique direito, escolha a resolução e o Hz de cada tela e salve como Perfil 1 e Perfil 2."],
@@ -808,7 +812,7 @@ const APPS = {
     id: "avaliador", route: "avaliador", name: "Avaliador Acadêmico", parent: "educacao",
     tint: "#2563EB", icon: "cap",
     tagline: "Avalie a turma, registre pontos fortes e o que melhorar, e gere o feedback de cada aluno em planilha.",
-    status: ["Em desenvolvimento", "warn"], version: "1.x", repo: "AvaliadorAcademico", repoPublic: false,
+    status: ["Em desenvolvimento", "warn"], version: "2.0.0", repo: "AvaliadorAcademico", repoPublic: false,
     platforms: {
       windows: { status: "soon", file: "AvaliadorAcademico-win-x64.zip", req: "Windows 10 ou 11 (64 bits)", size: "—" },
       linux: { status: "none" },
@@ -1259,6 +1263,11 @@ function pageApp(app) {
           ${app.features.map(([ic, t, d]) => `<div class="card feature"><span class="fi">${ico(ic)}</span><div><h3>${t}</h3><p>${d}</p></div></div>`).join("")}
         </div>
         ${isGame ? gameProgress(app) : ""}
+        ${app.notes ? `
+        <div class="card" style="margin-top:16px">
+          <h3 style="font-size:1.15rem;margin-bottom:12px">Novidades da v${esc(app.version)}</h3>
+          <ul class="roadmap">${notesList(app.notes)}</ul>
+        </div>` : ""}
         ${app.roadmap?.length ? `
         <div class="card" style="margin-top:16px">
           <h3 style="font-size:1.15rem;margin-bottom:12px">O que vem por aí</h3>
@@ -1338,7 +1347,7 @@ function downloadCard(app, key, p) {
   const mine = p.status !== "none" && (key === OS || (key === "web" && app.isGame));
   let button;
   if (p.status === "available") {
-    const href = key === "web" ? p.url : downloadUrl(app, p.file);
+    const href = key === "web" ? p.url : (p.url || downloadUrl(app, p.file));
     button = `<a class="btn primary" href="${href}" target="_blank" rel="noopener">${ico(key === "web" ? "web" : "download")}${key === "web" ? "Jogar agora" : "Baixar para " + label}</a>`;
   } else if (p.status === "soon") {
     button = `<button class="btn" disabled>${ico("clock")}Em breve</button>`;
@@ -1706,6 +1715,47 @@ document.getElementById("footer").innerHTML = `
 window.addEventListener("hashchange", render);
 paintThemeBtn();
 render();
+
+/* =====================================================================
+   CATÁLOGO: versões, links, tamanhos e novidades vêm do catalogo.json,
+   o mesmo arquivo que o NokyLabs Launcher lê (mantido em dia pelo robô
+   do catálogo). O que está escrito em APPS fica como reserva, caso o
+   arquivo não carregue. Assim, lançar uma versão não exige editar o site.
+   ===================================================================== */
+const CATALOG_ID = { ytdlp: "ytdlp-gui" };
+
+function applyCatalog(cat) {
+  let mudou = false;
+  for (const app of Object.values(APPS)) {
+    const c = app.id === "launcher" ? cat.launcher
+      : (cat.apps || []).find(a => a.id === (CATALOG_ID[app.id] || app.id));
+    if (!c || !c.downloads) continue;
+    let publicado = false;
+    for (const [key, d] of Object.entries(c.downloads)) {
+      const p = app.platforms?.[key];
+      if (!p || !d || !d.published || !d.url) continue;
+      publicado = true;
+      p.status = "available";
+      p.url = d.url;
+      p.file = d.url.split("/").pop();
+      if (d.size) p.size = fmtSize(d.size) + (p.sizeNote ? " " + p.sizeNote : "");
+      mudou = true;
+    }
+    if (publicado && c.version) app.version = c.version;
+    if (publicado && c.notes) app.notes = c.notes;
+  }
+  return mudou;
+}
+
+fetch("catalogo.json", { cache: "no-cache" })
+  .then(r => (r.ok ? r.json() : null))
+  .then(cat => {
+    if (!cat || !applyCatalog(cat)) return;
+    const y = window.scrollY;
+    render();
+    window.scrollTo({ top: y, behavior: "auto" });
+  })
+  .catch(() => { /* sem catálogo: o site usa os valores escritos em APPS */ });
 </script>
 </body>
 </html>

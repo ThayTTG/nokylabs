@@ -14,23 +14,26 @@ Utilitários, apps para a sala de aula e jogos, reunidos num só lugar.
 | `404.html` | Página de "não encontrado", que volta para o início |
 | `.nojekyll` | Diz ao GitHub Pages para publicar os arquivos como estão |
 | `.github/` | O robô do catálogo e a verificação automática do site |
+| `docs/identidade-visual.md` | Guia visual comum a todos os apps da NokyLabs |
 
 ## Como editar
 
 Tudo o que muda com frequência fica no começo do `<script>` do `index.html`:
 
 - `SITE`: e-mail de contato e usuário do GitHub.
-- `APPS`: textos, recursos, passo a passo, dúvidas e downloads de cada projeto.
+- `APPS`: textos, recursos, passo a passo e dúvidas de cada projeto. Versões e downloads escritos ali
+  são só a reserva: o site usa o que estiver no `catalogo.json`.
 - `NEWS`: a lista da página Novidades.
 
 ### Quando lançar um app
 
-1. No repositório do app, aumente o `<Version>` no `.csproj` e envie para o branch `release`.
-   O GitHub compila e publica o lançamento sozinho.
+1. No repositório do app, escreva o que mudou no `CHANGELOG.md` (seção `## [Não lançado]`),
+   aumente o `<Version>` no `.csproj` e envie para o branch `release`.
+   O GitHub compila, publica o lançamento com essas notas e registra a versão no CHANGELOG.
 2. Pronto. Em até uma hora o **robô do catálogo** percebe a versão nova e atualiza o `catalogo.json`
-   (versão, link e SHA-256). Para não esperar: aba **Actions** › **Robô do catálogo** › **Run workflow**.
-3. Só no **primeiro** lançamento de um app é preciso, no `index.html`, trocar `status: "soon"`
-   por `status: "available"` na plataforma certa (e a versão e o tamanho mostrados no site).
+   (versão, link, SHA-256, tamanho e novidades). Para não esperar: aba **Actions** › **Robô do catálogo** › **Run workflow**.
+3. O site lê o próprio `catalogo.json`: versão, botão de download, tamanho e "Novidades da versão"
+   se atualizam sozinhos. No `index.html` só ficam os textos (recursos, passo a passo, dúvidas).
 
 ## Robô do catálogo
 

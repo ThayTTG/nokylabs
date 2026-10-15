@@ -136,6 +136,18 @@ def executavel_no_zip(caminho: str, executavel: str) -> bool:
     return False
 
 
+NOVIDADES = re.compile(r"<!--\s*novidades\s*-->(.*?)<!--\s*/novidades\s*-->", re.DOTALL | re.IGNORECASE)
+
+
+def extrair_notas(corpo: str | None) -> str:
+    """As notas ficam entre <!-- novidades --> e <!-- /novidades --> no texto do lançamento."""
+    m = NOVIDADES.search(corpo or "")
+    if not m:
+        return ""
+    notas = m.group(1).strip()
+    return "" if notas == "Melhorias e correções." else notas[:1500]
+
+
 # ---------------------------------------------------------------- versões
 
 def partes(v: str) -> tuple[int, ...]:
@@ -175,7 +187,9 @@ def atualizar_item(nome: str, item: dict) -> bool:
             continue
 
         anexos = {a["name"]: a for a in rel.get("assets", [])}
+        notas = extrair_notas(rel.get("body"))
         novos = {}
+        ajustes = False
         for chave, d, arquivo in itens:
             anexo = anexos.get(arquivo)
             if anexo is None:
@@ -189,6 +203,10 @@ def atualizar_item(nome: str, item: dict) -> bool:
                 and digest and str(d.get("sha256", "")).upper() == digest
             )
             if ja_igual:
+                # Mesmo pacote: só completa o tamanho, se faltar.
+                if anexo.get("size") and d.get("size") != anexo["size"]:
+                    d["size"] = anexo["size"]
+                    ajustes = True
                 continue
 
             # Versão nova (ou dados incompletos): baixa e confere de verdade.
@@ -204,18 +222,25 @@ def atualizar_item(nome: str, item: dict) -> bool:
                     erro(f"{nome}/{chave}: o {arquivo} de {tag} não contém o {exe}. "
                          f"Se o executável mudou de nome, corrija o \"executable\" no catálogo.")
                     continue
-            novos[chave] = {"url": url, "sha256": sha, "published": True}
+            novos[chave] = {"url": url, "sha256": sha, "published": True, "size": anexo.get("size")}
+
+        # Notas da mesma versão que chegaram depois (ex.: lançamento editado).
+        if versao == atual and notas and item.get("notes") != notas:
+            item["notes"] = notas
+            ajustes = True
 
         if not novos:
+            if ajustes:
+                print(f"✓ {nome}: informações da versão {versao} completadas")
+                mudou = True
             continue
         for chave, valores in novos.items():
             downloads[chave].update(valores)
         if versao != atual:
             print(f"✓ {nome}: {atual} → {versao}")
             item["version"] = versao
-            if "notes" in item:
-                # As notas eram da versão anterior; vazio = o launcher mostra um texto padrão.
-                item["notes"] = ""
+            # Notas novas vêm do lançamento; sem elas, as antigas saem (eram da versão anterior).
+            item["notes"] = notas
         else:
             print(f"✓ {nome}: dados da versão {versao} corrigidos")
         mudou = True
