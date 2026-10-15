@@ -674,6 +674,7 @@ const APPS = {
       ["No Linux o ícone da bandeja não aparece.", "Alguns ambientes, como o GNOME sem extensões, não mostram a bandeja. Por isso, no Linux, fechar a janela só minimiza; fechar de novo encerra."],
       ["Como desinstalar?", "Pelo Windows, em Configurações › Aplicativos › Aplicativos instalados, ou dentro do launcher, em Configurações › NokyLabs neste computador. Você escolhe se os apps e as preferências também saem."],
       ["De onde o launcher tira a lista de apps?", "Do catálogo oficial, publicado aqui mesmo no site: <code>https://thayttg.github.io/nokylabs/catalogo.json</code>. A partir da versão 0.6 ele já vem configurado; não precisa colar nada."],
+      ["Atualizar um app apaga as minhas configurações?", "Não. A partir da versão 0.7, o launcher leva para a versão nova tudo o que é seu na pasta do app, como configurações, dados e logs. Só os arquivos do programa são trocados."],
       ["O que acontece quando eu clico em Encerrar?", "O launcher pede para o app fechar, como se você clicasse no X, e dá alguns segundos para ele salvar o que precisar. Só se o app não fechar é que ele é encerrado à força."],
     ],
   },
@@ -908,6 +909,8 @@ const APPS = {
 const ORDER_UTIL = ["ytdlp", "cubebin", "hotswap"];
 
 const NEWS = [
+  { date: "2026-10-15", app: "launcher", title: "NokyLabs Launcher 0.7", text: "Atualizar um app não apaga mais as configurações e os dados que ele guarda na própria pasta. Cada app ganhou o link Novidades, com o que mudou na versão." },
+  { date: "2026-10-15", app: "cubebin", title: "CubeBin 1.0.1", text: "O executável agora se chama CubeBin.exe. Quem usa o launcher recebe a atualização sozinho." },
   { date: "2026-10-15", app: "launcher", title: "NokyLabs Launcher 0.6 disponível", text: "Primeira versão para baixar, no Windows e no Linux. Mostra quais apps estão abertos, com opção de encerrar, e já vem ligado ao catálogo oficial." },
   { date: "2026-10-15", app: "ytdlp", title: "YT-DLP GUI 2.0 disponível", text: "Visual novo inspirado no Launcher, reparo automático e logs. Já vem com yt-dlp e ffmpeg, sem precisar instalar o .NET." },
   { date: "2026-10-15", app: "cubebin", title: "CubeBin 1.0 disponível", text: "Primeira versão pública: organizar, limpar e deletar com backup, sugestões de limpeza e a galeria de Cubos." },
