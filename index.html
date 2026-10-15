@@ -848,7 +848,7 @@ const APPS = {
     tagline: "Jogo de arena para até 4 pessoas, no mesmo computador ou online. O último de pé vence.",
     status: ["Em desenvolvimento", "warn"], version: "0.3.1", repo: "Blockable", repoPublic: true,
     platforms: {
-      web: { status: "soon", file: "Jogar no navegador", req: "Navegador atualizado, no computador ou no celular", size: "—" },
+      web: { status: "available", file: "Página no itch.io", url: "https://nokyttg.itch.io/blockable-game", req: "Navegador atualizado, no computador ou no celular", size: "—" },
       windows: { status: "none" },
     },
     features: [
@@ -881,12 +881,12 @@ const APPS = {
     ],
     install: {
       web: [
-        ["Abra pelo navegador", "Quando a versão de testes for publicada, o link aparece aqui. Não precisa instalar nada."],
+        ["Abra a página no itch.io", "Clique em Jogar agora. O jogo roda direto no navegador, sem instalar nada."],
         ["Chame a turma", "Para o online, cada pessoa abre o jogo no próprio aparelho e entra na mesma sala."],
       ],
     },
     faq: [
-      ["Quando vou poder jogar?", "O Blockable está na versão 0.3.1, em desenvolvimento. Acompanhe a página Novidades para saber quando a versão de testes sair."],
+      ["Onde eu jogo?", "Na página do Blockable no itch.io, direto no navegador. O jogo está em desenvolvimento (versão 0.3.1), então novidades chegam com frequência."],
       ["Tem chat entre jogadores?", "Não, de propósito. Só existem mensagens automáticas do jogo, sem texto digitado, para ser seguro para alunos."],
       ["Precisa instalar?", "Não. O jogo vai rodar direto no navegador, inclusive no celular."],
       ["Dá para jogar sozinho?", "Sim. A IA controla o adversário nas partidas locais."],
@@ -897,6 +897,7 @@ const APPS = {
 const ORDER_UTIL = ["ytdlp", "cubebin", "hotswap"];
 
 const NEWS = [
+  { date: "2026-10-15", app: "blockable", title: "Blockable no itch.io", text: "A versão em desenvolvimento já pode ser jogada no navegador, pela página do jogo no itch.io." },
   { date: "2026-10-14", app: "site", title: "O site da NokyLabs está no ar", text: "Uma casa para todos os projetos, com guias de uso, downloads e um canal para reportar bugs." },
   { date: "2026-10-13", app: "launcher", title: "NokyLabs Launcher 0.5", text: "Assistente de instalação, modo portátil, instalação limpa, atalhos e desinstalador registrado no Windows." },
   { date: "2026-10-13", app: "launcher", title: "NokyLabs Launcher 0.4", text: "Iniciar com o sistema, avisos de novidades, verificação de tempos em tempos e atualizações automáticas opcionais." },
