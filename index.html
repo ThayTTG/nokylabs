@@ -736,7 +736,7 @@ const APPS = {
     id: "cubebin", route: "cubebin", name: "CubeBin", parent: "apps",
     tint: "#C4362E", icon: "cubebin",
     tagline: "Organiza suas pastas por tipo de arquivo, guarda um backup de tudo e libera espaço com segurança.",
-    status: ["Estável", "ok"], version: "1.0.0", repo: "CubeBin", repoPublic: true, license: "MIT",
+    status: ["Estável", "ok"], version: "1.1.0", repo: "CubeBin", repoPublic: true, license: "MIT",
     platforms: {
       windows: { status: "available", file: "CubeBin-win-x64.zip", req: "Windows 10 ou 11 (64 bits)", size: "≈ 75 MB" },
       linux: { status: "none" },
@@ -749,9 +749,7 @@ const APPS = {
       ["brain", "Sugestões de limpeza", "Um agente opcional, que roda no seu computador, aponta duplicados, arquivos esquecidos e os maiores."],
       ["cloud", "Backup no Google Drive", "Compacta, envia e só apaga do PC depois que o envio é confirmado. Cada pacote vira um Cubo na galeria."],
     ],
-    roadmap: [
-      "Página de notas de atualização a cada versão",
-    ],
+    roadmap: [],
     howto: [
       ["Escolha as pastas monitoradas", "Documentos, Área de Trabalho, Downloads ou pastas suas. As pastas padrão do Windows nunca são apagadas."],
       ["Revise as regras", "Confira para onde vai cada extensão. Organizar subpastas é opcional, com aviso de risco."],
@@ -932,6 +930,7 @@ const APPS = {
 const ORDER_UTIL = ["ytdlp", "cubebin", "hotswap", "planingthings"];
 
 const NEWS = [
+  { date: "2026-10-15", app: "cubebin", title: "CubeBin 1.1: visual novo", text: "O CubeBin ganhou o visual da família NokyLabs, mantendo o seu vermelho: menu lateral, mensagens no tema escuro, botões de exclusão em destaque e a nova tela Sobre." },
   { date: "2026-10-15", app: "planingthings", title: "PlaningThings entra no planejamento", text: "Um app de organização que estava guardado na gaveta ganhou o seu lugar no site e no NokyLabs Launcher, como \"Em breve\"." },
   { date: "2026-10-15", app: "avaliador", title: "Avaliador Acadêmico agora é sob pedido", text: "Por ser feito para a sala de aula, o Avaliador passa a ser liberado por pedido de acesso, no site e no NokyLabs Launcher 0.7.1." },
   { date: "2026-10-15", app: "launcher", title: "NokyLabs Launcher 0.7", text: "Atualizar um app não apaga mais as configurações e os dados que ele guarda na própria pasta. Cada app ganhou o link Novidades, com o que mudou na versão." },
