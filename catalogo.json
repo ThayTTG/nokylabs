@@ -36,16 +36,16 @@
     {
       "id": "hotswap",
       "name": "HotSwap",
-      "description": "Troca rápida de resolução e de monitor principal, sem abrir as configurações do sistema.",
-      "version": "1.0.0",
+      "description": "Troque a resolução e o Hz dos monitores, e o conteúdo entre as telas, direto da bandeja do Windows.",
+      "version": "1.1.0",
       "accent": "#818CF8",
       "icon": "M7,7 H20 M16,3 L20,7 L16,11 M17,17 H4 M8,13 L4,17 L8,21",
       "downloads": {
         "windows": {
           "url": "https://github.com/ThayTTG/HotSwap/releases/latest/download/HotSwap-win-x64.zip",
           "executable": "HotSwap.exe",
-          "sha256": "",
-          "published": false
+          "sha256": "024066B9B2FBE9B33E2D1CF0E5F00A5D441682920C1FA67DDB202DB00DE5D34F",
+          "published": true
         },
         "linux": null
       }

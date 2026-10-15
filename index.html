@@ -767,33 +767,40 @@ const APPS = {
   hotswap: {
     id: "hotswap", route: "hotswap", name: "HotSwap", parent: "apps",
     tint: "#6366F1", icon: "hotswap",
-    tagline: "Troque a resolução e o monitor principal em um clique, sem abrir as configurações do sistema.",
-    status: ["Em breve", "warn"], version: "—", repo: "HotSwap", repoPublic: true,
+    tagline: "Troque a resolução e o Hz dos monitores, e o conteúdo entre as telas, direto da bandeja do Windows.",
+    status: ["Estável", "ok"], version: "1.1.0", repo: "HotSwap", repoPublic: true, license: "MIT",
     platforms: {
-      windows: { status: "soon", file: "HotSwap-win-x64.zip", req: "Windows 10 ou 11 (64 bits)", size: "—" },
+      windows: { status: "available", file: "HotSwap-win-x64.zip", req: "Windows 10 ou 11 (64 bits)", size: "≈ 68 MB" },
       linux: { status: "none" },
     },
     features: [
-      ["monitor", "Todos os monitores à vista", "Mostra as telas conectadas, inclusive o projetor, e as resoluções que cada uma aceita."],
-      ["hotswap", "Troca rápida", "Muda a resolução ou o monitor principal sem passar pelas Configurações do Windows."],
-      ["users", "Pensado para a sala de aula", "Ótimo para alternar entre o monitor e o projetor na hora da aula."],
+      ["monitor", "Dois perfis de tela", "Alterne entre duas configurações, como produtividade e jogos, com um duplo clique no ícone da bandeja."],
+      ["hotswap", "Troca de conteúdo entre telas", "Com Ctrl+Alt+S, todas as janelas de uma tela vão para a outra e vice-versa, sem mudar os monitores de lugar."],
+      ["list", "Todas as resoluções à mão", "O clique direito mostra as resoluções e taxas de atualização de cada monitor, com o modo atual marcado."],
+      ["code", "Atalhos de qualquer lugar", "Ctrl+Alt+R alterna os perfis mesmo com outro programa em foco."],
+      ["sparkle", "Configura sozinho", "Na primeira execução, detecta os monitores e guarda o que cada um suporta num perfis.json."],
+      ["power", "Sempre pronto", "Fica discreto na bandeja e pode abrir junto com o Windows."],
     ],
-    roadmap: ["Primeiro lançamento público"],
+    roadmap: ["Instalação e atualização pelo NokyLabs Launcher"],
     howto: [
-      ["Abra o HotSwap", "Os monitores conectados aparecem na tela."],
-      ["Escolha a tela", "Clique no monitor ou projetor que você quer ajustar."],
-      ["Escolha a resolução ou defina como principal", "A mudança vale na hora."],
+      ["Abra o HotSwap", "Ele vai direto para a bandeja do Windows e detecta os seus monitores."],
+      ["Monte os perfis", "Pelo clique direito, escolha a resolução e o Hz de cada tela e salve como Perfil 1 e Perfil 2."],
+      ["Alterne com um duplo clique", "Ou use Ctrl+Alt+R de qualquer lugar. O ícone mostra qual perfil está ativo."],
+      ["Troque o conteúdo das telas", "Ctrl+Alt+S leva as janelas de uma tela para a outra."],
     ],
     install: {
       windows: [
         ["Baixe o arquivo", "Pelo NokyLabs Launcher (recomendado) ou pelo botão Baixar para Windows."],
-        ["Extraia e abra o HotSwap.exe", "Se aparecer o SmartScreen, clique em Mais informações › Executar assim mesmo."],
+        ["Extraia numa pasta permanente", "Por exemplo, Documentos\\HotSwap. Evite rodar direto da pasta Downloads."],
+        ["Abra o HotSwap.exe", "Se aparecer o SmartScreen, clique em Mais informações › Executar assim mesmo. O ícone aparece na bandeja."],
       ],
     },
     faq: [
-      ["Funciona com projetor?", "Sim. Para o Windows, o projetor é mais um monitor, e ele aparece na lista."],
-      ["Escolhi uma resolução e a imagem sumiu. E agora?", "Desconecte e reconecte o cabo, ou use Windows + P para voltar a projeção para a tela do computador. Depois, abra o HotSwap e escolha outra resolução."],
-      ["Funciona no Linux?", "Ainda não. Por enquanto é só para Windows."],
+      ["Precisa instalar o .NET?", "Não. O HotSwap.exe já vem com tudo o que precisa."],
+      ["Funciona com projetor?", "Sim. Para o Windows, o projetor é mais um monitor, e ele aparece no menu."],
+      ["Escolhi uma resolução e a imagem sumiu. E agora?", "Use Windows + P para voltar a imagem para a tela do computador, ou desconecte e reconecte o cabo. Depois, escolha outra resolução no menu do HotSwap."],
+      ["Onde ficam os perfis?", "No arquivo perfis.json, organizado por monitor. Ele é criado na primeira execução."],
+      ["Funciona no Linux?", "Não. O HotSwap usa recursos do Windows para trocar a resolução."],
     ],
   },
 
@@ -897,6 +904,7 @@ const APPS = {
 const ORDER_UTIL = ["ytdlp", "cubebin", "hotswap"];
 
 const NEWS = [
+  { date: "2026-10-15", app: "hotswap", title: "HotSwap 1.1.0 disponível", text: "Primeira versão para baixar: perfis de tela com duplo clique, troca de conteúdo entre telas e atalhos globais. Não precisa instalar o .NET." },
   { date: "2026-10-15", app: "blockable", title: "Blockable no itch.io", text: "A versão em desenvolvimento já pode ser jogada no navegador, pela página do jogo no itch.io." },
   { date: "2026-10-14", app: "site", title: "O site da NokyLabs está no ar", text: "Uma casa para todos os projetos, com guias de uso, downloads e um canal para reportar bugs." },
   { date: "2026-10-13", app: "launcher", title: "NokyLabs Launcher 0.5", text: "Assistente de instalação, modo portátil, instalação limpa, atalhos e desinstalador registrado no Windows." },
