@@ -24,8 +24,8 @@
   --surface-2: #EFEBF6;
   --border: #E1DAEC;
   --fg: #1D1530;
-  --fg-2: #574D6E;
-  --fg-3: #857B9C;
+  --fg-2: #4A4061;
+  --fg-3: #6A6082;
   --accent: #EA580C;
   --accent-hover: #C2410C;
   --accent-ink: #C2410C;
@@ -56,7 +56,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #0F0B1A; --surface: #1B1530; --surface-2: #231B3E; --border: #2C2347;
-    --fg: #F2EEFF; --fg-2: #A99FC7; --fg-3: #786E9B;
+    --fg: #F2EEFF; --fg-2: #B8AFD4; --fg-3: #9087B2;
     --accent: #8B5CF6; --accent-hover: #9D74FF; --accent-ink: #C4B5FD;
     --accent-soft: rgba(139, 92, 246, .16); --accent-soft-2: rgba(139, 92, 246, .28); --on-accent: #FFFFFF;
     --brand-a: #6D28D9; --brand-b: #C084FC;
@@ -71,7 +71,7 @@
 }
 :root[data-theme="dark"] {
   --bg: #0F0B1A; --surface: #1B1530; --surface-2: #231B3E; --border: #2C2347;
-  --fg: #F2EEFF; --fg-2: #A99FC7; --fg-3: #786E9B;
+  --fg: #F2EEFF; --fg-2: #B8AFD4; --fg-3: #9087B2;
   --accent: #8B5CF6; --accent-hover: #9D74FF; --accent-ink: #C4B5FD;
   --accent-soft: rgba(139, 92, 246, .16); --accent-soft-2: rgba(139, 92, 246, .28); --on-accent: #FFFFFF;
   --brand-a: #6D28D9; --brand-b: #C084FC;
@@ -85,13 +85,13 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; font-size: 106.25%; }
 body {
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -102,7 +102,11 @@ a { color: var(--accent-ink); text-decoration-thickness: 1px; text-underline-off
 a:hover { color: var(--accent-hover); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
 h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.12; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
-p { margin: 0; }
+p { margin: 0; text-wrap: pretty; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip-link { position: absolute; left: 12px; top: -60px; z-index: 100; background: var(--accent); color: var(--on-accent); padding: 10px 16px; border-radius: 10px; font-weight: 700; text-decoration: none; }
+.skip-link:focus { top: 12px; color: var(--on-accent); }
+main:focus { outline: none; }
 code, .mono { font-family: var(--font-mono); font-size: .88em; }
 code { background: var(--surface-2); border: 1px solid var(--border); padding: .08em .4em; border-radius: 6px; overflow-wrap: anywhere; }
 
@@ -138,7 +142,7 @@ code { background: var(--surface-2); border: 1px solid var(--border); padding: .
 .logo-text { font-family: var(--font-display); font-weight: 800; font-size: 1.2rem; letter-spacing: -.02em; }
 .nav { display: flex; gap: 2px; margin-left: auto; }
 .nav a {
-  color: var(--fg-2); text-decoration: none; font-weight: 600; font-size: .93rem;
+  color: var(--fg-2); text-decoration: none; font-weight: 600; font-size: .96rem;
   padding: 8px 12px; border-radius: 999px;
 }
 .nav a:hover { color: var(--fg); background: var(--surface-2); }
@@ -186,12 +190,12 @@ main { padding-block: 0 72px; }
   font-family: var(--font-mono); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase;
   color: var(--accent-ink); font-weight: 500;
 }
-.lead { color: var(--fg-2); font-size: 1.1rem; max-width: 62ch; }
-.muted { color: var(--fg-3); font-size: .9rem; }
+.lead { color: var(--fg-2); font-size: 1.12rem; line-height: 1.7; max-width: 60ch; }
+.muted { color: var(--fg-3); font-size: .92rem; }
 .section { padding-block: 56px 0; }
 .section-head { display: grid; gap: 8px; margin-bottom: 24px; }
 .section-head h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
-.section-head p { color: var(--fg-2); max-width: 64ch; }
+.section-head p { color: var(--fg-2); max-width: 64ch; font-size: 1.03rem; }
 .card {
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
   padding: 22px; min-width: 0;
@@ -203,7 +207,7 @@ main { padding-block: 0 72px; }
 
 .pill {
   display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 999px;
-  font-size: .78rem; font-weight: 700; white-space: nowrap;
+  font-size: .82rem; font-weight: 700; white-space: nowrap;
 }
 .pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
 .pill.ok { color: var(--ok); background: var(--ok-soft); }
@@ -213,7 +217,7 @@ main { padding-block: 0 72px; }
 
 .chip {
   display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 8px;
-  font-size: .82rem; font-weight: 600; color: var(--fg-2); background: var(--surface-2); border: 1px solid var(--border);
+  font-size: .86rem; font-weight: 600; color: var(--fg-2); background: var(--surface-2); border: 1px solid var(--border);
 }
 .chip .ico { width: 15px; height: 15px; }
 .chip.off { opacity: .55; text-decoration: line-through; }
@@ -285,7 +289,7 @@ main { padding-block: 0 72px; }
 .cat-card { display: grid; gap: 12px; text-decoration: none; color: var(--fg); transition: border-color .15s, transform .15s, background .15s; }
 .cat-card:hover { color: var(--fg); border-color: var(--accent-soft-2); transform: translateY(-2px); }
 .cat-card h3 { font-size: 1.25rem; }
-.cat-card p { color: var(--fg-2); font-size: .95rem; }
+.cat-card p { color: var(--fg-2); font-size: 1rem; }
 .cat-card .go { display: inline-flex; align-items: center; gap: 6px; color: var(--accent-ink); font-weight: 700; font-size: .9rem; margin-top: auto; }
 
 .app-card { display: grid; gap: 14px; grid-template-rows: auto auto 1fr auto; text-decoration: none; color: var(--fg); transition: border-color .15s, transform .15s; }
@@ -293,18 +297,18 @@ main { padding-block: 0 72px; }
 .app-card .head { display: flex; align-items: start; justify-content: space-between; gap: 10px; }
 .app-card h3 { font-size: 1.3rem; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
 .app-card h3 small { font-family: var(--font-mono); font-size: .72rem; font-weight: 500; color: var(--fg-3); letter-spacing: .04em; text-transform: uppercase; }
-.app-card p { color: var(--fg-2); font-size: .95rem; }
+.app-card p { color: var(--fg-2); font-size: 1rem; }
 .app-card .foot { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 
 /* ---------- tabela de plataformas ---------- */
 .table-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
 table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
-.matrix th, .matrix td { padding: 13px 16px; text-align: left; border-bottom: 1px solid var(--border); font-size: .93rem; }
+.matrix th, .matrix td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--border); font-size: .98rem; }
 .matrix tr:last-child td { border-bottom: 0; }
-.matrix th { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .07em; text-transform: uppercase; color: var(--fg-3); font-weight: 500; }
+.matrix th { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .07em; text-transform: uppercase; color: var(--fg-3); font-weight: 500; }
 .matrix td:first-child a { color: var(--fg); font-weight: 700; text-decoration: none; display: inline-flex; gap: 10px; align-items: center; }
 .matrix td:first-child a:hover { color: var(--accent-ink); }
-.mark { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: .86rem; }
+.mark { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: .92rem; }
 .mark.yes { color: var(--ok); }
 .mark.soon { color: var(--warn); }
 .mark.no { color: var(--fg-3); }
@@ -314,11 +318,11 @@ table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
 /* ---------- caminhos de download (home) ---------- */
 .path-card { display: grid; gap: 12px; }
 .path-card h3 { font-size: 1.2rem; }
-.path-card ol { margin: 0; padding-left: 1.2em; color: var(--fg-2); display: grid; gap: 4px; }
+.path-card ol { margin: 0; padding-left: 1.2em; color: var(--fg-2); display: grid; gap: 6px; }
 .path-card.featured { border-color: var(--accent-soft-2); background: linear-gradient(160deg, var(--accent-soft), var(--surface) 55%); }
 
 /* ---------- página de app ---------- */
-.crumbs { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: .88rem; color: var(--fg-3); padding-top: 28px; }
+.crumbs { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: .93rem; color: var(--fg-3); padding-top: 28px; }
 .crumbs a { color: var(--fg-2); text-decoration: none; }
 .crumbs a:hover { color: var(--accent-ink); }
 .app-hero { padding-block: 22px 8px; display: grid; gap: 22px; }
@@ -353,8 +357,8 @@ table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
 .feature { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; }
 .feature .fi { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; background: color-mix(in srgb, var(--tint) 14%, transparent); color: var(--tint); }
 .feature .fi .ico { width: 19px; height: 19px; }
-.feature h3 { font-size: 1.02rem; font-family: var(--font-body); font-weight: 700; letter-spacing: 0; margin-bottom: 2px; }
-.feature p { color: var(--fg-2); font-size: .93rem; }
+.feature h3 { font-size: 1.08rem; font-family: var(--font-body); font-weight: 700; letter-spacing: 0; margin-bottom: 2px; }
+.feature p { color: var(--fg-2); font-size: 1rem; }
 
 .roadmap { display: grid; gap: 10px; }
 .roadmap li { list-style: none; display: flex; gap: 12px; align-items: start; color: var(--fg-2); }
@@ -371,13 +375,13 @@ table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
   width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
   background: var(--accent-soft); color: var(--accent-ink);
 }
-.steps h3 { font-family: var(--font-body); font-size: 1.04rem; font-weight: 700; letter-spacing: 0; margin-bottom: 3px; }
-.steps p { color: var(--fg-2); font-size: .95rem; }
+.steps h3 { font-family: var(--font-body); font-size: 1.1rem; font-weight: 700; letter-spacing: 0; margin-bottom: 4px; }
+.steps p { color: var(--fg-2); font-size: 1rem; max-width: 66ch; }
 .steps > li > div { min-width: 0; }
 
 .os-note {
   display: flex; gap: 12px; align-items: center; padding: 12px 16px; border-radius: 12px;
-  background: var(--accent-soft); color: var(--fg); font-size: .93rem; margin-bottom: 16px;
+  background: var(--accent-soft); color: var(--fg); font-size: 1rem; margin-bottom: 16px;
 }
 .os-note .ico { color: var(--accent-ink); }
 .dl-card { display: grid; gap: 14px; align-content: start; position: relative; }
@@ -386,7 +390,7 @@ table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
 .dl-card .plat { display: flex; align-items: center; gap: 10px; }
 .dl-card .plat .ico { width: 26px; height: 26px; color: var(--fg-2); }
 .dl-card h3 { font-size: 1.15rem; }
-.dl-card dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin: 0; font-size: .88rem; }
+.dl-card dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin: 0; font-size: .95rem; }
 .dl-card dt { color: var(--fg-3); }
 .dl-card dd { margin: 0; color: var(--fg-2); min-width: 0; overflow-wrap: anywhere; }
 .dl-card .btn { width: 100%; }
@@ -402,7 +406,7 @@ table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
 
 .callout {
   display: grid; grid-template-columns: auto 1fr; gap: 12px; padding: 16px 18px; border-radius: 14px;
-  background: var(--warn-soft); border: 1px solid color-mix(in srgb, var(--warn) 30%, transparent); font-size: .93rem;
+  background: var(--warn-soft); border: 1px solid color-mix(in srgb, var(--warn) 30%, transparent); font-size: 1rem;
 }
 .callout .ico { color: var(--warn); margin-top: 2px; }
 .callout b { display: block; margin-bottom: 2px; }
@@ -414,12 +418,12 @@ table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
 .faq details { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 0 18px; }
 .faq details[open] { border-color: var(--accent-soft-2); }
 .faq summary {
-  cursor: pointer; list-style: none; padding: 16px 0; font-weight: 700; display: flex; justify-content: space-between; gap: 16px; align-items: center;
+  cursor: pointer; list-style: none; padding: 18px 0; font-weight: 700; font-size: 1.04rem; display: flex; justify-content: space-between; gap: 16px; align-items: center;
 }
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary .ico { transition: transform .2s; color: var(--fg-3); }
 .faq details[open] summary .ico { transform: rotate(45deg); color: var(--accent-ink); }
-.faq .answer { padding: 0 0 18px; color: var(--fg-2); display: grid; gap: 8px; max-width: 72ch; }
+.faq .answer { padding: 0 0 18px; color: var(--fg-2); display: grid; gap: 8px; max-width: 68ch; font-size: 1rem; line-height: 1.7; }
 .faq-tools { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
 .search {
   flex: 1 1 260px; display: flex; align-items: center; gap: 10px; padding: 0 14px;
@@ -434,7 +438,7 @@ table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
 .shape { width: 46px; height: 46px; }
 .progress-list { display: grid; gap: 12px; }
 .progress-item { display: grid; gap: 6px; }
-.progress-item .row { display: flex; justify-content: space-between; gap: 12px; font-size: .92rem; }
+.progress-item .row { display: flex; justify-content: space-between; gap: 12px; font-size: 1rem; }
 .progress-item .row span:last-child { color: var(--fg-3); font-family: var(--font-mono); font-size: .8rem; }
 .track { height: 8px; background: var(--surface-2); border-radius: 99px; overflow: hidden; }
 .track i { display: block; height: 100%; background: var(--tint, var(--accent)); border-radius: 99px; }
@@ -443,15 +447,15 @@ table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
 .timeline { display: grid; gap: 0; padding: 0; margin: 0; }
 .timeline li { list-style: none; display: grid; grid-template-columns: 110px 1fr; gap: 22px; padding-block: 18px; border-bottom: 1px solid var(--border); }
 .timeline li:last-child { border-bottom: 0; }
-.timeline time { font-family: var(--font-mono); font-size: .82rem; color: var(--fg-3); padding-top: 3px; }
-.timeline h3 { font-size: 1.1rem; font-family: var(--font-body); font-weight: 700; letter-spacing: 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.timeline p { color: var(--fg-2); font-size: .95rem; margin-top: 4px; }
-.timeline .tag { font-family: var(--font-mono); font-size: .72rem; padding: 2px 8px; border-radius: 6px; background: color-mix(in srgb, var(--tint) 15%, transparent); color: var(--tint); font-weight: 500; }
+.timeline time { font-family: var(--font-mono); font-size: .86rem; color: var(--fg-3); padding-top: 3px; }
+.timeline h3 { font-size: 1.15rem; font-family: var(--font-body); font-weight: 700; letter-spacing: 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.timeline p { color: var(--fg-2); font-size: 1rem; margin-top: 6px; max-width: 66ch; }
+.timeline .tag { font-family: var(--font-mono); font-size: .76rem; padding: 2px 8px; border-radius: 6px; background: color-mix(in srgb, var(--tint) 15%, transparent); color: var(--tint); font-weight: 500; }
 @media (max-width: 600px) { .timeline li { grid-template-columns: 1fr; gap: 4px; } }
 .filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
 .filters button {
-  border: 1px solid var(--border); background: var(--surface); color: var(--fg-2); font: 600 .86rem var(--font-body);
-  padding: 7px 13px; border-radius: 99px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface); color: var(--fg-2); font: 600 .92rem var(--font-body);
+  padding: 8px 14px; border-radius: 99px; cursor: pointer;
 }
 .filters button.on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 
@@ -465,10 +469,10 @@ table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
 .form { display: grid; gap: 14px; }
 .form-row { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
 .field { display: grid; gap: 6px; min-width: 0; }
-.field label { font-weight: 700; font-size: .88rem; }
-.field .hint { color: var(--fg-3); font-size: .8rem; }
+.field label, .field .label { font-weight: 700; font-size: .95rem; }
+.field .hint { color: var(--fg-3); font-size: .86rem; }
 .field input, .field select, .field textarea {
-  width: 100%; font: 500 .95rem var(--font-body); color: var(--fg);
+  width: 100%; font: 500 1rem var(--font-body); color: var(--fg);
   background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 11px 12px;
 }
 .field textarea { min-height: 92px; resize: vertical; line-height: 1.5; }
@@ -476,12 +480,12 @@ table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
 .seg { display: flex; gap: 6px; flex-wrap: wrap; }
 .seg label {
   display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 10px; cursor: pointer;
-  border: 1px solid var(--border); background: var(--surface); font-weight: 600; font-size: .9rem; color: var(--fg-2);
+  border: 1px solid var(--border); background: var(--surface); font-weight: 600; font-size: .95rem; color: var(--fg-2);
 }
 .seg input { accent-color: var(--accent); }
 .seg label:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-ink); }
 .preview {
-  font-family: var(--font-mono); font-size: .8rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere;
+  font-family: var(--font-mono); font-size: .85rem; line-height: 1.65; white-space: pre-wrap; overflow-wrap: anywhere;
   background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin: 0;
   max-height: 340px; overflow: auto; color: var(--fg-2);
 }
@@ -489,7 +493,7 @@ table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
 @media (min-width: 1000px) { .contact-layout { grid-template-columns: 1.15fr .85fr; } }
 .contact-side { display: grid; gap: 16px; }
 .check-list { display: grid; gap: 10px; padding: 0; margin: 0; }
-.check-list li { list-style: none; display: grid; grid-template-columns: auto 1fr; gap: 10px; color: var(--fg-2); font-size: .93rem; }
+.check-list li { list-style: none; display: grid; grid-template-columns: auto 1fr; gap: 10px; color: var(--fg-2); font-size: 1rem; }
 .check-list .ico { color: var(--ok); margin-top: 3px; width: 17px; height: 17px; }
 .toast {
   position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(20px);
@@ -499,13 +503,13 @@ table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 /* ---------- rodapé ---------- */
-.site-footer { border-top: 1px solid var(--border); padding-block: 36px 40px; color: var(--fg-3); font-size: .9rem; }
+.site-footer { border-top: 1px solid var(--border); padding-block: 36px 40px; color: var(--fg-2); font-size: .95rem; }
 .footer-row { display: flex; flex-wrap: wrap; gap: 24px 48px; justify-content: space-between; }
 .footer-col { display: grid; gap: 8px; align-content: start; min-width: 0; }
 .footer-col b { color: var(--fg); font-size: .9rem; }
 .footer-col a { color: var(--fg-2); text-decoration: none; }
 .footer-col a:hover { color: var(--accent-ink); }
-.footer-mail { font-family: var(--font-mono); font-size: .85rem; overflow-wrap: anywhere; }
+.footer-mail { font-family: var(--font-mono); font-size: .88rem; overflow-wrap: anywhere; }
 
 .empty { padding: 28px; text-align: center; color: var(--fg-3); }
 .split { display: grid; gap: 28px; grid-template-columns: 1fr; align-items: start; }
@@ -520,6 +524,7 @@ table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#app" id="skipLink">Pular para o conteúdo</a>
 <header class="site-header">
   <div class="wrap header-row">
     <a class="logo" href="#home" aria-label="NokyLabs, página inicial">
@@ -843,7 +848,7 @@ const APPS = {
       ["list", "Avaliação completa", "Notas, pontos fortes, pontos a melhorar e um relato para cada aluno."],
       ["table", "Feedback em planilha", "Gera um arquivo .xlsx por turma, pronto para compartilhar."],
       ["sparkle", "Resumo escrito por IA", "Opcional: um resumo do desempenho de cada aluno, usando a sua própria chave da Groq."],
-      ["users", "Cada professora com seus dados", "Pode ser repassado para colegas: cada pessoa usa a própria base e a própria chave."],
+      ["users", "Cada pessoa com seus dados", "Pode ser repassado para colegas: cada pessoa usa a própria base de dados e a própria chave."],
       ["palette", "Tema claro e escuro", "Começa no claro, com a cor azul do app, e alterna para o escuro quando você quiser."],
       ["shield", "Dados protegidos", "Valida antes de salvar, confere a integridade dos arquivos e guarda um registro de erros."],
     ],
@@ -921,7 +926,7 @@ const APPS = {
     faq: [
       ["Onde eu jogo?", "Na página do Blockable no itch.io, direto no navegador. O jogo está em desenvolvimento (versão 0.3.1), então novidades chegam com frequência."],
       ["Tem chat entre jogadores?", "Não, de propósito. Só existem mensagens automáticas do jogo, sem texto digitado, para ser seguro para alunos."],
-      ["Precisa instalar?", "Não. O jogo vai rodar direto no navegador, inclusive no celular."],
+      ["Precisa instalar?", "Não. O jogo roda direto no navegador, inclusive no celular."],
       ["Dá para jogar sozinho?", "Sim. A IA controla o adversário nas partidas locais."],
     ],
   },
@@ -930,6 +935,7 @@ const APPS = {
 const ORDER_UTIL = ["ytdlp", "cubebin", "hotswap", "planingthings"];
 
 const NEWS = [
+  { date: "2026-10-18", app: "site", title: "Site mais fácil de ler", text: "Letras maiores, mais contraste nos textos de apoio e frases mais diretas em todas as páginas. O site também ganhou o link Pular para o conteúdo e leitura melhor para leitores de tela." },
   { date: "2026-10-15", app: "cubebin", title: "CubeBin 1.1: visual novo", text: "O CubeBin ganhou o visual da família NokyLabs, mantendo o seu vermelho: menu lateral, mensagens no tema escuro, botões de exclusão em destaque e a nova tela Sobre." },
   { date: "2026-10-15", app: "planingthings", title: "PlaningThings entra no planejamento", text: "Um app de organização que estava guardado na gaveta ganhou o seu lugar no site e no NokyLabs Launcher, como \"Em breve\"." },
   { date: "2026-10-15", app: "avaliador", title: "Avaliador Acadêmico agora é sob pedido", text: "Por ser feito para a sala de aula, o Avaliador passa a ser liberado por pedido de acesso, no site e no NokyLabs Launcher 0.7.1." },
@@ -1029,7 +1035,7 @@ function pageHome() {
   const util = ORDER_UTIL.map(k => APPS[k]);
   const all = [APPS.launcher, ...util, APPS.avaliador, APPS.blockable].filter(a => !a.planned);
   const mark = (p) => {
-    if (!p || p.status === "none") return `<span class="mark no">—</span>`;
+    if (!p || p.status === "none") return `<span class="mark no" aria-hidden="true">—</span><span class="sr-only">Indisponível</span>`;
     if (p.status === "available") return `<span class="mark yes">${ico("check")}Disponível</span>`;
     if (p.status === "request") return `<span class="mark soon">${ico("shield")}Sob pedido</span>`;
     return `<span class="mark soon">${ico("clock")}Em breve</span>`;
@@ -1040,13 +1046,13 @@ function pageHome() {
       <div class="hero-copy">
         <span class="eyebrow">NokyLabs</span>
         <h1>Ferramentas que nasceram no <em>laboratório</em>, prontas para o seu computador.</h1>
-        <p class="lead">Utilitários do dia a dia, apps para a sala de aula e jogos em desenvolvimento, reunidos num só lugar e mantidos em dia pelo NokyLabs Launcher.</p>
+        <p class="lead">Utilitários para o dia a dia, apps para a sala de aula e jogos em desenvolvimento. Está tudo aqui, e o NokyLabs Launcher instala e mantém seus apps atualizados.</p>
         <div class="btn-row">
           <a class="btn primary" href="#launcher">${ico("download")}Conhecer o Launcher</a>
           <a class="btn ghost" href="#apps">Ver os apps${ico("arrow")}</a>
         </div>
         <div class="hero-meta">
-          <span>${ico("windows")}Windows</span><span>${ico("linux")}Linux</span><span>${ico("web")}Navegador</span><span>${ico("shield")}Sem precisar de administrador</span>
+          <span>${ico("windows")}Windows</span><span>${ico("linux")}Linux</span><span>${ico("web")}Navegador</span><span>${ico("shield")}Não exige administrador</span>
         </div>
       </div>
       ${launcherMock()}
@@ -1069,7 +1075,7 @@ function pageHome() {
       <div class="section-head">
         <span class="eyebrow">Projetos</span>
         <h2>Todos os apps</h2>
-        <p>Cada página tem um guia de uso, os downloads para cada sistema e as dúvidas mais comuns.</p>
+        <p>Cada app tem uma página com o que ele faz, um passo a passo, as dúvidas mais comuns e os downloads.</p>
       </div>
       <div class="grid cols-3">${all.map(appCard).join("")}</div>
     </section>
@@ -1081,7 +1087,8 @@ function pageHome() {
       </div>
       <div class="table-scroll">
         <table class="matrix">
-          <thead><tr><th>Projeto</th><th>Windows</th><th>Linux</th><th>Navegador</th></tr></thead>
+          <caption class="sr-only">Sistemas em que cada projeto funciona</caption>
+          <thead><tr><th scope="col">Projeto</th><th scope="col">Windows</th><th scope="col">Linux</th><th scope="col">Navegador</th></tr></thead>
           <tbody>
             ${all.map(a => `<tr>
               <td><a href="#${a.route}"><span class="dot-tile" style="--tint:${a.tint}">${ico(a.icon)}</span>${appTitle(a).replace("<small>", "<small class=\"muted\">")}</a></td>
@@ -1095,7 +1102,7 @@ function pageHome() {
     <section class="section">
       <div class="section-head">
         <span class="eyebrow">Como baixar</span>
-        <h2>Dois caminhos, você escolhe</h2>
+        <h2>Dois jeitos de baixar</h2>
       </div>
       <div class="grid cols-2">
         <div class="card path-card featured">
@@ -1104,7 +1111,7 @@ function pageHome() {
           <ol>
             <li>Baixe e instale o Launcher uma vez.</li>
             <li>Clique em Instalar no app que quiser.</li>
-            <li>Pronto: atalhos criados e atualizações automáticas, se você quiser.</li>
+            <li>Pronto: os atalhos são criados, e as atualizações podem ser automáticas.</li>
           </ol>
           <div><a class="btn soft small" href="#launcher">Ir para o Launcher${ico("arrow")}</a></div>
         </div>
@@ -1134,7 +1141,7 @@ function pageHome() {
         <div class="card stack" style="align-self:stretch">
           <span class="app-tile" style="--tint:var(--accent)">${ico("bug")}</span>
           <h3 style="font-size:1.35rem">Achou um bug ou teve uma ideia?</h3>
-          <p style="color:var(--fg-2)">Monte um relatório em poucos passos: o site organiza as informações para você enviar por e-mail ou pelo GitHub.</p>
+          <p style="color:var(--fg-2)">Preencha um formulário curto. O site monta o relatório, e você envia por e-mail ou pelo GitHub.</p>
           <div><a class="btn primary" href="#contato">${ico("mail")}Falar com a NokyLabs</a></div>
         </div>
       </div>
@@ -1315,7 +1322,7 @@ function pageApp(app) {
         <div class="section-head">
           <span class="eyebrow">${isGame ? "Onde jogar" : app.requestAccess ? "Pedir acesso" : "Baixar e instalar"}</span>
           <h2>${isGame ? "Plataformas" : app.requestAccess ? "Como conseguir o app" : "Downloads"}</h2>
-          <p>${isGame ? "O Blockable vai rodar direto no navegador." : `Feito para ${Object.entries(app.platforms).filter(([, p]) => p.status !== "none").map(([k]) => PLATFORM_LABEL[k]).join(" e ")}.`}</p>
+          <p>${isGame ? "O Blockable roda direto no navegador, sem instalar nada." : `Feito para ${Object.entries(app.platforms).filter(([, p]) => p.status !== "none").map(([k]) => PLATFORM_LABEL[k]).join(" e ")}.`}</p>
         </div>
         ${osNote(app)}
         <div class="grid cols-2">${Object.entries(app.platforms).map(([k, p]) => downloadCard(app, k, p)).join("")}</div>
@@ -1331,7 +1338,7 @@ function pageApp(app) {
       ${ids.includes("duvidas") ? `<section ${panel("duvidas")}>
         <div class="section-head"><span class="eyebrow">Dúvidas</span><h2>Perguntas frequentes</h2></div>
         <div class="faq-tools">
-          <label class="search" for="faqSearch">${ico("M4,10.5 A6.5,6.5 0 1 0 17,10.5 A6.5,6.5 0 1 0 4,10.5 Z M15.5,15.5 L20,20")}<input id="faqSearch" type="search" placeholder="Buscar nas dúvidas" autocomplete="off"></label>
+          <label class="search" for="faqSearch" aria-label="Buscar nas dúvidas">${ico("M4,10.5 A6.5,6.5 0 1 0 17,10.5 A6.5,6.5 0 1 0 4,10.5 Z M15.5,15.5 L20,20")}<input id="faqSearch" type="search" placeholder="Buscar nas dúvidas" autocomplete="off"></label>
         </div>
         <div class="faq" id="faqList">
           ${app.faq.map(([q, a]) => `<details><summary>${q}${ico("plus")}</summary><div class="answer"><p>${a}</p></div></details>`).join("")}
@@ -1360,9 +1367,9 @@ function osNote(app) {
   const plats = Object.entries(app.platforms).filter(([, p]) => p.status !== "none").map(([k]) => k);
   let text;
   if (app.isGame) {
-    text = OS === "mobile" ? "Você está no celular: o Blockable vai funcionar direto daqui." : "Você vai poder jogar direto deste navegador.";
+    text = OS === "mobile" ? "Você está no celular: o Blockable funciona direto daqui." : "Você pode jogar direto deste navegador.";
   } else if (OS === "mobile") {
-    text = "Você está no celular. Estes apps são para computador: abra esta página no PC para baixar.";
+    text = "Você está no celular, mas estes apps são para computador. Abra esta página no PC para baixar.";
   } else if (OS === "windows" || OS === "linux") {
     text = plats.includes(OS)
       ? `Você está no ${PLATFORM_LABEL[OS]}. O download certo está destacado.`
@@ -1469,8 +1476,8 @@ function pageContato() {
           <div><h2 style="font-size:1.5rem">Relatório de bug ou sugestão</h2><p style="color:var(--fg-2);margin-top:4px">Preencha o que souber. O texto ao lado é montado na hora, pronto para enviar.</p></div>
           <form class="form" id="reportForm" novalidate>
             <div class="field">
-              <span style="font-weight:700;font-size:.88rem">Tipo</span>
-              <div class="seg" role="radiogroup">
+              <span class="label" id="kindLabel">Tipo</span>
+              <div class="seg" role="radiogroup" aria-labelledby="kindLabel">
                 <label><input type="radio" name="kind" value="Bug" checked>Bug</label>
                 <label><input type="radio" name="kind" value="Sugestão">Sugestão</label>
                 <label><input type="radio" name="kind" value="Dúvida">Dúvida</label>
@@ -1606,6 +1613,8 @@ function render() {
   window.scrollTo({ top: 0, behavior: "auto" });
   wirePage(key);
 }
+// O link "Pular para o conteúdo" não pode mexer no endereço (a rota fica em #): só leva o foco para o conteúdo
+document.getElementById("skipLink").addEventListener("click", e => { e.preventDefault(); main.focus(); main.scrollIntoView(); });
 
 function wirePage(key) {
   // Abas da página de um app: mostra só a aba escolhida
@@ -1751,7 +1760,7 @@ document.getElementById("footer").innerHTML = `
   </div>
   <div class="footer-col"><b>Site</b><a href="#novidades">Novidades</a><a href="#contato">Contato e bugs</a>
     <a href="https://github.com/${SITE.github}" target="_blank" rel="noopener">GitHub</a></div>
-  <div class="footer-col"><b>E-mail</b><span class="footer-mail">${esc(SITE.email)}</span></div>`;
+  <div class="footer-col"><b>E-mail</b><a class="footer-mail" href="mailto:${esc(SITE.email)}">${esc(SITE.email)}</a></div>`;
 
 window.addEventListener("hashchange", render);
 paintThemeBtn();
