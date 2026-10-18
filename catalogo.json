@@ -62,7 +62,7 @@
     {
       "id": "ytdlp-gui",
       "name": "YT-DLP GUI",
-      "description": "Interface gráfica para o yt-dlp, pensada para usar com a turma em sala de aula.",
+      "description": "Interface gráfica para o yt-dlp: cole o link e baixe vídeo ou áudio, sem sites duvidosos.",
       "version": "2.0.0",
       "accent": "#F472B6",
       "icon": "M5,4.5 H19 A2,2 0 0 1 21,6.5 V17.5 A2,2 0 0 1 19,19.5 H5 A2,2 0 0 1 3,17.5 V6.5 A2,2 0 0 1 5,4.5 Z M10,9 L15,12 L10,15 Z",

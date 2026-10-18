@@ -7,11 +7,11 @@
 <meta name="theme-color" content="#0F0B1A" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#F6F4FA" media="(prefers-color-scheme: light)">
 <meta property="og:title" content="NokyLabs">
-<meta property="og:description" content="Utilitários, apps para a sala de aula e jogos, reunidos num só lugar.">
+<meta property="og:description" content="Soluções pequenas para problemas reais: utilitários, um app de avaliação e um jogo.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://thayttg.github.io/nokylabs/">
 <title>NokyLabs</title>
-<meta name="description" content="NokyLabs: utilitários, apps para a sala de aula e jogos, reunidos num só lugar.">
+<meta name="description" content="NokyLabs: soluções pequenas para problemas reais. Utilitários, um app de avaliação e um jogo.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -232,8 +232,19 @@ main { padding-block: 0 72px; }
 
 /* ---------- HOME: hero ---------- */
 .hero { padding-block: 56px 8px; display: grid; gap: 40px; align-items: center; grid-template-columns: 1fr; }
-@media (min-width: 980px) { .hero { grid-template-columns: 1.05fr 1fr; padding-block: 72px 8px; } }
-.hero h1 { font-size: clamp(2.3rem, 5.4vw, 3.9rem); font-weight: 800; letter-spacing: -.03em; }
+@media (min-width: 980px) { .hero { padding-block: 72px 8px; } }
+.hero h1 { font-size: clamp(2.3rem, 5.4vw, 3.9rem); font-weight: 800; letter-spacing: -.03em; max-width: 16ch; }
+.hero-copy { max-width: 760px; }
+.shot { margin: 0; display: grid; gap: 10px; }
+.shot img { display: block; width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); background: #0F0B1A; }
+.shot figcaption { color: var(--fg-3); font-size: .92rem; }
+.about-grid { display: grid; gap: 36px; align-items: center; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .about-grid { grid-template-columns: 1.3fr .7fr; } }
+.about-art { margin: 0; border-radius: 28px; overflow: hidden; border: 1px solid var(--border); background: var(--surface-2); }
+.about-art svg { display: block; width: 100%; height: auto; }
+.about-text { display: grid; gap: 16px; max-width: 62ch; font-size: 1.08rem; }
+.about-text p { color: var(--fg-2); }
+.origin { border-left: 3px solid var(--tint, var(--accent)); }
 .hero h1 em { font-style: normal; color: var(--accent-ink); }
 .hero-copy { display: grid; gap: 20px; min-width: 0; }
 .hero-meta { display: flex; flex-wrap: wrap; gap: 8px 18px; color: var(--fg-3); font-size: .9rem; }
@@ -692,9 +703,10 @@ const APPS = {
   },
 
   ytdlp: {
-    id: "ytdlp", route: "ytdlp-gui", name: "YT-DLP GUI", parent: "apps", alsoEdu: true,
+    id: "ytdlp", route: "ytdlp-gui", name: "YT-DLP GUI", parent: "apps",
     tint: "#EC4899", icon: "ytdlp",
-    tagline: "Baixe vídeos e áudios colando um link, sem abrir o terminal. Feito para usar com a turma.",
+    tagline: "Cole o link, baixe o vídeo ou o áudio. Sem anúncios, sem site duvidoso e sem abrir o terminal.",
+    origin: "Baixar um vídeo não deveria obrigar ninguém a passar por sites cheios de anúncios, que podem levar a propaganda de apostas ou coisa pior. O YT-DLP GUI nasceu para resolver isso: você cola o link, escolhe o formato e pronto.",
     status: ["Estável", "ok"], version: "2.0.0", repo: "yt-dlp-GUI", repoPublic: true, license: "MIT",
     platforms: {
       windows: { status: "available", file: "YtDlpGui-win-x64.zip", req: "Windows 10 ou 11 (64 bits)", size: "≈ 125 MB (com yt-dlp e ffmpeg)", sizeNote: "(com yt-dlp e ffmpeg)" },
@@ -704,7 +716,7 @@ const APPS = {
       ["monitor", "Prévia antes de baixar", "Cole o link e veja a miniatura, o título e o canal do vídeo antes de confirmar."],
       ["download", "Vídeo ou só áudio", "MP4 para vídeo, MP3 para áudio. Playlists inteiras com um único botão."],
       ["history", "Histórico", "Tudo o que foi baixado fica listado, para achar de novo sem procurar nas pastas."],
-      ["shield", "Filtro para a sala de aula", "Módulo opcional que libera só os sites permitidos. Por padrão, apenas o YouTube."],
+      ["shield", "Filtro de sites (opcional)", "Libera só os sites que você escolher. Por padrão, apenas o YouTube. Útil em computadores compartilhados."],
       ["cookie", "Vídeos que pedem login", "Usa os cookies do navegador, com um botão que gera um cookies.txt estável quando aparece o erro 403."],
       ["refresh", "Sempre funcionando", "O yt-dlp se atualiza sozinho, e o ffmpeg já vem junto. Nada para instalar à parte."],
     ],
@@ -730,8 +742,8 @@ const APPS = {
     faq: [
       ["Preciso instalar o yt-dlp ou o ffmpeg?", "Não. Os dois já vêm no pacote, e o yt-dlp se atualiza sozinho."],
       ["Apareceu o erro 403. E agora?", "Alguns vídeos pedem login. Em Configurações, use o extrator de cookies: ele gera um <code>cookies.txt</code> a partir do seu navegador e resolve a maioria dos casos."],
-      ["Posso deixar só o YouTube liberado no laboratório?", "Sim. O filtro de conteúdo é opcional e, quando ativo, libera apenas os domínios da lista (por padrão, só o YouTube). Um código mestre libera bloqueios pontuais."],
-      ["Posso baixar qualquer vídeo?", "Baixe só conteúdo que você tem direito de usar, como material próprio, licenças abertas ou vídeos autorizados para uso em aula, e respeite os termos das plataformas e os direitos autorais."],
+      ["Dá para liberar só alguns sites?", "Sim. O filtro de conteúdo é opcional e, quando ativo, libera apenas os domínios da lista (por padrão, só o YouTube). Um código mestre libera bloqueios pontuais."],
+      ["Posso baixar qualquer vídeo?", "Baixe só conteúdo que você tem direito de usar, como material próprio, licenças abertas ou vídeos autorizados, e respeite os termos das plataformas e os direitos autorais."],
       ["Onde ficam o histórico e o log?", "Em <code>%AppData%\\YtDlpGui</code>: <code>historico.json</code> e <code>log.txt</code>. O log ajuda muito num relatório de bug."],
       ["Funciona no Linux?", "Ainda não. Por enquanto é só para Windows."],
     ],
@@ -884,6 +896,7 @@ const APPS = {
     id: "blockable", route: "blockable", name: "Blockable", parent: "jogos", isGame: true,
     tint: "#16A34A", icon: "blocks",
     tagline: "Jogo de arena para até 4 pessoas, no mesmo computador ou online. O último de pé vence.",
+    origin: "O Blockable começou como um desafio entre alunos monitores. A ideia era boa o bastante para ser levada adiante, e hoje é um projeto cuidado com carinho, que continua evoluindo.",
     status: ["Em desenvolvimento", "warn"], version: "0.3.1", repo: "Blockable", repoPublic: true,
     platforms: {
       web: { status: "available", file: "Página no itch.io", url: "https://nokyttg.itch.io/blockable-game", req: "Navegador atualizado, no computador ou no celular", size: "—" },
@@ -894,7 +907,7 @@ const APPS = {
       ["robot", "Uma IA para jogar junto", "Controla o jogador 2 quando não tem ninguém. Pegou o controle, ela sai na hora."],
       ["wifi", "Online do seu jeito", "Sala automática, sala com código ou escolha numa lista de salas abertas. A fase é sorteada."],
       ["refresh", "Ninguém fica sozinho", "Se alguém sair no meio da partida, a IA assume o personagem."],
-      ["chat", "Seguro para a escola", "Sem chat aberto entre jogadores: só mensagens automáticas do jogo."],
+      ["chat", "Sem chat aberto", "Não há conversa entre jogadores: só mensagens automáticas do jogo. Seguro para qualquer idade."],
     ],
     progress: [
       ["Partidas locais", 90],
@@ -925,7 +938,7 @@ const APPS = {
     },
     faq: [
       ["Onde eu jogo?", "Na página do Blockable no itch.io, direto no navegador. O jogo está em desenvolvimento (versão 0.3.1), então novidades chegam com frequência."],
-      ["Tem chat entre jogadores?", "Não, de propósito. Só existem mensagens automáticas do jogo, sem texto digitado, para ser seguro para alunos."],
+      ["Tem chat entre jogadores?", "Não, de propósito. Só existem mensagens automáticas do jogo, sem texto digitado, para ser seguro para qualquer idade."],
       ["Precisa instalar?", "Não. O jogo roda direto no navegador, inclusive no celular."],
       ["Dá para jogar sozinho?", "Sim. A IA controla o adversário nas partidas locais."],
     ],
@@ -935,6 +948,7 @@ const APPS = {
 const ORDER_UTIL = ["ytdlp", "cubebin", "hotswap", "planingthings"];
 
 const NEWS = [
+  { date: "2026-10-18", app: "site", title: "Nova página Sobre e textos renovados", text: "O site agora conta de onde vêm os projetos, ganhou a página Sobre e mostra a tela real do NokyLabs Launcher. A aba Educação ficou só com o Avaliador Acadêmico." },
   { date: "2026-10-18", app: "site", title: "Site mais fácil de ler", text: "Letras maiores, mais contraste nos textos de apoio e frases mais diretas em todas as páginas. O site também ganhou o link Pular para o conteúdo e leitura melhor para leitores de tela." },
   { date: "2026-10-15", app: "cubebin", title: "CubeBin 1.1: visual novo", text: "O CubeBin ganhou o visual da família NokyLabs, mantendo o seu vermelho: menu lateral, mensagens no tema escuro, botões de exclusão em destaque e a nova tela Sobre." },
   { date: "2026-10-15", app: "planingthings", title: "PlaningThings entra no planejamento", text: "Um app de organização que estava guardado na gaveta ganhou o seu lugar no site e no NokyLabs Launcher, como \"Em breve\"." },
@@ -998,35 +1012,6 @@ function appCard(app) {
   </a>`;
 }
 
-function launcherMock() {
-  const card = (tint, iconName, name, badge, badgeStyle, ver, act, actCls, id = "") => `
-    <div class="mock-card" style="--tint:${tint}" ${id ? `id="${id}"` : ""}>
-      <div class="top"><span class="t">${ico(iconName)}</span><span class="badge" style="${badgeStyle}" data-badge>${badge}</span></div>
-      <b>${name}</b>
-      <span class="v" data-ver>${ver}</span>
-      <div class="act ${actCls}" data-act>${act}</div>
-    </div>`;
-  return `
-  <div class="mock" role="img" aria-label="Prévia do NokyLabs Launcher: biblioteca com HotSwap, CubeBin e YT-DLP GUI">
-    <div class="mock-bar"><span class="mini-logo"></span>NokyLabs<span class="win">– ▢ ✕</span></div>
-    <div class="mock-body">
-      <div class="mock-side">
-        <div class="mock-brand"><span class="lm">${ico("logo")}</span><span><b>NokyLabs</b><small>Launcher</small></span></div>
-        <div class="mock-nav on">Biblioteca</div>
-        <div class="mock-nav">Atualizações <span class="n">1</span></div>
-        <div class="mock-nav">Configurações</div>
-      </div>
-      <div class="mock-main">
-        <div class="mock-hero"><b>Seus utilitários, num só lugar</b><p>Instale, abra e mantenha tudo atualizado.</p></div>
-        <div class="mock-cards">
-          ${card("#818CF8", "hotswap", "HotSwap", "Atualização", "background:rgba(251,191,36,.14);color:#FBBF24", "v1.2 → v1.3", "Atualizar", "upd")}
-          ${card("#C084FC", "cubebin", "CubeBin", "Instalado", "background:rgba(52,211,153,.14);color:#34D399", "v2.0.1 · em dia", "Abrir", "open")}
-          ${card("#F472B6", "ytdlp", "YT-DLP GUI", "Disponível", "background:rgba(139,92,246,.16);color:#C4B5FD", "v9 disponível", "Instalar", "inst", "mockInstall")}
-        </div>
-      </div>
-    </div>
-  </div>`;
-}
 
 /* =====================================================================
    PÁGINAS
@@ -1045,8 +1030,8 @@ function pageHome() {
     <section class="hero">
       <div class="hero-copy">
         <span class="eyebrow">NokyLabs</span>
-        <h1>Ferramentas que nasceram no <em>laboratório</em>, prontas para o seu computador.</h1>
-        <p class="lead">Utilitários para o dia a dia, apps para a sala de aula e jogos em desenvolvimento. Está tudo aqui, e o NokyLabs Launcher instala e mantém seus apps atualizados.</p>
+        <h1>Soluções pequenas para <em>problemas reais</em>.</h1>
+        <p class="lead">A NokyLabs reúne programas criados a partir de incômodos do dia a dia: baixar um vídeo, arrumar pastas, trocar de tela. O NokyLabs Launcher instala tudo e mantém os apps atualizados.</p>
         <div class="btn-row">
           <a class="btn primary" href="#launcher">${ico("download")}Conhecer o Launcher</a>
           <a class="btn ghost" href="#apps">Ver os apps${ico("arrow")}</a>
@@ -1055,7 +1040,13 @@ function pageHome() {
           <span>${ico("windows")}Windows</span><span>${ico("linux")}Linux</span><span>${ico("web")}Navegador</span><span>${ico("shield")}Não exige administrador</span>
         </div>
       </div>
-      ${launcherMock()}
+    </section>
+
+    <section class="section" style="padding-top:32px">
+      <figure class="shot">
+        <img src="img/launcher-biblioteca.png" width="1858" height="1022" alt="Tela Biblioteca do NokyLabs Launcher, com os cards de HotSwap, CubeBin, YT-DLP GUI, Avaliador Acadêmico, Blockable e PlaningThings">
+        <figcaption>A Biblioteca do NokyLabs Launcher: instalar, abrir e atualizar os apps num só lugar.</figcaption>
+      </figure>
     </section>
 
     <section class="section">
@@ -1066,7 +1057,7 @@ function pageHome() {
       <div class="grid cols-4">
         ${catCard("launcher", "logo", "#8B5CF6", "NokyLabs Launcher", "Instala, abre e atualiza todos os apps. Comece por aqui.")}
         ${catCard("apps", "grid", "#EC4899", "Apps", "YT-DLP GUI, CubeBin e HotSwap: ferramentas para o dia a dia no computador.")}
-        ${catCard("educacao", "cap", "#2563EB", "Educação", "Apps pensados para professoras, professores e turmas.")}
+        ${catCard("educacao", "cap", "#2563EB", "Educação", "O Avaliador Acadêmico, de uso restrito, para avaliar alunos e gerar feedback.")}
         ${catCard("jogos", "blocks", "#16A34A", "Jogos", "Projetos em desenvolvimento, como o Blockable.")}
       </div>
     </section>
@@ -1176,7 +1167,7 @@ function pageApps() {
   return listingPage({
     eyebrow: "Apps",
     title: "Utilitários",
-    lead: "Ferramentas pequenas para resolver problemas do dia a dia no computador: baixar vídeos para a aula, arrumar pastas e trocar de tela rapidinho.",
+    lead: "Ferramentas pequenas para resolver problemas do dia a dia no computador: baixar um vídeo, arrumar pastas e trocar de tela rapidinho.",
     apps: ORDER_UTIL.map(k => APPS[k]),
     extra: launcherBanner(),
   });
@@ -1185,13 +1176,9 @@ function pageApps() {
 function pageEducacao() {
   return listingPage({
     eyebrow: "Educação",
-    title: "Para a sala de aula",
-    lead: "Apps pensados para quem ensina: avaliar a turma, preparar material e usar a tecnologia do laboratório com segurança.",
-    apps: [APPS.avaliador, APPS.ytdlp],
-    extra: `
-    <section class="section">
-      <div class="callout info">${ico("info")}<div><b>Também usado em aula</b><p>O YT-DLP GUI é um utilitário, mas foi feito pensando na turma: tem filtro de conteúdo opcional para liberar só os sites permitidos no laboratório.</p></div></div>
-    </section>`,
+    title: "Avaliador Acadêmico",
+    lead: "Um app para registrar a avaliação de cada aluno e gerar o feedback da turma em planilha. É de uso restrito: o acesso é liberado por pedido.",
+    apps: [APPS.avaliador],
   });
 }
 
@@ -1297,6 +1284,8 @@ function pageApp(app) {
       <section ${panel("visao")}>
         <div class="section-head"><span class="eyebrow">Visão geral</span><h2>${isGame ? "O que já dá para fazer" : app.planned ? "A ideia" : "O que ele faz"}</h2></div>
         ${app.planned ? `<div class="callout info">${ico("info")}<div><b>Ainda na prancheta</b><p>Este app ainda não tem versão de teste. Quando tiver, ele aparece aqui e no NokyLabs Launcher.</p></div></div>` : ""}
+        ${app.origin ? `<div class="card origin" style="margin-bottom:16px"><h3 style="font-size:1.15rem;margin-bottom:8px">Como surgiu</h3><p style="color:var(--fg-2);max-width:68ch">${esc(app.origin)}</p></div>` : ""}
+        ${app.id === "launcher" ? `<figure class="shot" style="margin-bottom:16px"><img src="img/launcher-biblioteca.png" width="1858" height="1022" alt="Tela Biblioteca do NokyLabs Launcher, com os cards dos apps instalados e disponíveis" loading="lazy"></figure>` : ""}
         <div class="grid cols-2">
           ${(app.features || []).map(([ic, t, d]) => `<div class="card feature"><span class="fi">${ico(ic)}</span><div><h3>${t}</h3><p>${d}</p></div></div>`).join("")}
         </div>
@@ -1457,6 +1446,55 @@ function pageNovidades() {
   </div>`;
 }
 
+/* ---------- sobre ---------- */
+function pageSobre() {
+  const stories = ["ytdlp", "blockable"].map(k => APPS[k]);
+  return `
+  <div class="wrap">
+    <section class="app-hero" style="padding-top:48px">
+      <span class="eyebrow">Sobre</span>
+      <div class="about-grid">
+        <div class="stack" style="gap:20px">
+          <div class="app-title"><h1>Soluções pequenas para problemas reais</h1></div>
+          <div class="about-text">
+            <p>A NokyLabs reúne programas criados a partir de incômodos do dia a dia. Quando surge algo repetitivo, confuso ou cheio de atalhos ruins, a ideia é resolver com uma ferramenta simples, que faz uma coisa e faz bem.</p>
+            <p>Cada projeto nasce de uma necessidade concreta, não de uma lista de tendências. Alguns servem a qualquer pessoa, outros são mais específicos, e um deles, o Avaliador Acadêmico, é de uso restrito.</p>
+          </div>
+        </div>
+        <!-- Espaço da arte própria da NokyLabs: troque este SVG por uma imagem em img/ quando a arte estiver pronta -->
+        <figure class="about-art" role="img" aria-label="Arte abstrata provisória da NokyLabs">
+          <svg viewBox="0 0 400 400" aria-hidden="true">
+            <rect width="400" height="400" fill="var(--surface-2)"/>
+            <circle cx="140" cy="150" r="96" fill="var(--accent)" opacity=".85"/>
+            <circle cx="262" cy="232" r="78" fill="none" stroke="var(--brand-b)" stroke-width="14"/>
+            <path d="M70 330 Q200 250 330 330" fill="none" stroke="var(--fg)" stroke-width="6" stroke-linecap="round"/>
+          </svg>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><span class="eyebrow">Princípios</span><h2>Como os projetos são feitos</h2></div>
+      <div class="grid cols-3">
+        <div class="card feature" style="--tint:var(--accent)"><span class="fi">${ico("check")}</span><div><h3>Um problema por vez</h3><p>Cada app tem um propósito claro. Se precisar de mais, vira outro app.</p></div></div>
+        <div class="card feature" style="--tint:var(--accent)"><span class="fi">${ico("shield")}</span><div><h3>Sem complicar</h3><p>Sempre que possível, sem conta obrigatória, sem administrador e com os dados no seu computador.</p></div></div>
+        <div class="card feature" style="--tint:var(--accent)"><span class="fi">${ico("code")}</span><div><h3>Código aberto quando faz sentido</h3><p>Vários projetos têm o código público no GitHub, para qualquer pessoa conferir.</p></div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><span class="eyebrow">Origens</span><h2>De onde vêm alguns dos projetos</h2></div>
+      <div class="grid cols-2">
+        ${stories.map(a => `<div class="card origin stack" style="--tint:${a.tint}"><h3 style="font-size:1.2rem"><a href="#${a.route}" style="color:var(--fg);text-decoration:none">${esc(a.name)}</a></h3><p style="color:var(--fg-2)">${esc(a.origin)}</p></div>`).join("")}
+      </div>
+      <div class="btn-row" style="margin-top:24px">
+        <a class="btn primary" href="#apps">Ver os projetos${ico("arrow")}</a>
+        <a class="btn ghost" href="#contato">${ico("mail")}Falar com a NokyLabs</a>
+      </div>
+    </section>
+  </div>`;
+}
+
 /* ---------- contato ---------- */
 let contactPreset = null;
 function pageContato() {
@@ -1591,9 +1629,10 @@ const ROUTES = {
   jogos: { nav: "jogos", render: pageJogos, title: "Jogos" },
   blockable: { nav: "jogos", render: () => pageApp(APPS.blockable), title: "Blockable" },
   novidades: { nav: "novidades", render: pageNovidades, title: "Novidades" },
+  sobre: { nav: "sobre", render: pageSobre, title: "Sobre" },
   contato: { nav: "contato", render: pageContato, title: "Contato" },
 };
-const NAV = [["home", "Início"], ["launcher", "Launcher"], ["apps", "Apps"], ["educacao", "Educação"], ["jogos", "Jogos"], ["novidades", "Novidades"], ["contato", "Contato"]];
+const NAV = [["home", "Início"], ["launcher", "Launcher"], ["apps", "Apps"], ["educacao", "Educação"], ["jogos", "Jogos"], ["novidades", "Novidades"], ["sobre", "Sobre"], ["contato", "Contato"]];
 
 const main = document.getElementById("app");
 const nav = document.getElementById("nav");
@@ -1752,13 +1791,13 @@ menuBtn.addEventListener("click", () => {
 document.getElementById("footer").innerHTML = `
   <div class="footer-col" style="max-width:320px">
     <a class="logo" href="#home"><span class="logo-mark">${ico("logo")}</span><span class="logo-text">NokyLabs</span></a>
-    <p>Utilitários, apps para a sala de aula e jogos, feitos com carinho no laboratório de informática.</p>
+    <p>Soluções pequenas para problemas reais, criadas com cuidado. <a href="#sobre">Saiba mais</a></p>
   </div>
   <div class="footer-col"><b>Projetos</b>
     <a href="#launcher">NokyLabs Launcher</a>${ORDER_UTIL.map(k => `<a href="#${APPS[k].route}">${APPS[k].name}</a>`).join("")}
     <a href="#avaliador">Avaliador Acadêmico</a><a href="#blockable">Blockable</a>
   </div>
-  <div class="footer-col"><b>Site</b><a href="#novidades">Novidades</a><a href="#contato">Contato e bugs</a>
+  <div class="footer-col"><b>Site</b><a href="#sobre">Sobre</a><a href="#novidades">Novidades</a><a href="#contato">Contato e bugs</a>
     <a href="https://github.com/${SITE.github}" target="_blank" rel="noopener">GitHub</a></div>
   <div class="footer-col"><b>E-mail</b><a class="footer-mail" href="mailto:${esc(SITE.email)}">${esc(SITE.email)}</a></div>`;
 
