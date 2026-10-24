@@ -620,6 +620,7 @@ const I = {
   terminal: "M7,9 L10,12 L7,15 M12.5,15 H17",
   chat: "M4,5 H20 V16 H11 L6.5,19.5 V16 H4 Z",
   layers: "M12,3 L21,8 L12,13 L3,8 Z M3,12.5 L12,17.5 L21,12.5 M3,16.5 L12,21.5 L21,16.5",
+  chart: "M4,20 H20 M6.5,20 V13 M11,20 V9 M15.5,20 V14 M20,20 V6 M4.5,10 L9.5,5.5 L14,9 L20,3.5",
 };
 
 const ico = (name, cls = "") => `<svg class="ico ${cls}" viewBox="0 0 24 24" aria-hidden="true"><path d="${I[name] || name}"/></svg>`;
@@ -945,9 +946,51 @@ const APPS = {
   },
 };
 
+APPS.valreport = {
+  id: "valreport", route: "valreport", name: "ValReport", parent: "jogos", isWeb: true,
+  tint: "#EC7518", icon: "chart",
+  tagline: "Estatísticas e leitura tática da nossa equipe de VALORANT, partida a partida, direto no navegador.",
+  origin: "O ValReport começou como um report diário no Discord da equipe: quem jogou bem, em que round o time perdeu a chance e o que treinar. Virou um site aberto, com o mesmo cuidado com transparência e com a privacidade de quem aparece nele.",
+  status: ["No ar", "ok"], version: "1.1", repo: "ValReport", repoPublic: true, license: "MIT",
+  platforms: {
+    web: { status: "available", file: "thayttg.github.io/ValReport", url: "https://thayttg.github.io/ValReport/", req: "Navegador atualizado, no computador ou no celular", size: "—" },
+  },
+  features: [
+    ["chart", "Do jeito dos trackers", "Geral, Partidas, Agentes, Mapas, Armas e Performance, com filtros de fila, temporada, período, mapa, agente e com quem jogou."],
+    ["users", "Feito para a equipe", "Formações, sinergia, comparação lado a lado, resumo da semana com MVP e o Hall da fama com os recordes de cada um."],
+    ["sparkle", "Leitura de cada round", "Impacto na chance de vitória, índice justo por função (vs lobby e vs elo), trades, posicionamento e mapa de calor por tipo de round."],
+    ["book", "Notas da IGL", "A IGL anota o plano de cada mapa e a leitura de partidas e rounds, e as notas aparecem junto dos números."],
+    ["monitor", "Pensado para o celular", "Funciona bem em qualquer tela e pode ser instalado como app, com ícone próprio e leitura sem internet."],
+    ["shield", "Transparente e com consentimento", "Só aparece pelo nome quem autorizou. Todo o resto é anônimo, e a página Sobre explica cada cálculo e credita cada ferramenta usada."],
+  ],
+  roadmap: [
+    "Chave Advanced da HenrikDev, indicada para sites públicos",
+    "Mais ferramentas para revisar VOD com a equipe",
+  ],
+  howto: [
+    ["Abra o site", "A página inicial mostra a equipe, o ranking e as partidas mais recentes."],
+    ["Escolha um jogador", "No topo, toque no nome de alguém para ver o perfil completo, com abas e filtros parecidos com os dos trackers."],
+    ["Abra uma partida", "Placar, rounds com killfeed e economia, mapa 2D dos abates e a leitura da equipe round a round."],
+    ["Veja a semana e os recordes", "Na aba Equipe, Semana resume os últimos 7 dias e Recordes mostra o melhor de cada estatística."],
+  ],
+  install: {
+    web: [
+      ["Abra o site", "O ValReport roda direto no navegador, sem instalar nada."],
+      ["Instale como app (opcional)", "No Android, toque em Instalar no topo do site ou no menu ⋮ › Instalar app. No iPhone, Compartilhar › Adicionar à Tela de Início."],
+    ],
+  },
+  faq: [
+    ["De onde vêm os dados?", "Da HenrikDev API, uma API não oficial mantida pela comunidade. Um script no PC da equipe coleta as partidas uma vez por dia e publica o site. O site em si não consulta nenhuma API."],
+    ["Quem aparece no site?", "Só quem é da equipe e autorizou. Aliados aleatórios e adversários aparecem como Aliado ou Adversário, sem nome."],
+    ["Tem vínculo com a Riot Games?", "Não. É um projeto de fã, sem fins lucrativos, feito sob a política Legal Jibber Jabber da Riot. A Riot Games não endossa nem patrocina o ValReport."],
+    ["Posso usar para a minha equipe?", "O código está aberto no GitHub, sob a licença MIT. O README explica como montar o seu, sempre com o consentimento de quem vai aparecer."],
+  ],
+};
+
 const ORDER_UTIL = ["ytdlp", "cubebin", "hotswap", "planingthings"];
 
 const NEWS = [
+  { date: "2026-10-24", app: "valreport", title: "ValReport no ar", text: "As estatísticas da nossa equipe de VALORANT agora têm um site aberto: perfis no estilo dos trackers, formações, sinergia, resumo da semana, recordes, notas da IGL e evolução de elo. Funciona no celular e pode ser instalado como app." },
   { date: "2026-10-18", app: "site", title: "Nova página Sobre e textos renovados", text: "O site agora conta de onde vêm os projetos, ganhou a página Sobre e mostra a tela real do NokyLabs Launcher. A aba Educação ficou só com o Avaliador Acadêmico." },
   { date: "2026-10-18", app: "site", title: "Site mais fácil de ler", text: "Letras maiores, mais contraste nos textos de apoio e frases mais diretas em todas as páginas. O site também ganhou o link Pular para o conteúdo e leitura melhor para leitores de tela." },
   { date: "2026-10-15", app: "cubebin", title: "CubeBin 1.1: visual novo", text: "O CubeBin ganhou o visual da família NokyLabs, mantendo o seu vermelho: menu lateral, mensagens no tema escuro, botões de exclusão em destaque e a nova tela Sobre." },
@@ -1018,7 +1061,7 @@ function appCard(app) {
    ===================================================================== */
 function pageHome() {
   const util = ORDER_UTIL.map(k => APPS[k]);
-  const all = [APPS.launcher, ...util, APPS.avaliador, APPS.blockable].filter(a => !a.planned);
+  const all = [APPS.launcher, ...util, APPS.avaliador, APPS.blockable, APPS.valreport].filter(a => !a.planned);
   const mark = (p) => {
     if (!p || p.status === "none") return `<span class="mark no" aria-hidden="true">—</span><span class="sr-only">Indisponível</span>`;
     if (p.status === "available") return `<span class="mark yes">${ico("check")}Disponível</span>`;
@@ -1058,7 +1101,7 @@ function pageHome() {
         ${catCard("launcher", "logo", "#8B5CF6", "NokyLabs Launcher", "Instala, abre e atualiza todos os apps. Comece por aqui.")}
         ${catCard("apps", "grid", "#EC4899", "Apps", "YT-DLP GUI, CubeBin e HotSwap: ferramentas para o dia a dia no computador.")}
         ${catCard("educacao", "cap", "#2563EB", "Educação", "O Avaliador Acadêmico, de uso restrito, para avaliar alunos e gerar feedback.")}
-        ${catCard("jogos", "blocks", "#16A34A", "Jogos", "Projetos em desenvolvimento, como o Blockable.")}
+        ${catCard("jogos", "blocks", "#16A34A", "Jogos", "O Blockable, em desenvolvimento, e o ValReport, as estatísticas da nossa equipe de VALORANT.")}
       </div>
     </section>
 
@@ -1204,6 +1247,10 @@ function pageJogos() {
         </div>
       </a>
     </section>
+    <section class="section" style="padding-top:8px">
+      <div class="section-head"><span class="eyebrow">Para jogadores</span><h2>Ferramentas</h2><p>Projetos feitos para quem joga, no navegador.</p></div>
+      <div class="grid cols-3">${appCard(APPS.valreport)}</div>
+    </section>
   </div>`;
 }
 
@@ -1238,10 +1285,10 @@ function pageApp(app) {
     apps: ["#apps", "Apps"], educacao: ["#educacao", "Educação"], jogos: ["#jogos", "Jogos"],
   }[app.parent];
   const crumbs = `<nav class="crumbs" aria-label="Você está em"><a href="#home">Início</a><span>›</span>${parentInfo ? `<a href="${parentInfo[0]}">${parentInfo[1]}</a><span>›</span>` : ""}<span>${esc(app.name)}${app.subtitle ? " " + esc(app.subtitle) : ""}</span></nav>`;
-  const isGame = !!app.isGame;
+  const isGame = !!app.isGame, isWeb = !!app.isWeb;
   const hasDownloads = !app.planned && Object.values(app.platforms).some(p => p.status !== "none");
-  const dlLabel = isGame ? "Onde jogar" : app.requestAccess ? "Pedir acesso" : "Baixar";
-  const dlIcon = isGame ? "web" : app.requestAccess ? "shield" : "download";
+  const dlLabel = isGame ? "Onde jogar" : isWeb ? "Acessar" : app.requestAccess ? "Pedir acesso" : "Baixar";
+  const dlIcon = isGame || isWeb ? "web" : app.requestAccess ? "shield" : "download";
   // Uma aba por assunto; só a aba escolhida aparece na tela.
   const tabs = [
     ["visao", "sparkle", "Visão geral"],
@@ -1309,15 +1356,15 @@ function pageApp(app) {
 
       ${hasDownloads ? `<section ${panel("baixar")}>
         <div class="section-head">
-          <span class="eyebrow">${isGame ? "Onde jogar" : app.requestAccess ? "Pedir acesso" : "Baixar e instalar"}</span>
-          <h2>${isGame ? "Plataformas" : app.requestAccess ? "Como conseguir o app" : "Downloads"}</h2>
-          <p>${isGame ? "O Blockable roda direto no navegador, sem instalar nada." : `Feito para ${Object.entries(app.platforms).filter(([, p]) => p.status !== "none").map(([k]) => PLATFORM_LABEL[k]).join(" e ")}.`}</p>
+          <span class="eyebrow">${isGame ? "Onde jogar" : isWeb ? "Acessar" : app.requestAccess ? "Pedir acesso" : "Baixar e instalar"}</span>
+          <h2>${isGame || isWeb ? "Plataformas" : app.requestAccess ? "Como conseguir o app" : "Downloads"}</h2>
+          <p>${isGame ? "O Blockable roda direto no navegador, sem instalar nada." : isWeb ? `O ${esc(app.name)} é um site: abre direto no navegador, no computador ou no celular.` : `Feito para ${Object.entries(app.platforms).filter(([, p]) => p.status !== "none").map(([k]) => PLATFORM_LABEL[k]).join(" e ")}.`}</p>
         </div>
         ${osNote(app)}
         <div class="grid cols-2">${Object.entries(app.platforms).map(([k, p]) => downloadCard(app, k, p)).join("")}</div>
-        ${!isGame && app.id !== "launcher" && !app.requestAccess ? viaLauncher() : ""}
+        ${!isGame && !isWeb && app.id !== "launcher" && !app.requestAccess ? viaLauncher() : ""}
         ${installGuide(app)}
-        ${!isGame ? `
+        ${!isGame && !isWeb ? `
         <div class="grid cols-2" style="margin-top:16px">
           <div class="callout">${ico("warn")}<div><b>Aviso azul do Windows (SmartScreen)</b><p>Programas novos sem assinatura digital paga mostram esse aviso. Clique em Mais informações e depois em Executar assim mesmo.</p></div></div>
           <div class="callout info">${ico("shield")}<div><b>Quer conferir o arquivo?</b><p>Cada lançamento publica o SHA-256 do download. No PowerShell, rode <code>Get-FileHash .\\arquivo.zip</code> e compare.</p></div></div>
@@ -1357,6 +1404,8 @@ function osNote(app) {
   let text;
   if (app.isGame) {
     text = OS === "mobile" ? "Você está no celular: o Blockable funciona direto daqui." : "Você pode jogar direto deste navegador.";
+  } else if (app.isWeb) {
+    text = OS === "mobile" ? `Você está no celular: o ${app.name} funciona direto daqui e pode ser instalado como app.` : `O ${app.name} abre direto deste navegador.`;
   } else if (OS === "mobile") {
     text = "Você está no celular, mas estes apps são para computador. Abra esta página no PC para baixar.";
   } else if (OS === "windows" || OS === "linux") {
@@ -1371,11 +1420,11 @@ function osNote(app) {
 
 function downloadCard(app, key, p) {
   const label = PLATFORM_LABEL[key];
-  const mine = p.status !== "none" && (key === OS || (key === "web" && app.isGame));
+  const mine = p.status !== "none" && (key === OS || (key === "web" && (app.isGame || app.isWeb)));
   let button;
   if (p.status === "available") {
     const href = key === "web" ? p.url : (p.url || downloadUrl(app, p.file));
-    button = `<a class="btn primary" href="${href}" target="_blank" rel="noopener">${ico(key === "web" ? "web" : "download")}${key === "web" ? "Jogar agora" : "Baixar para " + label}</a>`;
+    button = `<a class="btn primary" href="${href}" target="_blank" rel="noopener">${ico(key === "web" ? "web" : "download")}${key === "web" ? (app.isWeb ? "Abrir o site" : "Jogar agora") : "Baixar para " + label}</a>`;
   } else if (p.status === "request") {
     button = `<a class="btn primary" href="${esc(app.requestAccess)}">${ico("shield")}Solicitar acesso</a>`;
   } else if (p.status === "soon") {
@@ -1386,7 +1435,7 @@ function downloadCard(app, key, p) {
   const details = p.status === "none"
     ? `<p class="muted">Ainda não existe versão do ${esc(app.name)} para ${label}.</p>`
     : `<dl>
-        <dt>Arquivo</dt><dd class="mono">${esc(p.file)}</dd>
+        <dt>${app.isWeb ? "Endereço" : "Arquivo"}</dt><dd class="mono">${esc(p.file)}</dd>
         <dt>Requisitos</dt><dd>${esc(p.req)}</dd>
         ${p.size && p.size !== "—" ? `<dt>Tamanho</dt><dd>${esc(p.size)}</dd>` : ""}
       </dl>
@@ -1413,7 +1462,7 @@ function installGuide(app) {
   const first = keys.includes(OS) ? OS : keys[0];
   return `
   <div style="margin-top:28px">
-    <h3 style="font-size:1.3rem;margin-bottom:12px">${app.isGame ? "Como começar" : "Instalação passo a passo"}</h3>
+    <h3 style="font-size:1.3rem;margin-bottom:12px">${app.isGame || app.isWeb ? "Como começar" : "Instalação passo a passo"}</h3>
     ${keys.length > 1 ? `<div class="inst-tabs" role="tablist">${keys.map(k => `<button data-inst="${k}" class="${k === first ? "on" : ""}">${ico(PLATFORM_ICON[k])}${PLATFORM_LABEL[k]}</button>`).join("")}</div>` : ""}
     ${keys.map(k => `<ol class="steps" data-inst-panel="${k}" ${k === first ? "" : "hidden"}>${app.install[k].map(([t, d]) => `<li><div><h3>${t}</h3><p>${formatCmd(d)}</p></div></li>`).join("")}</ol>`).join("")}
   </div>`;
@@ -1422,7 +1471,7 @@ function installGuide(app) {
 const formatCmd = d => esc(d).replace(/(chmod \+x NokyLabs|\.\/NokyLabs)/g, "<code>$1</code>");
 
 /* ---------- novidades ---------- */
-const NEWS_TAGS = { site: ["Site", "#64748B"], launcher: ["Launcher", "#8B5CF6"], ytdlp: ["YT-DLP GUI", "#EC4899"], cubebin: ["CubeBin", "#A855F7"], hotswap: ["HotSwap", "#6366F1"], avaliador: ["Avaliador", "#2563EB"], planingthings: ["PlaningThings", "#0D9488"], blockable: ["Blockable", "#16A34A"] };
+const NEWS_TAGS = { site: ["Site", "#64748B"], launcher: ["Launcher", "#8B5CF6"], ytdlp: ["YT-DLP GUI", "#EC4899"], cubebin: ["CubeBin", "#A855F7"], hotswap: ["HotSwap", "#6366F1"], avaliador: ["Avaliador", "#2563EB"], planingthings: ["PlaningThings", "#0D9488"], blockable: ["Blockable", "#16A34A"], valreport: ["ValReport", "#EC7518"] };
 function newsItem(n) {
   const [tag, tint] = NEWS_TAGS[n.app] || ["NokyLabs", "#8B5CF6"];
   return `<li data-app="${n.app}"><time datetime="${n.date}">${fmtDate(n.date)}</time><div><h3><span class="tag" style="--tint:${tint}">${tag}</span>${esc(n.title)}</h3><p>${esc(n.text)}</p></div></li>`;
@@ -1498,7 +1547,7 @@ function pageSobre() {
 /* ---------- contato ---------- */
 let contactPreset = null;
 function pageContato() {
-  const options = [["geral", "Geral / site"], ...["launcher", ...ORDER_UTIL, "avaliador", "blockable"].map(k => [k, APPS[k].name + (APPS[k].subtitle ? " " + APPS[k].subtitle : "")])];
+  const options = [["geral", "Geral / site"], ...["launcher", ...ORDER_UTIL, "avaliador", "blockable", "valreport"].map(k => [k, APPS[k].name + (APPS[k].subtitle ? " " + APPS[k].subtitle : "")])];
   const osDefault = { windows: "Windows 11", linux: "Linux", mac: "macOS", mobile: "Celular" }[OS] || "";
   return `
   <div class="wrap">
@@ -1628,6 +1677,7 @@ const ROUTES = {
   avaliador: { nav: "educacao", render: () => pageApp(APPS.avaliador), title: "Avaliador Acadêmico" },
   jogos: { nav: "jogos", render: pageJogos, title: "Jogos" },
   blockable: { nav: "jogos", render: () => pageApp(APPS.blockable), title: "Blockable" },
+  valreport: { nav: "jogos", render: () => pageApp(APPS.valreport), title: "ValReport" },
   novidades: { nav: "novidades", render: pageNovidades, title: "Novidades" },
   sobre: { nav: "sobre", render: pageSobre, title: "Sobre" },
   contato: { nav: "contato", render: pageContato, title: "Contato" },
@@ -1795,7 +1845,7 @@ document.getElementById("footer").innerHTML = `
   </div>
   <div class="footer-col"><b>Projetos</b>
     <a href="#launcher">NokyLabs Launcher</a>${ORDER_UTIL.map(k => `<a href="#${APPS[k].route}">${APPS[k].name}</a>`).join("")}
-    <a href="#avaliador">Avaliador Acadêmico</a><a href="#blockable">Blockable</a>
+    <a href="#avaliador">Avaliador Acadêmico</a><a href="#blockable">Blockable</a><a href="#valreport">ValReport</a>
   </div>
   <div class="footer-col"><b>Site</b><a href="#sobre">Sobre</a><a href="#novidades">Novidades</a><a href="#contato">Contato e bugs</a>
     <a href="https://github.com/${SITE.github}" target="_blank" rel="noopener">GitHub</a></div>
