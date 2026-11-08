@@ -2,22 +2,22 @@
   "_leia": "Catálogo oficial da NokyLabs, lido pelo NokyLabs Launcher. As versões, os links e os SHA-256 são atualizados sozinhos pelo robô do catálogo (veja o README.md). O resto (nomes, descrições, cores, ícones) pode ser editado à mão.",
   "schemaVersion": 1,
   "launcher": {
-    "version": "0.7.1",
-    "notes": "- Apps de uso restrito, como o Avaliador Acadêmico, agora mostram **Solicitar acesso** em vez de Instalar.",
+    "version": "0.8.0",
+    "notes": "- A Biblioteca agora é separada nas mesmas categorias do site (**Apps**, **Educação** e **Jogos**). Cada categoria vira uma faixa, com os apps lado a lado, e as setas ‹ › mostram os próximos.\n- Clique num app para abrir os **detalhes**: descrição, versão instalada e mais recente, novidades e o que dá para fazer em cada sistema. No seu sistema, o launcher instala; para o outro sistema, aparece só o link para baixar.\n- Os filtros Todos, Instalados e Disponíveis ficaram num seletor compacto, ao lado das categorias.\n- No canto da barra lateral: \"Idealizado e aprovado por Thayna Dias\" e \"Desenvolvido com IA (Claude, da Anthropic)\".",
     "downloads": {
       "windows": {
-        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/download/v0.7.1/NokyLabs-win-x64.zip",
+        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/download/v0.8.0/NokyLabs-win-x64.zip",
         "executable": "NokyLabs.exe",
-        "sha256": "20616AD883AA961A45B2E5C17643F0B67AC89B4E74E1FC6808D4E93E246A665F",
+        "sha256": "223FB3BDAC61D5C028440B9715CF7328552F1DD4753FD9A81AC8C2A4099EC5CB",
         "published": true,
-        "size": 41706278
+        "size": 41750058
       },
       "linux": {
-        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/download/v0.7.1/NokyLabs-linux-x64.zip",
+        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/download/v0.8.0/NokyLabs-linux-x64.zip",
         "executable": "NokyLabs",
-        "sha256": "937C23EF608768D4538F4D8053C3578C1B1EFD4C6B6285F21E0A9FC6B765346E",
+        "sha256": "5FF15761ADA4F399460DBD2B5D985E649EB6989E79274B6D7C8E322BB93A7170",
         "published": true,
-        "size": 38209161
+        "size": 38221102
       }
     }
   },
