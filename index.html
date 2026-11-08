@@ -444,9 +444,6 @@ table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
 .search:focus-within { border-color: var(--accent); }
 
 /* ---------- jogo ---------- */
-.players { display: flex; gap: 14px; flex-wrap: wrap; }
-.player { display: grid; justify-items: center; gap: 8px; font-size: .82rem; color: var(--fg-2); font-weight: 600; }
-.shape { width: 46px; height: 46px; }
 .progress-list { display: grid; gap: 12px; }
 .progress-item { display: grid; gap: 6px; }
 .progress-item .row { display: flex; justify-content: space-between; gap: 12px; font-size: 1rem; }
@@ -521,6 +518,10 @@ table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
 .footer-col a { color: var(--fg-2); text-decoration: none; }
 .footer-col a:hover { color: var(--accent-ink); }
 .footer-mail { font-family: var(--font-mono); font-size: .88rem; overflow-wrap: anywhere; }
+.footer-credito { flex-basis: 100%; display: grid; gap: 2px; justify-items: center; text-align: center; margin-top: 8px; padding-top: 20px; border-top: 1px solid var(--border); font-size: .88rem; }
+.footer-credito b { color: var(--fg); font-weight: 600; }
+.footer-credito span { color: var(--fg-3); }
+.footer-credito a { color: inherit; text-decoration: underline; text-decoration-color: var(--border); }
 
 .empty { padding: 28px; text-align: center; color: var(--fg-3); }
 .split { display: grid; gap: 28px; grid-template-columns: 1fr; align-items: start; }
@@ -1246,14 +1247,11 @@ function pageJogos() {
     </section>
     <section class="section" style="padding-top:28px">
       <a class="card app-card" href="#blockable" style="--tint:${g.tint};grid-template-rows:auto">
-        <div class="split" style="align-items:center">
-          <div class="stack">
-            <div class="head" style="justify-content:flex-start;gap:14px"><span class="app-tile big">${ico(g.icon)}</span>${pill(g.status)}</div>
-            <h3 style="font-size:2rem">${esc(g.name)}</h3>
-            <p style="font-size:1.05rem">${esc(g.tagline)}</p>
-            <div class="foot"><span class="chip">${ico("web")}Navegador</span><span class="chip mono">v${g.version}</span></div>
-          </div>
-          ${playersBlock()}
+        <div class="stack">
+          <div class="head" style="justify-content:flex-start;gap:14px"><span class="app-tile big">${ico(g.icon)}</span>${pill(g.status)}</div>
+          <h3 style="font-size:2rem">${esc(g.name)}</h3>
+          <p style="font-size:1.05rem">${esc(g.tagline)}</p>
+          <div class="foot"><span class="chip">${ico("web")}Navegador</span><span class="chip mono">v${g.version}</span></div>
         </div>
       </a>
     </section>
@@ -1261,19 +1259,6 @@ function pageJogos() {
       <div class="section-head"><span class="eyebrow">Para jogadores</span><h2>Ferramentas</h2><p>Projetos feitos para quem joga, no navegador.</p></div>
       <div class="grid cols-3">${appCard(APPS.valreport)}</div>
     </section>
-  </div>`;
-}
-
-function playersBlock() {
-  const shapes = [
-    ["Jogador 1", `<rect x="6" y="6" width="36" height="36" rx="6" fill="#F97316"/>`],
-    ["Jogador 2", `<rect x="6" y="6" width="36" height="36" rx="3" fill="#3B82F6"/>`],
-    ["Jogador 3", `<path d="M24 5 L43 41 H5 Z" fill="#22C55E" stroke="#EAB308" stroke-width="4" stroke-linejoin="round"/>`],
-    ["Jogador 4", `<circle cx="24" cy="24" r="19" fill="#D946EF"/>`],
-  ];
-  return `<div class="card" style="background:var(--surface-2)">
-    <p class="muted" style="margin-bottom:12px">Até quatro pessoas na mesma arena</p>
-    <div class="players">${shapes.map(([n, s]) => `<div class="player"><svg class="shape" viewBox="0 0 48 48" aria-hidden="true">${s}</svg>${n}</div>`).join("")}</div>
   </div>`;
 }
 
@@ -1859,7 +1844,11 @@ document.getElementById("footer").innerHTML = `
   </div>
   <div class="footer-col"><b>Site</b><a href="#sobre">Sobre</a><a href="#novidades">Novidades</a><a href="#contato">Contato e bugs</a>
     <a href="https://github.com/${SITE.github}" target="_blank" rel="noopener">GitHub</a></div>
-  <div class="footer-col"><b>E-mail</b><a class="footer-mail" href="mailto:${esc(SITE.email)}">${esc(SITE.email)}</a></div>`;
+  <div class="footer-col"><b>E-mail</b><a class="footer-mail" href="mailto:${esc(SITE.email)}">${esc(SITE.email)}</a></div>
+  <div class="footer-credito">
+    <b>Idealizado e aprovado por Thayna Dias</b>
+    <span>Desenvolvido com IA (<a href="https://www.anthropic.com/claude" target="_blank" rel="noopener">Claude, da Anthropic</a>)</span>
+  </div>`;
 
 window.addEventListener("hashchange", render);
 paintThemeBtn();
