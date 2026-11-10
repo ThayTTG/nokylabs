@@ -77,7 +77,13 @@
           "published": true,
           "size": 153263217
         },
-        "linux": null
+        "linux": {
+          "url": "https://github.com/ThayTTG/yt-dlp-GUI/releases/download/v3.1.0/YtDlpGui-linux-x64.zip",
+          "executable": "YtDlpGui",
+          "sha256": "0B49A2E17BD42D3AD699AD500D0C43182BFD817AF6150FEFDD9DB6657AB2F958",
+          "published": true,
+          "size": 78823480
+        }
       },
       "notes": "- Agora também para **Linux** (64 bits): o mesmo app, o mesmo visual. Baixe o `YtDlpGui-linux-x64.zip` (ou instale pelo NokyLabs Launcher), extraia e abra o `YtDlpGui`.\r\n- No Linux, o FFmpeg e o Deno são baixados sozinhos na primeira abertura, ou o app usa os que já estiverem instalados no sistema.\r\n- No Linux, o app reconhece o navegador padrão para os cookies e avisa quando o download termina (notificação do sistema)."
     },
