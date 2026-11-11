@@ -11,10 +11,15 @@ Utilitários, apps para a sala de aula e jogos, reunidos num só lugar.
 | `index.html` | O site inteiro (HTML, CSS e JS num arquivo só, sem framework) |
 | `catalogo.json` | Catálogo oficial de apps lido pelo **NokyLabs Launcher** |
 | `favicon.svg` | Ícone da aba |
+| `fonts/` | As fontes Inter e Inter Display (licença OFL), servidas pelo próprio site |
 | `404.html` | Página de "não encontrado", que volta para o início |
 | `.nojekyll` | Diz ao GitHub Pages para publicar os arquivos como estão |
 | `.github/` | O robô do catálogo e a verificação automática do site |
 | `docs/identidade-visual.md` | Guia visual comum a todos os apps da NokyLabs |
+
+O visual do site segue o **Kit NokyLabs**, o design system extraído do ValReport: mesmas cores nos dois temas
+(claro laranja, escuro roxo), Inter, pílulas e animações. As variáveis do CSS têm os mesmos nomes do ValReport
+(`--fundo`, `--destaque`, `--raio`…).
 
 ## Como editar
 

@@ -1,5 +1,9 @@
 # Identidade visual da NokyLabs
 
+> **Novembro de 2026:** a referência visual passou a ser o **Kit NokyLabs**, extraído do ValReport. O site já segue o Kit;
+> nos apps, a biblioteca NokyLabs.UI aplica o mesmo visual. As cores e a tipografia abaixo descrevem o guia anterior e
+> valem só para o que ainda não foi migrado. As cores de cada app aprovadas em 08/11 estão no `catalogo.json`.
+
 Guia único para todos os apps da NokyLabs. Cada app mantém a sua **cor de identidade**; todo o resto segue este guia.
 
 | App | Cor de identidade |
