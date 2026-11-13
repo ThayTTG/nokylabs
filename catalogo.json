@@ -28,7 +28,7 @@
       "description": "Troque a resolução e o Hz dos monitores, e o conteúdo entre as telas, direto da bandeja do Windows.",
       "category": "apps",
       "version": "1.1.0",
-      "accent": "#818CF8",
+      "accent": "#3B82F6",
       "icon": "M7,7 H20 M16,3 L20,7 L16,11 M17,17 H4 M8,13 L4,17 L8,21",
       "downloads": {
         "windows": {
@@ -67,7 +67,7 @@
       "description": "Interface gráfica para o yt-dlp: cole o link e baixe vídeo ou áudio, sem sites duvidosos.",
       "category": "apps",
       "version": "3.1.0",
-      "accent": "#F472B6",
+      "accent": "#6EE7B7",
       "icon": "M5,4.5 H19 A2,2 0 0 1 21,6.5 V17.5 A2,2 0 0 1 19,19.5 H5 A2,2 0 0 1 3,17.5 V6.5 A2,2 0 0 1 5,4.5 Z M10,9 L15,12 L10,15 Z",
       "downloads": {
         "windows": {
@@ -93,7 +93,7 @@
       "description": "Avalie a turma e gere o feedback de cada aluno em planilha, com resumo opcional por IA.",
       "category": "educacao",
       "version": "2.0.0",
-      "accent": "#3B82F6",
+      "accent": "#818CF8",
       "icon": "M2,9.5 L12,5 L22,9.5 L12,14 Z M6,11.5 V16 C6,17.6 9,19 12,19 C15,19 18,17.6 18,16 V11.5 M22,9.5 V14.5",
       "requestAccess": "mailto:thaynarcd1178@gmail.com?subject=Pedido%20de%20acesso%3A%20Avaliador%20Acad%C3%AAmico&body=Ol%C3%A1%21%20Gostaria%20de%20usar%20o%20Avaliador%20Acad%C3%AAmico.%0A%0ANome%3A%0AEscola%20ou%20institui%C3%A7%C3%A3o%3A%0APara%20que%20vou%20usar%3A%0A",
       "requestAction": "Solicitar acesso",
