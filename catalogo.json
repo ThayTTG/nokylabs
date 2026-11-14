@@ -46,20 +46,26 @@
       "name": "CubeBin",
       "description": "Organiza arquivos por extensão em pastas configuráveis e mantém uma auditoria de tudo que foi movido.",
       "category": "apps",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "accent": "#C4362E",
       "icon": "M12,2.5 L20.5,7.25 V16.75 L12,21.5 L3.5,16.75 V7.25 Z M3.5,7.25 L12,12 L20.5,7.25 M12,12 V21.5",
       "downloads": {
         "windows": {
-          "url": "https://github.com/ThayTTG/CubeBin/releases/download/v2.0.0/CubeBin-win-x64.zip",
+          "url": "https://github.com/ThayTTG/CubeBin/releases/download/v2.1.0/CubeBin-win-x64.zip",
           "executable": "CubeBin.exe",
-          "sha256": "CD4D538778A5AD54959216367F74C57D644824E3813BDF66BA8E2B07DD136E32",
+          "sha256": "A5B9CF6397941E8C61349770759C320C009508515566DA2FD16392EDDFF51802",
           "published": true,
-          "size": 49422995
+          "size": 49474893
         },
-        "linux": null
+        "linux": {
+          "url": "https://github.com/ThayTTG/CubeBin/releases/download/v2.1.0/CubeBin-linux-x64.zip",
+          "executable": "CubeBin",
+          "sha256": "655612FA406FE8E92970767DCE00B7BB990EF240C5F854A73ACE1B3CFD2B5185",
+          "published": true,
+          "size": 38924922
+        }
       },
-      "notes": "- Motor gráfico novo (Avalonia), no padrão de todos os apps da NokyLabs: o mesmo visual e as mesmas animações do launcher, do ValReport e do YT-DLP GUI, no vermelho do CubeBin. Tudo continua funcionando do mesmo jeito.\r\n- No canto do menu lateral: \"Idealizado e aprovado por Thayna Dias\" e \"Desenvolvido com IA (Claude, da Anthropic)\". A tela **Sobre** ganhou os créditos de quem fez e das ferramentas usadas.\r\n- A tela Deletar já abre mostrando a área para arrastar os arquivos.\r\n- No menu das pendências, nomes com \"_\" (como Documentos_Office) aparecem certinhos."
+      "notes": "- **Versão para Linux** (x64), também pelo NokyLabs Launcher. Organiza no horário certo quando você está longe do computador (GNOME, KDE e sessões X11), abre junto com o sistema, guarda o login do Google Drive no chaveiro do sistema e avisa antes de organizar, com uma janelinha e o botão **Cancelar**.\r\n- No Linux, arquivos ocultos e downloads que ainda estão baixando (`.part`, `.crdownload`) não são mexidos, e os instaladores do Linux (`.deb`, `.rpm`, `.appimage`...) vão para **Instaladores**.\r\n- No Windows, tudo continua igual."
     },
     {
       "id": "ytdlp-gui",

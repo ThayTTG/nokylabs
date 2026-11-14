@@ -797,10 +797,10 @@ const APPS = {
     id: "cubebin", route: "cubebin", name: "CubeBin", parent: "apps",
     tint: "#C4362E", icon: "cubebin",
     tagline: "Organiza suas pastas por tipo de arquivo, guarda um backup de tudo e libera espaço com segurança.",
-    status: ["Estável", "ok"], version: "1.1.0", repo: "CubeBin", repoPublic: true, license: "MIT",
+    status: ["Estável", "ok"], version: "2.1.0", repo: "CubeBin", repoPublic: true, license: "MIT",
     platforms: {
-      windows: { status: "available", file: "CubeBin-win-x64.zip", req: "Windows 10 ou 11 (64 bits)", size: "≈ 75 MB" },
-      linux: { status: "none" },
+      windows: { status: "available", file: "CubeBin-win-x64.zip", req: "Windows 10 ou 11 (64 bits)", size: "≈ 50 MB" },
+      linux: { status: "available", file: "CubeBin-linux-x64.zip", req: "Linux 64 bits (Ubuntu 22.04+, Fedora, Mint…)", size: "≈ 39 MB" },
     },
     features: [
       ["layers", "Organizar, Limpar e Deletar", "Três módulos separados, para você saber exatamente o que cada botão faz."],
@@ -824,6 +824,12 @@ const APPS = {
         ["Extraia e abra o CubeBin.exe", "Se aparecer o SmartScreen, clique em Mais informações › Executar assim mesmo."],
         ["Configure na primeira abertura", "Escolha as pastas monitoradas e revise as regras antes de organizar."],
       ],
+      linux: [
+        ["Baixe o arquivo", "Pelo NokyLabs Launcher (recomendado) ou pelo botão Baixar para Linux."],
+        ["Extraia e abra o CubeBin", "Se o sistema não deixar abrir, dê permissão de execução: chmod +x CubeBin"],
+        ["Ícone perto do relógio", "No GNOME (Ubuntu e Fedora), o ícone do CubeBin aparece com a extensão AppIndicator. No KDE, já funciona de cara."],
+        ["Configure na primeira abertura", "Escolha as pastas monitoradas e revise as regras antes de organizar."],
+      ],
     },
     faq: [
       ["O CubeBin pode apagar meus arquivos?", "Organizar só move, nunca apaga. As pastas padrão do Windows nunca são excluídas, e o módulo Deletar sempre pede confirmação. Antes de qualquer mudança, um backup em .csv registra onde tudo estava."],
@@ -831,7 +837,7 @@ const APPS = {
       ["O agente de sugestões manda meus arquivos para a internet?", "Não. Ele roda no seu computador, olhando tamanho, data do último acesso e arquivos repetidos."],
       ["Preciso de conta no Google Drive?", "Só se quiser o backup na nuvem, que é opcional. O acesso fica guardado de forma criptografada no seu computador."],
       ["Posso cancelar quando ele começar sozinho?", "Sim. Um aviso aparece antes de começar, e você tem 60 segundos para cancelar."],
-      ["Funciona no Linux?", "Não. O CubeBin foi feito para Windows 10 e 11."],
+      ["Funciona no Linux?", "Sim, desde a versão 2.1 (64 bits). Organiza sozinho quando você está longe do computador no GNOME, no KDE e em sessões X11; em outros ambientes, segue o horário agendado, sempre com o aviso para cancelar antes. O login do Google Drive fica guardado no chaveiro do sistema."],
     ],
   },
 
@@ -1040,6 +1046,7 @@ APPS.valreport = {
 const ORDER_UTIL = ["ytdlp", "cubebin", "hotswap", "planingthings"];
 
 const NEWS = [
+  { date: "2026-11-14", app: "cubebin", title: "CubeBin 2.1: agora também no Linux", text: "O CubeBin ganhou versão para Linux (64 bits), também pelo NokyLabs Launcher. Organiza sozinho quando você está longe do computador, abre junto com o sistema e avisa antes de começar, com o botão Cancelar. No Windows, tudo continua igual." },
   { date: "2026-11-08", app: "valreport", title: "ValReport: coleta na nuvem", text: "A coleta das partidas e o report das 21h passaram a rodar sozinhos na nuvem, sem depender do PC ligado. As partidas novas chegam a cada 20 minutos, e a administradora pode pedir uma coleta na hora pelo próprio site." },
   { date: "2026-10-27", app: "valreport", title: "ValReport: Táticas, Comentários e Habilidades", text: "A equipe ganhou a aba Táticas, com estratégias montadas com desenhos no mapa, prints, PDFs e clipes. Também chegaram os comentários nas partidas e nos rounds, o contador de habilidades de cada um, os abates com habilidade e o vínculo com a equipe do Premier." },
   { date: "2026-10-26", app: "valreport", title: "ValReport 2.0: contas e equipes", text: "O ValReport agora tem endereço novo (valreport.vercel.app) e entrada com a conta Google. As equipes têm cargos e convites, o Riot ID é confirmado e só a própria equipe vê as suas partidas. A Política de Privacidade segue a LGPD." },
@@ -1505,7 +1512,7 @@ function installGuide(app) {
   </div>`;
 }
 
-const formatCmd = d => esc(d).replace(/(chmod \+x NokyLabs|\.\/NokyLabs)/g, "<code>$1</code>");
+const formatCmd = d => esc(d).replace(/(chmod \+x [\w.-]+|\.\/NokyLabs)/g, "<code>$1</code>");
 
 /* ---------- novidades ---------- */
 // A etiqueta de cada novidade usa a cor do próprio app; "site" fica neutra
