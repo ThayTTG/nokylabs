@@ -2,22 +2,22 @@
   "_leia": "Catálogo oficial da NokyLabs, lido pelo NokyLabs Launcher. As versões, os links e os SHA-256 são atualizados sozinhos pelo robô do catálogo (veja o README.md). O resto (nomes, descrições, cores, ícones) pode ser editado à mão.",
   "schemaVersion": 1,
   "launcher": {
-    "version": "0.8.0",
-    "notes": "- A Biblioteca agora é separada nas mesmas categorias do site (**Apps**, **Educação** e **Jogos**). Cada categoria vira uma faixa, com os apps lado a lado, e as setas ‹ › mostram os próximos.\n- Clique num app para abrir os **detalhes**: descrição, versão instalada e mais recente, novidades e o que dá para fazer em cada sistema. No seu sistema, o launcher instala; para o outro sistema, aparece só o link para baixar.\n- Os filtros Todos, Instalados e Disponíveis ficaram num seletor compacto, ao lado das categorias.\n- No canto da barra lateral: \"Idealizado e aprovado por Thayna Dias\" e \"Desenvolvido com IA (Claude, da Anthropic)\".",
+    "version": "0.9.0",
+    "notes": "- Visual novo, o mesmo do site e do ValReport (Kit NokyLabs): fonte Inter, botões em pílula, cartões que sobem ao passar o mouse, os números do topo da Biblioteca contando e as páginas entrando suavemente.\n- Novo **tema claro**. Em **Configurações › Aparência**, escolha Escuro, Claro ou Igual ao sistema; a troca vale na hora.\n- As cores de cada app continuam fáceis de ler nos dois temas.",
     "downloads": {
       "windows": {
-        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/download/v0.8.0/NokyLabs-win-x64.zip",
+        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/download/v0.9.0/NokyLabs-win-x64.zip",
         "executable": "NokyLabs.exe",
-        "sha256": "223FB3BDAC61D5C028440B9715CF7328552F1DD4753FD9A81AC8C2A4099EC5CB",
+        "sha256": "6E0D5F1BD930B9DCAD387E8D77EBD80705055B2F1807E1407BE963F33ACF6FE9",
         "published": true,
-        "size": 41750058
+        "size": 41771745
       },
       "linux": {
-        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/download/v0.8.0/NokyLabs-linux-x64.zip",
+        "url": "https://github.com/ThayTTG/NokyLabs-Launcher/releases/download/v0.9.0/NokyLabs-linux-x64.zip",
         "executable": "NokyLabs",
-        "sha256": "5FF15761ADA4F399460DBD2B5D985E649EB6989E79274B6D7C8E322BB93A7170",
+        "sha256": "A5D5B56E25FE23A005B9886C17DEA25344276B4E46B109B1E3C3313F4B5476DD",
         "published": true,
-        "size": 38221102
+        "size": 38256199
       }
     }
   },
