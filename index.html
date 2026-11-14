@@ -48,6 +48,10 @@ try {
   --destaque-suave: #fde5d0;
   --destaque-texto: #b0520a;
   --sobre-destaque: #ffffff;
+  /* Fundo dos botões cheios (texto branco). No claro, o laranja do Kit dá só 2,9:1 com o branco;
+     este tom (o mesmo do --destaque-texto) dá 5,2:1 e o hover 6,4:1. No escuro, é o roxo de sempre. */
+  --destaque-botao: #b0520a;
+  --destaque-botao-forte: #9a4708;
   --vitoria: #1b9a57;
   --vitoria-suave: #dcf3e6;
   --derrota: #d64545;
@@ -81,6 +85,7 @@ try {
     --fundo: #110e1a; --superficie: #1c1729; --superficie-2: #251f36; --superficie-3: #2f2843; --borda: #342b4b;
     --texto: #f0ecf8; --texto-2: #c9c1db; --suave: #968dac;
     --destaque: #a068ff; --destaque-forte: #8a4dff; --destaque-suave: #3a2a60; --destaque-texto: #ccb2ff; --sobre-destaque: #ffffff;
+    --destaque-botao: #a068ff; --destaque-botao-forte: #8a4dff;
     --vitoria: #54d688; --vitoria-suave: #1a3628; --derrota: #f67070; --derrota-suave: #42202a;
     --alerta: #f6b84c; --alerta-suave: #3d2f17;
     --sombra: 0 10px 30px rgba(0, 0, 0, .35);
@@ -92,6 +97,7 @@ try {
   --fundo: #110e1a; --superficie: #1c1729; --superficie-2: #251f36; --superficie-3: #2f2843; --borda: #342b4b;
   --texto: #f0ecf8; --texto-2: #c9c1db; --suave: #968dac;
   --destaque: #a068ff; --destaque-forte: #8a4dff; --destaque-suave: #3a2a60; --destaque-texto: #ccb2ff; --sobre-destaque: #ffffff;
+    --destaque-botao: #a068ff; --destaque-botao-forte: #8a4dff;
   --vitoria: #54d688; --vitoria-suave: #1a3628; --derrota: #f67070; --derrota-suave: #42202a;
   --alerta: #f6b84c; --alerta-suave: #3d2f17;
   --sombra: 0 10px 30px rgba(0, 0, 0, .35);
@@ -189,8 +195,8 @@ code { background: var(--superficie-2); border: 1px solid var(--borda); padding:
 }
 .btn:hover { transform: translateY(-1px); }
 .btn:active { transform: scale(.97); }
-.btn.primary { background: var(--destaque); color: var(--sobre-destaque); border-color: transparent; box-shadow: 0 6px 18px color-mix(in srgb, var(--destaque) 35%, transparent); }
-.btn.primary:hover { background: var(--destaque-forte); color: var(--sobre-destaque); }
+.btn.primary { background: var(--destaque-botao); color: var(--sobre-destaque); border-color: transparent; box-shadow: 0 6px 18px color-mix(in srgb, var(--destaque) 35%, transparent); }
+.btn.primary:hover { background: var(--destaque-botao-forte); color: var(--sobre-destaque); }
 .btn.soft { background: var(--destaque-suave); color: var(--destaque-texto); border-color: transparent; }
 .btn.soft:hover { background: color-mix(in srgb, var(--destaque) 24%, var(--superficie)); color: var(--destaque-texto); }
 .btn.ghost { background: var(--superficie); color: var(--texto); border-color: var(--borda); }
@@ -358,12 +364,12 @@ table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
 }
 .tabs button:hover { background: var(--superficie-2); color: var(--texto); }
 .tabs button:active { transform: scale(.96); }
-.tabs button.on { background: var(--destaque); color: var(--sobre-destaque); }
+.tabs button.on { background: var(--destaque-botao); color: var(--sobre-destaque); }
 .anchor { scroll-margin-top: calc(140px + env(safe-area-inset-top, 0px)); }
 /* A aba de baixar fica à direita, com contorno, para não parecer uma segunda aba ativa */
 .tabs-row .tab-dl { margin-left: auto; border-color: color-mix(in srgb, var(--destaque) 55%, var(--borda)); color: var(--destaque-texto); font-weight: 700; }
 .tabs-row .tab-dl:hover { background: var(--destaque-suave); color: var(--destaque-texto); }
-.tabs-row .tab-dl.on { background: var(--destaque); border-color: transparent; color: var(--sobre-destaque); }
+.tabs-row .tab-dl.on { background: var(--destaque-botao); border-color: transparent; color: var(--sobre-destaque); }
 .tab-panel { padding-block: 36px 0; min-height: 40vh; }
 .tab-panel[hidden], .tabs[hidden] { display: none; }
 @media (max-width: 640px) { .tabs-row .tab-dl { margin-left: 0; } }
@@ -478,7 +484,7 @@ table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
 }
 .filters button:hover { background: var(--superficie-2); color: var(--texto); }
 .filters button:active { transform: scale(.96); }
-.filters button.on { background: var(--destaque); border-color: var(--destaque); color: var(--sobre-destaque); }
+.filters button.on { background: var(--destaque-botao); border-color: var(--destaque-botao); color: var(--sobre-destaque); }
 
 /* ---------- contato ---------- */
 .mail-card { display: grid; gap: 14px; }
